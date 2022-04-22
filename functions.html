@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Functions - PRQL Language reference</title>
+        <title>Functions - PRQL Language Reference (draft)</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Modern language for transforming data — a simpler and more powerful SQL">
@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="comparison-table.css">
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -75,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="verbs.html"><strong aria-hidden="true">2.</strong> Verbs</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">3.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html" class="active"><strong aria-hidden="true">4.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">5.</strong> Stdlib</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">3.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">3.1.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">3.2.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates.html"><strong aria-hidden="true">3.3.</strong> Dates</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.4.</strong> Regex</div></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">3.5.</strong> S-Strings</a></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">4.</strong> Transforms</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html" class="active"><strong aria-hidden="true">6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">7.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">8.</strong> Live Editor</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -104,13 +105,13 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">PRQL Language reference</h1>
+                    <h1 class="menu-title">PRQL Language Reference (draft)</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        <a href="https://github.com/max-sixty/prql" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/prql/prql" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                     </div>

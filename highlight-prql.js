@@ -10,7 +10,7 @@
 //     "k"  => keywords
 //     "cN" => className
 
-hljs.registerLanguage("prql", function(hljs) {
+formatting = function (hljs) {
     return {
         case_insensitive: false,
         keywords: {
@@ -39,10 +39,19 @@ hljs.registerLanguage("prql", function(hljs) {
 
         ]
     };
+}
 
-});
+hljs.registerLanguage("prql", formatting);
+hljs.registerLanguage("prql_no_test", formatting);
+hljs.registerLanguage("elm", formatting);
 
 // This file is inserted after the default highlight.js invocation, which tags
 // unknown-language blocks with CSS classes but doesn't highlight them.
 Array.from(document.querySelectorAll("code.language-prql"))
+    .forEach((a) => console.log(a) || hljs.highlightBlock(a));
+
+Array.from(document.querySelectorAll("code.language-prql_no_test"))
+    .forEach((a) => console.log(a) || hljs.highlightBlock(a));
+
+Array.from(document.querySelectorAll("code.language-elm"))
     .forEach((a) => console.log(a) || hljs.highlightBlock(a));

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>PRQL Language reference</title>
+        <title>PRQL Language Reference (draft)</title>
         <meta name="robots" content="noindex" />
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="comparison-table.css">
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -76,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="verbs.html"><strong aria-hidden="true">2.</strong> Verbs</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">3.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">4.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">5.</strong> Stdlib</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">3.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">3.1.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">3.2.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates.html"><strong aria-hidden="true">3.3.</strong> Dates</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.4.</strong> Regex</div></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">3.5.</strong> S-Strings</a></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">4.</strong> Transforms</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">7.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">8.</strong> Live Editor</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -105,13 +106,13 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">PRQL Language reference</h1>
+                    <h1 class="menu-title">PRQL Language Reference (draft)</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        <a href="https://github.com/max-sixty/prql" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/prql/prql" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                     </div>
@@ -139,12 +140,23 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<blockquote>
+<p>[Note that this is a very early version and actively being worked on; thanks for
+your patience]</p>
+</blockquote>
 <p>PRQL is a modern language for transforming data — a simpler and more powerful
 SQL. Like SQL, it's readable, explicit and declarative. Unlike SQL, it forms a
 logical pipeline of transformations, and supports abstractions such as variables
 and functions. It can be used with any database that uses SQL, since it
 transpiles to SQL.</p>
 <p>Let's get started with an example:</p>
+<!-- TODO: resolve formatting — way too wide for the current preprocessor -->
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 filter country_code = &quot;USA&quot;                # Each line transforms the previous result.
 derive [                                   # This adds columns / variables.
@@ -167,127 +179,471 @@ take 20
 join countries side:left [country_code]
 derive [
   always_true: true,
-  s_string: s&quot;version()&quot;,                  # An S-string, which transpiles directly into SQL
+  db_version: s&quot;version()&quot;,                  # An S-string, which transpiles directly into SQL
 ]
 </code></pre>
-<p>As you can see, PRQL is a linear <strong>pipeline of transformations</strong> — each line of the
-query is a transformation of the previous line's result.</p>
-<p>This query can be compiled into SQL:</p>
+</td>
+<td>
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
-    TOP (20) title,
+    title,
     country_code,
-    SUM(salary + payroll_tax + benefits_cost) AS sum_gross_cost,
-    COUNT(*) AS ct,
     AVG(salary),
     SUM(salary),
     AVG(salary + payroll_tax),
     SUM(salary + payroll_tax),
-    AVG(salary + payroll_tax + benefits_cost)
+    AVG(salary + payroll_tax + benefits_cost),
+    SUM(salary + payroll_tax + benefits_cost) AS sum_gross_cost,
+    COUNT(*) AS ct
   FROM
     employees
   WHERE
     country_code = 'USA'
-    and salary + payroll_tax + benefits_cost &gt; 0
+    AND salary + payroll_tax + benefits_cost &gt; 0
   GROUP BY
     title,
     country_code
   HAVING
-    ct &gt; 200
+    COUNT(*) &gt; 200
   ORDER BY
     sum_gross_cost
-),
-table_1 AS (
-  SELECT
-    *,
-    true AS always_true,
-    version() AS s_string
-  FROM
-    table_0
-    LEFT JOIN countries USING(country_code)
+  LIMIT
+    20
 )
 SELECT
-  *
+  table_0.*,
+  countries.*,
+  country_code,
+  true AS always_true,
+  version() AS db_version
 FROM
-  table_1
+  table_0
+  LEFT JOIN countries USING(country_code)
 </code></pre>
+</td>
+</tr>
+</table>
+<p>As you can see, PRQL is a linear <strong>pipeline of transformations</strong> — each line of the
+query is a transformation of the previous line's result.</p>
 <p>You can see that in SQL, operations do not follow one another, which makes it hard to compose larger queries.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="verbs"><a class="header" href="#verbs">Verbs</a></h1>
-<p>Core principle of the language is a pipeline, which is a series of sequential transformations of a table (or data frame). There is only a few different types of transformations which are identified by their verbs.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="queries"><a class="header" href="#queries">Queries</a></h1>
+<p>PRQL queries are structured differently to SQL queries — they represent a
+pipeline of transformations, each one changing the previous result into a new
+result.</p>
+<ul>
+<li><a href="queries/pipelines.html">Pipelines</a></li>
+</ul>
+<p>[TODO]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h1>
+<h3 id="the-simplest-pipeline"><a class="header" href="#the-simplest-pipeline">The simplest pipeline</a></h3>
+<p>The simplest pipeline is just:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from employees
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*
+FROM
+  employees
+</code></pre>
+</td>
+</tr>
+</table>
+<h3 id="adding-transformations"><a class="header" href="#adding-transformations">Adding transformations</a></h3>
+<p>We can add additional lines, each one transforms the result:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from employees
+derive gross_salary: (salary + payroll_tax)
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*,
+  salary + payroll_tax AS gross_salary
+FROM
+  employees
+</code></pre>
+</td>
+</tr>
+</table>
+<p>...and so on:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from employees
+derive gross_salary: (salary + payroll_tax)
+sort gross_salary
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*,
+  salary + payroll_tax AS gross_salary
+FROM
+  employees
+ORDER BY
+  gross_salary
+</code></pre>
+</td>
+</tr>
+</table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="language-features"><a class="header" href="#language-features">Language Features</a></h1>
+<p>PRQL improves on many of SQL's awkward language features:</p>
+<!-- toc -->
+<div style="break-before: page; page-break-before: always;"></div><h1 id="f-strings"><a class="header" href="#f-strings">F-Strings</a></h1>
+<p>f-strings are a readable approach to building new strings from existing strings.
+Currently PRQL supports this for concatenating strings:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from x
+select full_name: f&quot;{first} {last}&quot;
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  CONCAT(first, ' ', last) AS full_name
+FROM
+  x
+</code></pre>
+</td>
+</tr>
+</table>
+<p>This can be much easier to read for longer strings, relative to the SQL approach:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from x
+select url: f&quot;http{tls}://www.{domain}.{tld}/{page}&quot;
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  CONCAT(
+    'http',
+    tls,
+    '://www.',
+    domain,
+    '.',
+    tld,
+    '/',
+    page
+  ) AS url
+FROM
+  x
+</code></pre>
+</td>
+</tr>
+</table>
+<p>In the future, this may extend to other types of formatting, such as datetimes,
+numbers, and padding. If there's a feature that would be helpful, please <a href="https://github.com/prql/prql/issues/new/choose">post
+an issue</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ranges"><a class="header" href="#ranges">Ranges</a></h1>
+<p>PRQL has a concise range syntax <code>start..end</code>, which can be accessed with the <code>in</code> function:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from employees
+filter (age | in 18..40)
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*
+FROM
+  employees
+WHERE
+  age BETWEEN 18
+  AND 40
+</code></pre>
+</td>
+</tr>
+</table>
+<p>Like in SQL, ranges are inclusive.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="dates"><a class="header" href="#dates">Dates</a></h1>
+<h2 id="intervals"><a class="header" href="#intervals">Intervals</a></h2>
+<p>Intervals are represented by <code>{N}{periods}</code>, such as <code>2years</code> or <code>10minutes</code>,
+without a space.</p>
+<blockquote>
+<p>These aren't the same as ISO8601, because we evaluated <code>P3Y6M4DT12H30M5S</code> to
+be difficult to understand, but we could support a simplified form if there's
+demand for it. We don't currently support compound expressions, for example
+<code>2years10months</code>, but most DBs will allow <code>2years + 10months</code>. Please raise an
+issue if this is inconvenient.</p>
+</blockquote>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from projects
+derive first_check_in: start + 10days
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  projects.*,
+  start + INTERVAL '10' DAY AS first_check_in
+FROM
+  projects
+</code></pre>
+</td>
+</tr>
+</table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="s-strings"><a class="header" href="#s-strings">S-Strings</a></h1>
+<p>An s-string inserts SQL directly, as an escape hatch when there's something that PRQL
+doesn't yet implement. For example, there's no <code>version()</code> function in SQL that
+returns the Postgres version, so if we want to use that, we use an s-string:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">derive db_version: s&quot;version()&quot;
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  version() AS db_version
+</code></pre>
+</td>
+</tr>
+</table>
+<p>We can embed columns in an s-string using braces. For example, PRQL's standard
+library defines the <code>average</code> function as:</p>
+<pre><code class="language-prql_no_test">func average column = s&quot;AVG({column})&quot;
+</code></pre>
+<p>So this compiles using the function:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from employees
+aggregate [average salary]
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  AVG(salary)
+FROM
+  employees
+</code></pre>
+</td>
+</tr>
+</table>
+<p>For those who have used python, s-strings are similar to python f-strings, but
+the result is SQL, rather than a string literal — a python f-string would
+produce <code>&quot;average(salary)&quot;</code>, with the quotes.</p>
+<p>S-strings in user code are intended as an escape-hatch for an unimplemented
+feature. If we often need s-strings to express something, that's a sign we
+should implement it in PRQL / PRQL's stdlib.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="transforms"><a class="header" href="#transforms">Transforms</a></h1>
+<p>Core principle of the language is a pipeline, which is a series of sequential transformations of a table (or data frame). There is only a few different types of transformations:</p>
 <h2 id="from"><a class="header" href="#from">From</a></h2>
 <blockquote>
 <p>specifies a data source</p>
 </blockquote>
-<pre><code class="language-prql">from {table reference}
+<pre><code class="language-prql_no_test">from {table reference}
 </code></pre>
 <p><em>Example:</em></p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 </code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*
+FROM
+  employees
+</code></pre>
+</td>
+</tr>
+</table>
 <h2 id="select"><a class="header" href="#select">Select</a></h2>
 <blockquote>
 <p>picks columns based on their names</p>
 </blockquote>
-<pre><code class="language-prql">select [{expression}]
+<pre><code class="language-prql_no_test">select [{expression}]
 </code></pre>
 <p><em>Example:</em></p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 select [first_name, last_name]
 </code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  first_name,
+  last_name
+FROM
+  employees
+</code></pre>
+</td>
+</tr>
+</table>
 <h2 id="derive"><a class="header" href="#derive">Derive</a></h2>
 <blockquote>
 <p>adds new columns that are computed from existing columns</p>
 </blockquote>
-<pre><code class="language-prql">derive [{new_name}: {expression}]
+<pre><code class="language-prql_no_test">derive [{new_name}: {expression}]
 </code></pre>
 <p><em>Example:</em></p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 derive gross_salary: salary + payroll_tax
 </code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*,
+  salary + payroll_tax AS gross_salary
+FROM
+  employees
+</code></pre>
+</td>
+</tr>
+</table>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 derive [
   gross_salary: salary + payroll_tax,
   gross_cost: gross_salary + benefits_cost
 ]
 </code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*,
+  salary + payroll_tax AS gross_salary,
+  salary + payroll_tax + benefits_cost AS gross_cost
+FROM
+  employees
+</code></pre>
+</td>
+</tr>
+</table>
 <h2 id="filter"><a class="header" href="#filter">Filter</a></h2>
 <blockquote>
 <p>picks rows based on their values</p>
 </blockquote>
-<pre><code class="language-prql">filter {boolean expression}
+<pre><code class="language-prql_no_test">filter {boolean expression}
 </code></pre>
 <p><em>Example:</em></p>
-<pre><code class="language-prql">from employees
-filter length last_name &lt; 3
+<pre><code class="language-prql_no_test">from employees
+filter (length last_name &lt; 3)
 </code></pre>
 <h2 id="take"><a class="header" href="#take">Take</a></h2>
 <blockquote>
 <p>picks first n rows</p>
 </blockquote>
-<pre><code class="language-prql">take {n}
+<pre><code class="language-prql_no_test">take {n}
 </code></pre>
 <p><em>Example:</em></p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 take 10
 </code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*
+FROM
+  employees
+LIMIT
+  10
+</code></pre>
+</td>
+</tr>
+</table>
 <h2 id="sort"><a class="header" href="#sort">Sort</a></h2>
 <blockquote>
 <p>orders the rows by the values of selected columns</p>
 </blockquote>
-<pre><code class="language-prql">sort {column}
+<pre><code class="language-prql_no_test">sort {column}
 </code></pre>
 <p><em>Arguments:</em></p>
 <ul>
 <li>a column identifier of the key to sort by</li>
 </ul>
 <p><em>Example:</em></p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 sort age
 </code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*
+FROM
+  employees
+ORDER BY
+  employees.age
+</code></pre>
+</td>
+</tr>
+</table>
 <h2 id="join"><a class="header" href="#join">Join</a></h2>
 <blockquote>
 <p>adds columns from another table, matching rows based on a condition</p>
 </blockquote>
-<pre><code class="language-prql">join side:{inner|left|right|full} {table} {[conditions]}
+<pre><code class="language-prql_no_test">join side:{inner|left|right|full} {table} {[conditions]}
 </code></pre>
 <p><em>Arguments:</em></p>
 <ul>
@@ -300,49 +656,87 @@ sort age
 </li>
 </ul>
 <p><em>Example:</em></p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 join side:left positions [id=employee_id]
 </code></pre>
-<pre><code class="language-sql">SELECT * FROM employees
-LEFT JOIN positions ON id = employee_id
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*,
+  positions.*
+FROM
+  employees
+  LEFT JOIN positions ON id = employee_id
 </code></pre>
+</td>
+</tr>
+</table>
 <p><em>Example:</em></p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 join side:full positions [emp_no]
 </code></pre>
-<pre><code class="language-sql">SELECT * FROM employees
-FULL OUTER JOIN positions ON USING(emp_no)
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*,
+  positions.*,
+  emp_no
+FROM
+  employees FULL
+  JOIN positions USING(emp_no)
 </code></pre>
+</td>
+</tr>
+</table>
 <h2 id="aggregate"><a class="header" href="#aggregate">Aggregate</a></h2>
 <blockquote>
 <p>group rows by one or more columns</p>
 </blockquote>
-<pre><code class="language-prql">aggregate by:[{column identifier}] [{expression or assign operation}]
+<pre><code class="language-prql_no_test">aggregate by:[{column identifier}] [{expression or assign operation}]
 </code></pre>
 <p><em>Example:</em></p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 aggregate by:[title, country] [
   average salary,
   ct: count
 ]
 </code></pre>
-<pre><code class="language-sql">SELECT title, country, AVG(salary), COUNT(*) AS ct
-FROM employees
-GROUP BY title, country
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  title,
+  country,
+  AVG(salary),
+  COUNT(*) AS ct
+FROM
+  employees
+GROUP BY
+  title,
+  country
 </code></pre>
+</td>
+</tr>
+</table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="syntax"><a class="header" href="#syntax">Syntax</a></h1>
 <!-- Here we could explain how function parameters work, what is a list, S-strings, how to do aliases and so on. -->
-<h3 id="s-strings"><a class="header" href="#s-strings">S-Strings</a></h3>
-<p>An s-string inserts SQL directly. It's similar in form to a python f-string, but
-the result is SQL, rather than a string literal; i.e.:</p>
-<pre><code class="language-prql">func sum col = s&quot;SUM({col})&quot;
-sum salary
-</code></pre>
-<p>transpiles to:</p>
-<pre><code class="language-sql">SUM(salary)
-</code></pre>
-<p>...whereas if it were a python f-string, it would make <code>&quot;sum(salary)&quot;</code>, with the
-quotes.</p>
 <h3 id="lists"><a class="header" href="#lists">Lists</a></h3>
 <ul>
 <li>
@@ -356,20 +750,55 @@ quotes.</p>
 <p>More examples in <a href="examples/list-equivalence.html"><strong>list-equivalence.md</strong></a>.</p>
 </li>
 </ul>
-<h3 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h3>
+<h3 id="pipelines-1"><a class="header" href="#pipelines-1">Pipelines</a></h3>
 <ul>
 <li>
 <p>A line-break generally creates a pipelined transformation. For example:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from tbl
-select [
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  tbl.*
+FROM
+  tbl
+</code></pre>
+</td>
+</tr>
+</table>
   col1,
   col2,
-]
+\]
 filter col1 = col2
-</code></pre>
+````
 <p>...is equivalent to:</p>
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from tbl | select [col1, col2] | filter col1 = col2
 </code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  col1,
+  col2
+FROM
+  tbl
+WHERE
+  col1 = col2
+</code></pre>
+</td>
+</tr>
+</table>
 </li>
 <li>
 <p>A line-break doesn't created a pipeline in a few cases:</p>
@@ -411,6 +840,43 @@ with <code>by_col:sec_id</code>.</p>
 </li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="stdlib"><a class="header" href="#stdlib">Stdlib</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="live-editor"><a class="header" href="#live-editor">Live Editor</a></h1>
+<!-- The `container-container` properties already exist on `editor-container`, but we
+need to re-specify them since there's another layer (maybe avoidable?). -->
+<!-- We specify all the hierarchy, from html down, to have height=100%, in order to
+get the editors to be full height, and add some reductions in `px` to two
+elements, to prevent scroll bars / awkward scrolling when the line breaks run
+on. We previously had a different approach, which aligned the content such that
+we didn't need scrollbars, but it didn't work well on Chrome. -->
+<!-- TODO:
+- Should we have a max-width to limit the width for very wide browsers?
+- If so, can we get the editors to center?
+ -->
+<style>
+    html, body, .page-wrapper, .page , .container-container {
+        height: 100%;
+        box-sizing: border-box;
+    }
+     main {
+        height: calc(100% - 150px);
+        box-sizing: border-box;
+    }
+    .content {
+        height: calc(100% - 70px);
+        box-sizing: border-box;
+    }
+    main {
+        /*Override the main CSS so that the Editors can be wide*/
+        max-width: none !important;
+    }
+    .container-container {
+        width: 100%;
+    }
+    .nav-chapters, .nav-wrapper {
+        visibility: hidden;
+    }
+</style>
+<embed class="container-container" type="text/html" src="./dist/index.html">
 
                     </main>
 

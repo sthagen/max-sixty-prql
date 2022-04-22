@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - PRQL Language reference</title>
+        <title>Introduction - PRQL Language Reference (draft)</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Modern language for transforming data — a simpler and more powerful SQL">
@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="comparison-table.css">
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -75,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="verbs.html"><strong aria-hidden="true">2.</strong> Verbs</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">3.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">4.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">5.</strong> Stdlib</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">3.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">3.1.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">3.2.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates.html"><strong aria-hidden="true">3.3.</strong> Dates</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.4.</strong> Regex</div></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">3.5.</strong> S-Strings</a></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">4.</strong> Transforms</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">7.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">8.</strong> Live Editor</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -104,13 +105,13 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">PRQL Language reference</h1>
+                    <h1 class="menu-title">PRQL Language Reference (draft)</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        <a href="https://github.com/max-sixty/prql" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/prql/prql" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                     </div>
@@ -138,12 +139,23 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<blockquote>
+<p>[Note that this is a very early version and actively being worked on; thanks for
+your patience]</p>
+</blockquote>
 <p>PRQL is a modern language for transforming data — a simpler and more powerful
 SQL. Like SQL, it's readable, explicit and declarative. Unlike SQL, it forms a
 logical pipeline of transformations, and supports abstractions such as variables
 and functions. It can be used with any database that uses SQL, since it
 transpiles to SQL.</p>
 <p>Let's get started with an example:</p>
+<!-- TODO: resolve formatting — way too wide for the current preprocessor -->
+<table class="comparison">
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
 <pre><code class="language-prql">from employees
 filter country_code = &quot;USA&quot;                # Each line transforms the previous result.
 derive [                                   # This adds columns / variables.
@@ -166,57 +178,59 @@ take 20
 join countries side:left [country_code]
 derive [
   always_true: true,
-  s_string: s&quot;version()&quot;,                  # An S-string, which transpiles directly into SQL
+  db_version: s&quot;version()&quot;,                  # An S-string, which transpiles directly into SQL
 ]
 </code></pre>
-<p>As you can see, PRQL is a linear <strong>pipeline of transformations</strong> — each line of the
-query is a transformation of the previous line's result.</p>
-<p>This query can be compiled into SQL:</p>
+</td>
+<td>
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
-    TOP (20) title,
+    title,
     country_code,
-    SUM(salary + payroll_tax + benefits_cost) AS sum_gross_cost,
-    COUNT(*) AS ct,
     AVG(salary),
     SUM(salary),
     AVG(salary + payroll_tax),
     SUM(salary + payroll_tax),
-    AVG(salary + payroll_tax + benefits_cost)
+    AVG(salary + payroll_tax + benefits_cost),
+    SUM(salary + payroll_tax + benefits_cost) AS sum_gross_cost,
+    COUNT(*) AS ct
   FROM
     employees
   WHERE
     country_code = 'USA'
-    and salary + payroll_tax + benefits_cost &gt; 0
+    AND salary + payroll_tax + benefits_cost &gt; 0
   GROUP BY
     title,
     country_code
   HAVING
-    ct &gt; 200
+    COUNT(*) &gt; 200
   ORDER BY
     sum_gross_cost
-),
-table_1 AS (
-  SELECT
-    *,
-    true AS always_true,
-    version() AS s_string
-  FROM
-    table_0
-    LEFT JOIN countries USING(country_code)
+  LIMIT
+    20
 )
 SELECT
-  *
+  table_0.*,
+  countries.*,
+  country_code,
+  true AS always_true,
+  version() AS db_version
 FROM
-  table_1
+  table_0
+  LEFT JOIN countries USING(country_code)
 </code></pre>
+</td>
+</tr>
+</table>
+<p>As you can see, PRQL is a linear <strong>pipeline of transformations</strong> — each line of the
+query is a transformation of the previous line's result.</p>
 <p>You can see that in SQL, operations do not follow one another, which makes it hard to compose larger queries.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="next" href="verbs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="queries/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -225,7 +239,7 @@ FROM
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="next" href="verbs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="queries/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
