@@ -157,7 +157,8 @@
 <ul>
 <li>
 <p>A line-break generally creates a pipelined transformation. For example:</p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -175,13 +176,15 @@ FROM
 </td>
 </tr>
 </table>
+</div>
   col1,
   col2,
 \]
 filter col1 = col2
 ````
 <p>...is equivalent to:</p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -202,6 +205,7 @@ WHERE
 </td>
 </tr>
 </table>
+</div>
 </li>
 <li>
 <p>A line-break doesn't created a pipeline in a few cases:</p>

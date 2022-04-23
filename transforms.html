@@ -147,7 +147,8 @@
 <pre><code class="language-prql_no_test">from {table reference}
 </code></pre>
 <p><em>Example:</em></p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -165,6 +166,7 @@ FROM
 </td>
 </tr>
 </table>
+</div>
 <h2 id="select"><a class="header" href="#select">Select</a></h2>
 <blockquote>
 <p>picks columns based on their names</p>
@@ -172,7 +174,8 @@ FROM
 <pre><code class="language-prql_no_test">select [{expression}]
 </code></pre>
 <p><em>Example:</em></p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -192,6 +195,7 @@ FROM
 </td>
 </tr>
 </table>
+</div>
 <h2 id="derive"><a class="header" href="#derive">Derive</a></h2>
 <blockquote>
 <p>adds new columns that are computed from existing columns</p>
@@ -199,7 +203,8 @@ FROM
 <pre><code class="language-prql_no_test">derive [{new_name}: {expression}]
 </code></pre>
 <p><em>Example:</em></p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -219,7 +224,9 @@ FROM
 </td>
 </tr>
 </table>
-<table class="comparison">
+</div>
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -243,6 +250,7 @@ FROM
 </td>
 </tr>
 </table>
+</div>
 <h2 id="filter"><a class="header" href="#filter">Filter</a></h2>
 <blockquote>
 <p>picks rows based on their values</p>
@@ -260,7 +268,8 @@ filter (length last_name &lt; 3)
 <pre><code class="language-prql_no_test">take {n}
 </code></pre>
 <p><em>Example:</em></p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -281,6 +290,7 @@ LIMIT
 </td>
 </tr>
 </table>
+</div>
 <h2 id="sort"><a class="header" href="#sort">Sort</a></h2>
 <blockquote>
 <p>orders the rows by the values of selected columns</p>
@@ -292,7 +302,8 @@ LIMIT
 <li>a column identifier of the key to sort by</li>
 </ul>
 <p><em>Example:</em></p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -308,11 +319,12 @@ sort age
 FROM
   employees
 ORDER BY
-  employees.age
+  age
 </code></pre>
 </td>
 </tr>
 </table>
+</div>
 <h2 id="join"><a class="header" href="#join">Join</a></h2>
 <blockquote>
 <p>adds columns from another table, matching rows based on a condition</p>
@@ -330,7 +342,8 @@ ORDER BY
 </li>
 </ul>
 <p><em>Example:</em></p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -351,8 +364,10 @@ FROM
 </td>
 </tr>
 </table>
+</div>
 <p><em>Example:</em></p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -374,6 +389,7 @@ FROM
 </td>
 </tr>
 </table>
+</div>
 <h2 id="aggregate"><a class="header" href="#aggregate">Aggregate</a></h2>
 <blockquote>
 <p>group rows by one or more columns</p>
@@ -381,17 +397,20 @@ FROM
 <pre><code class="language-prql_no_test">aggregate by:[{column identifier}] [{expression or assign operation}]
 </code></pre>
 <p><em>Example:</em></p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
 <tr>
 <td>
 <pre><code class="language-prql">from employees
-aggregate by:[title, country] [
-  average salary,
-  ct: count
-]
+group [title, country] (
+  aggregate [
+    average salary,
+    ct: count
+  ]
+)
 </code></pre>
 </td>
 <td>
@@ -409,6 +428,7 @@ GROUP BY
 </td>
 </tr>
 </table>
+</div>
 
                     </main>
 

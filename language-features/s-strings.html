@@ -142,7 +142,8 @@
 <p>An s-string inserts SQL directly, as an escape hatch when there's something that PRQL
 doesn't yet implement. For example, there's no <code>version()</code> function in SQL that
 returns the Postgres version, so if we want to use that, we use an s-string:</p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -158,12 +159,14 @@ returns the Postgres version, so if we want to use that, we use an s-string:</p>
 </td>
 </tr>
 </table>
+</div>
 <p>We can embed columns in an s-string using braces. For example, PRQL's standard
 library defines the <code>average</code> function as:</p>
 <pre><code class="language-prql_no_test">func average column = s&quot;AVG({column})&quot;
 </code></pre>
 <p>So this compiles using the function:</p>
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
@@ -182,6 +185,7 @@ FROM
 </td>
 </tr>
 </table>
+</div>
 <p>For those who have used python, s-strings are similar to python f-strings, but
 the result is SQL, rather than a string literal — a python f-string would
 produce <code>&quot;average(salary)&quot;</code>, with the quotes.</p>

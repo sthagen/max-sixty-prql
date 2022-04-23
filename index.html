@@ -150,28 +150,31 @@ and functions. It can be used with any database that uses SQL, since it
 transpiles to SQL.</p>
 <p>Let's get started with an example:</p>
 <!-- TODO: resolve formatting — way too wide for the current preprocessor -->
-<table class="comparison">
+<div class="comparison">
+<table>
 <tr>
 <th>PRQL</th><th>SQL</th>
 </tr>
 <tr>
 <td>
 <pre><code class="language-prql">from employees
-filter country_code = &quot;USA&quot;                # Each line transforms the previous result.
-derive [                                   # This adds columns / variables.
+filter country_code = &quot;USA&quot;                  # Each line transforms the previous result.
+derive [                                     # This adds columns / variables.
   gross_salary: salary + payroll_tax,
-  gross_cost: gross_salary + benefits_cost # Variables can use other variables.
+  gross_cost:  gross_salary + benefits_cost  # Variables can use other variables.
 ]
 filter gross_cost &gt; 0
-aggregate by:[title, country_code] [       # `by` are the columns to group by.
-  average salary,                          # These are aggregation calcs run on each group.
-  sum     salary,
-  average gross_salary,
-  sum     gross_salary,
-  average gross_cost,
-  sum_gross_cost: sum gross_cost,
-  ct: count
-]
+group [title, country_code] (                # For each group use a nested pipeline
+  aggregate [                                # Aggregate each group to a single row
+    average salary,
+    average gross_salary,
+    sum salary,
+    sum gross_salary,
+    average gross_cost,
+    sum_gross_cost: sum gross_cost,
+    ct: count,
+  ]
+)
 sort sum_gross_cost
 filter ct &gt; 200
 take 20
@@ -188,8 +191,8 @@ derive [
     title,
     country_code,
     AVG(salary),
-    SUM(salary),
     AVG(salary + payroll_tax),
+    SUM(salary),
     SUM(salary + payroll_tax),
     AVG(salary + payroll_tax + benefits_cost),
     SUM(salary + payroll_tax + benefits_cost) AS sum_gross_cost,
@@ -210,10 +213,17 @@ derive [
     20
 )
 SELECT
-  table_0.*,
+  title,
+  AVG(salary),
+  AVG(salary + payroll_tax),
+  SUM(salary),
+  SUM(salary + payroll_tax),
+  AVG(salary + payroll_tax + benefits_cost),
+  sum_gross_cost,
+  table_0.ct,
   countries.*,
   country_code,
-  true AS always_true,
+  countries.true AS always_true,
   version() AS db_version
 FROM
   table_0
@@ -222,6 +232,7 @@ FROM
 </td>
 </tr>
 </table>
+</div>
 <p>As you can see, PRQL is a linear <strong>pipeline of transformations</strong> — each line of the
 query is a transformation of the previous line's result.</p>
 <p>You can see that in SQL, operations do not follow one another, which makes it hard to compose larger queries.</p>
