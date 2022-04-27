@@ -745,13 +745,10 @@ FROM
 </tr>
 </table>
 </div>
-<h2 id="aggregate"><a class="header" href="#aggregate">Aggregate</a></h2>
-<blockquote>
-<p>group rows by one or more columns</p>
-</blockquote>
-<pre><code class="language-prql_no_test">aggregate by:[{column identifier}] [{expression or assign operation}]
-</code></pre>
-<p><em>Example:</em></p>
+<h2 id="group"><a class="header" href="#group">Group</a></h2>
+<p>A <code>group</code> transform maps a pipeline over a number of groups. The groups are determined by the
+columns passed to <code>group</code>'s first argument.</p>
+<p>The most conventional use of <code>group</code> is with <code>aggregate</code>:</p>
 <div class="comparison">
 <table>
 <tr>
@@ -779,6 +776,77 @@ FROM
 GROUP BY
   title,
   country
+</code></pre>
+</td>
+</tr>
+</table>
+</div>
+<p>In concept, a transform in context of a <code>group</code> does the same transformation to the group as
+it would to the table — for example finding the employee who joined first:</p>
+<div class="comparison">
+<table>
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from employees
+sort join_date
+take 1
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  employees.*
+FROM
+  employees
+ORDER BY
+  join_date
+LIMIT
+  1
+</code></pre>
+</td>
+</tr>
+</table>
+</div>
+<p>To find the employee who joined first in each department, it's exactly the
+same pipeline, but within a <code>group</code> expression:</p>
+<blockquote>
+<p>Not yet implemented, ref <a href="https://github.com/prql/prql/issues/421">https://github.com/prql/prql/issues/421</a></p>
+</blockquote>
+<pre><code class="language-prql_no_test">from employees
+group role (
+  sort join_date  # taken from above
+  take 1
+)
+</code></pre>
+<h2 id="aggregate"><a class="header" href="#aggregate">Aggregate</a></h2>
+<blockquote>
+<p>group rows by one or more columns</p>
+</blockquote>
+<pre><code class="language-prql_no_test">aggregate [{expression or assign operations}]
+</code></pre>
+<p><em>Example:</em></p>
+<div class="comparison">
+<table>
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from employees
+aggregate [
+  average salary,
+  ct: count
+]
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  AVG(salary),
+  COUNT(*) AS ct
+FROM
+  employees
 </code></pre>
 </td>
 </tr>
