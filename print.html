@@ -214,14 +214,7 @@ derive [
     20
 )
 SELECT
-  title,
-  AVG(salary),
-  AVG(salary + payroll_tax),
-  SUM(salary),
-  SUM(salary + payroll_tax),
-  AVG(salary + payroll_tax + benefits_cost),
-  sum_gross_cost,
-  table_0.ct,
+  table_0.*,
   countries.*,
   country_code,
   countries.true AS always_true,
@@ -598,7 +591,7 @@ derive [
 <pre><code class="language-sql">SELECT
   employees.*,
   salary + payroll_tax AS gross_salary,
-  salary + payroll_tax + benefits_cost AS gross_cost
+  gross_salary + benefits_cost AS gross_cost
 FROM
   employees
 </code></pre>
