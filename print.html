@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">3.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">3.1.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">3.2.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates.html"><strong aria-hidden="true">3.3.</strong> Dates</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.4.</strong> Regex</div></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">3.5.</strong> S-Strings</a></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">4.</strong> Transforms</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">7.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">8.</strong> Live Editor</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">3.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/strings.html"><strong aria-hidden="true">3.1.</strong> Strings</a></li><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">3.2.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">3.3.</strong> S-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">3.4.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates.html"><strong aria-hidden="true">3.5.</strong> Dates</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.6.</strong> Regex</div></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">4.</strong> Transforms</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">7.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">8.</strong> Live Editor</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -314,6 +314,86 @@ ORDER BY
 <div style="break-before: page; page-break-before: always;"></div><h1 id="language-features"><a class="header" href="#language-features">Language Features</a></h1>
 <p>PRQL improves on many of SQL's awkward language features:</p>
 <!-- toc -->
+<div style="break-before: page; page-break-before: always;"></div><h1 id="strings"><a class="header" href="#strings">Strings</a></h1>
+<p>Strings in PRQL can use either single or double quotes:</p>
+<div class="comparison">
+<table>
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">derive x: &quot;hello world&quot;
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  'hello world' AS x
+</code></pre>
+</td>
+</tr>
+</table>
+</div>
+<div class="comparison">
+<table>
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">derive x: 'hello world'
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  'hello world' AS x
+</code></pre>
+</td>
+</tr>
+</table>
+</div>
+<p>To quote a string containing quotes, either use the &quot;other&quot; type of quote, or
+use three-or-more quotes, and close with the same number.</p>
+<div class="comparison">
+<table>
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">derive x: '&quot;hello world&quot;'
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  '&quot;hello world&quot;' AS x
+</code></pre>
+</td>
+</tr>
+</table>
+</div>
+<div class="comparison">
+<table>
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">derive x: &quot;&quot;&quot;I said &quot;hello world&quot;!&quot;&quot;&quot;
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  'I said &quot;hello world&quot;!' AS x
+</code></pre>
+</td>
+</tr>
+</table>
+</div>
+<p>Currently PRQL does not adjust escape characters during the compilation process.</p>
+<p>Currently PRQL allows multiline strings with either a single character or
+multiple character quotes. This may change for strings using a single character
+quote in future versions.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="f-strings"><a class="header" href="#f-strings">F-Strings</a></h1>
 <p>f-strings are a readable approach to building new strings from existing strings.
 Currently PRQL supports this for concatenating strings:</p>
@@ -372,6 +452,60 @@ FROM
 <p>In the future, this may extend to other types of formatting, such as datetimes,
 numbers, and padding. If there's a feature that would be helpful, please <a href="https://github.com/prql/prql/issues/new/choose">post
 an issue</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="s-strings"><a class="header" href="#s-strings">S-Strings</a></h1>
+<p>An s-string inserts SQL directly, as an escape hatch when there's something that PRQL
+doesn't yet implement. For example, there's no <code>version()</code> function in SQL that
+returns the Postgres version, so if we want to use that, we use an s-string:</p>
+<div class="comparison">
+<table>
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">derive db_version: s&quot;version()&quot;
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  version() AS db_version
+</code></pre>
+</td>
+</tr>
+</table>
+</div>
+<p>We can embed columns in an s-string using braces. For example, PRQL's standard
+library defines the <code>average</code> function as:</p>
+<pre><code class="language-prql_no_test">func average column = s&quot;AVG({column})&quot;
+</code></pre>
+<p>So this compiles using the function:</p>
+<div class="comparison">
+<table>
+<tr>
+<th>PRQL</th><th>SQL</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-prql">from employees
+aggregate [average salary]
+</code></pre>
+</td>
+<td>
+<pre><code class="language-sql">SELECT
+  AVG(salary)
+FROM
+  employees
+</code></pre>
+</td>
+</tr>
+</table>
+</div>
+<p>For those who have used python, s-strings are similar to python f-strings, but
+the result is SQL, rather than a string literal — a python f-string would
+produce <code>&quot;average(salary)&quot;</code>, with the quotes.</p>
+<p>S-strings in user code are intended as an escape-hatch for an unimplemented
+feature. If we often need s-strings to express something, that's a sign we
+should implement it in PRQL / PRQL's stdlib.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ranges"><a class="header" href="#ranges">Ranges</a></h1>
 <p>PRQL has a concise range syntax <code>start..end</code>, which can be accessed with the <code>in</code> function:</p>
 <div class="comparison">
@@ -432,60 +566,6 @@ FROM
 </tr>
 </table>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="s-strings"><a class="header" href="#s-strings">S-Strings</a></h1>
-<p>An s-string inserts SQL directly, as an escape hatch when there's something that PRQL
-doesn't yet implement. For example, there's no <code>version()</code> function in SQL that
-returns the Postgres version, so if we want to use that, we use an s-string:</p>
-<div class="comparison">
-<table>
-<tr>
-<th>PRQL</th><th>SQL</th>
-</tr>
-<tr>
-<td>
-<pre><code class="language-prql">derive db_version: s&quot;version()&quot;
-</code></pre>
-</td>
-<td>
-<pre><code class="language-sql">SELECT
-  version() AS db_version
-</code></pre>
-</td>
-</tr>
-</table>
-</div>
-<p>We can embed columns in an s-string using braces. For example, PRQL's standard
-library defines the <code>average</code> function as:</p>
-<pre><code class="language-prql_no_test">func average column = s&quot;AVG({column})&quot;
-</code></pre>
-<p>So this compiles using the function:</p>
-<div class="comparison">
-<table>
-<tr>
-<th>PRQL</th><th>SQL</th>
-</tr>
-<tr>
-<td>
-<pre><code class="language-prql">from employees
-aggregate [average salary]
-</code></pre>
-</td>
-<td>
-<pre><code class="language-sql">SELECT
-  AVG(salary)
-FROM
-  employees
-</code></pre>
-</td>
-</tr>
-</table>
-</div>
-<p>For those who have used python, s-strings are similar to python f-strings, but
-the result is SQL, rather than a string literal — a python f-string would
-produce <code>&quot;average(salary)&quot;</code>, with the quotes.</p>
-<p>S-strings in user code are intended as an escape-hatch for an unimplemented
-feature. If we often need s-strings to express something, that's a sign we
-should implement it in PRQL / PRQL's stdlib.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="transforms"><a class="header" href="#transforms">Transforms</a></h1>
 <p>Core principle of the language is a pipeline, which is a series of sequential transformations of a table (or data frame). There is only a few different types of transformations:</p>
 <h2 id="from"><a class="header" href="#from">From</a></h2>
