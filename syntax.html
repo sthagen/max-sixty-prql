@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">3.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/strings.html"><strong aria-hidden="true">3.1.</strong> Strings</a></li><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">3.2.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">3.3.</strong> S-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">3.4.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates.html"><strong aria-hidden="true">3.5.</strong> Dates</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.6.</strong> Regex</div></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">4.</strong> Transforms</a></li><li class="chapter-item expanded "><a href="syntax.html" class="active"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">7.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">8.</strong> Live Editor</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">3.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/strings.html"><strong aria-hidden="true">3.1.</strong> Strings</a></li><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">3.2.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">3.3.</strong> S-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">3.4.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates.html"><strong aria-hidden="true">3.5.</strong> Dates</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.6.</strong> Regex</div></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">4.</strong> Transforms</a></li><li class="chapter-item expanded "><a href="syntax.html" class="active"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">7.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">8.</strong> Live Editor</a></li><li class="chapter-item expanded "><a href="examples/index.html"><strong aria-hidden="true">9.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="examples/variables.html"><strong aria-hidden="true">9.1.</strong> Variables</a></li><li class="chapter-item expanded "><a href="examples/list-equivalence.html"><strong aria-hidden="true">9.2.</strong> List equivalence</a></li><li class="chapter-item expanded "><a href="examples/functions.html"><strong aria-hidden="true">9.3.</strong> Functions</a></li><li class="chapter-item expanded "><a href="examples/cte.html"><strong aria-hidden="true">9.4.</strong> CTE (intermediate tables)</a></li><li class="chapter-item expanded "><a href="examples/sql-parameters.html"><strong aria-hidden="true">9.5.</strong> Sql parameters</a></li><li class="chapter-item expanded "><a href="examples/employees-0.html"><strong aria-hidden="true">9.6.</strong> Employees 0</a></li><li class="chapter-item expanded "><a href="examples/employees-1.html"><strong aria-hidden="true">9.7.</strong> Employees 1</a></li><li class="chapter-item expanded "><a href="examples/employees-2.html"><strong aria-hidden="true">9.8.</strong> Employees 2</a></li><li class="chapter-item expanded "><a href="examples/employees-3.html"><strong aria-hidden="true">9.9.</strong> Employees 3</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -155,45 +155,21 @@
 </ul>
 <h3 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h3>
 <ul>
-<li>
-<p>A line-break generally creates a pipelined transformation. For example:</p>
+<li>A line-break generally creates a pipelined transformation. For example:</li>
+</ul>
 <div class="comparison">
-<table>
-<tr>
-<th>PRQL</th><th>SQL</th>
-</tr>
-<tr>
-<td>
+<div>
+<h4 id="prql"><a class="header" href="#prql">PRQL</a></h4>
 <pre><code class="language-prql">from tbl
-</code></pre>
-</td>
-<td>
-<pre><code class="language-sql">SELECT
-  tbl.*
-FROM
-  tbl
-</code></pre>
-</td>
-</tr>
-</table>
-</div>
+select [
   col1,
   col2,
-\]
+]
 filter col1 = col2
-````
-<p>...is equivalent to:</p>
-<div class="comparison">
-<table>
-<tr>
-<th>PRQL</th><th>SQL</th>
-</tr>
-<tr>
-<td>
-<pre><code class="language-prql">from tbl | select [col1, col2] | filter col1 = col2
 </code></pre>
-</td>
-<td>
+</div>
+<div>
+<h4 id="sql"><a class="header" href="#sql">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   col1,
   col2
@@ -202,13 +178,29 @@ FROM
 WHERE
   col1 = col2
 </code></pre>
-</td>
-</tr>
-</table>
 </div>
-</li>
-<li>
-<p>A line-break doesn't created a pipeline in a few cases:</p>
+</div>
+<p>...is equivalent to:</p>
+<div class="comparison">
+<div>
+<h4 id="prql-1"><a class="header" href="#prql-1">PRQL</a></h4>
+<pre><code class="language-prql">from tbl | select [col1, col2] | filter col1 = col2
+</code></pre>
+</div>
+<div>
+<h4 id="sql-1"><a class="header" href="#sql-1">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  col1,
+  col2
+FROM
+  tbl
+WHERE
+  col1 = col2
+</code></pre>
+</div>
+</div>
+<ul>
+<li>A line-break doesn't created a pipeline in a few cases:
 <ul>
 <li>Within a list (e.g. the <code>select</code> example above).</li>
 <li>When the following line is a new statement, by starting with a keyword such
@@ -218,7 +210,7 @@ as <code>func</code>.</li>
 </ul>
 <h3 id="ctes"><a class="header" href="#ctes">CTEs</a></h3>
 <ul>
-<li>See <a href="examples/cte-1.html">CTE Example</a>.</li>
+<li>See <a href="examples/cte.html">CTE Example</a>.</li>
 <li>This is no longer point-free, but that's a feature rather than a requirement.
 The alternative is subqueries, which are fine at small scale, but become
 difficult to digest as complexity increases.</li>

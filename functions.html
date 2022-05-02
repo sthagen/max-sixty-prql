@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">3.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/strings.html"><strong aria-hidden="true">3.1.</strong> Strings</a></li><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">3.2.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">3.3.</strong> S-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">3.4.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates.html"><strong aria-hidden="true">3.5.</strong> Dates</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.6.</strong> Regex</div></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">4.</strong> Transforms</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html" class="active"><strong aria-hidden="true">6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">7.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">8.</strong> Live Editor</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">3.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/strings.html"><strong aria-hidden="true">3.1.</strong> Strings</a></li><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">3.2.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">3.3.</strong> S-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">3.4.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates.html"><strong aria-hidden="true">3.5.</strong> Dates</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.6.</strong> Regex</div></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">4.</strong> Transforms</a></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="functions.html" class="active"><strong aria-hidden="true">6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">7.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">8.</strong> Live Editor</a></li><li class="chapter-item expanded "><a href="examples/index.html"><strong aria-hidden="true">9.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="examples/variables.html"><strong aria-hidden="true">9.1.</strong> Variables</a></li><li class="chapter-item expanded "><a href="examples/list-equivalence.html"><strong aria-hidden="true">9.2.</strong> List equivalence</a></li><li class="chapter-item expanded "><a href="examples/functions.html"><strong aria-hidden="true">9.3.</strong> Functions</a></li><li class="chapter-item expanded "><a href="examples/cte.html"><strong aria-hidden="true">9.4.</strong> CTE (intermediate tables)</a></li><li class="chapter-item expanded "><a href="examples/sql-parameters.html"><strong aria-hidden="true">9.5.</strong> Sql parameters</a></li><li class="chapter-item expanded "><a href="examples/employees-0.html"><strong aria-hidden="true">9.6.</strong> Employees 0</a></li><li class="chapter-item expanded "><a href="examples/employees-1.html"><strong aria-hidden="true">9.7.</strong> Employees 1</a></li><li class="chapter-item expanded "><a href="examples/employees-2.html"><strong aria-hidden="true">9.8.</strong> Employees 2</a></li><li class="chapter-item expanded "><a href="examples/employees-3.html"><strong aria-hidden="true">9.9.</strong> Employees 3</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -153,40 +153,31 @@ default value.</li>
 </ol>
 <p>So this function is named <code>celsius_of_fahrenheit</code> and has one parameter <code>temp</code>:</p>
 <div class="comparison">
-<table>
-<tr>
-<th>PRQL</th><th>SQL</th>
-</tr>
-<tr>
-<td>
+<div>
+<h4 id="prql"><a class="header" href="#prql">PRQL</a></h4>
 <pre><code class="language-prql">func celsius_of_fahrenheit temp = (temp - 32) * 3
 
 from cities
 derive temp_c: (celsius_of_fahrenheit temp_f)
 </code></pre>
-</td>
-<td>
+</div>
+<div>
+<h4 id="sql"><a class="header" href="#sql">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   cities.*,
   temp_f - 32 * 3 AS temp_c
 FROM
   cities
 </code></pre>
-</td>
-</tr>
-</table>
+</div>
 </div>
 <p>This function named <code>interp</code>, and has two positional parameters named
 <code>higher</code> and <code>x</code>, and one named parameter named <code>lower</code> which takes a default
 argument of <code>0</code>. It calculates the proportion of the distance that <code>x</code> is
 between <code>lower</code> and <code>higher</code>.</p>
 <div class="comparison">
-<table>
-<tr>
-<th>PRQL</th><th>SQL</th>
-</tr>
-<tr>
-<td>
+<div>
+<h4 id="prql-1"><a class="header" href="#prql-1">PRQL</a></h4>
 <pre><code class="language-prql">func interp lower:0 higher x = (x - lower) / (higher - lower)
 
 from students
@@ -195,8 +186,9 @@ derive [
   sat_proportion_2: (interp lower:0 1600 sat_score),
 ]
 </code></pre>
-</td>
-<td>
+</div>
+<div>
+<h4 id="sql-1"><a class="header" href="#sql-1">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   students.*,
   sat_score - 0 / 1600 - 0 AS sat_proportion_1,
@@ -204,9 +196,7 @@ derive [
 FROM
   students
 </code></pre>
-</td>
-</tr>
-</table>
+</div>
 </div>
 <h2 id="piping"><a class="header" href="#piping">Piping</a></h2>
 <p>Consistent with the principles of PRQL, it's possible to pipe values into
@@ -215,12 +205,8 @@ into a function, the value is passed as an argument to the final positional
 parameter of the function. Here's the same result as the examples above with an
 alternative construction:</p>
 <div class="comparison">
-<table>
-<tr>
-<th>PRQL</th><th>SQL</th>
-</tr>
-<tr>
-<td>
+<div>
+<h4 id="prql-2"><a class="header" href="#prql-2">PRQL</a></h4>
 <pre><code class="language-prql">func interp lower:0 higher x = (x - lower) / (higher - lower)
 
 from students
@@ -229,8 +215,9 @@ derive [
   sat_proportion_2: (sat_score | interp lower:0 1600),
 ]
 </code></pre>
-</td>
-<td>
+</div>
+<div>
+<h4 id="sql-2"><a class="header" href="#sql-2">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   students.*,
   sat_score - 0 / 1600 - 0 AS sat_proportion_1,
@@ -238,60 +225,48 @@ derive [
 FROM
   students
 </code></pre>
-</td>
-</tr>
-</table>
+</div>
 </div>
 <p>and</p>
 <div class="comparison">
-<table>
-<tr>
-<th>PRQL</th><th>SQL</th>
-</tr>
-<tr>
-<td>
+<div>
+<h4 id="prql-3"><a class="header" href="#prql-3">PRQL</a></h4>
 <pre><code class="language-prql">func celsius_of_fahrenheit temp = (temp - 32) * 3
 
 from cities
 derive temp_c: (temp_f | celsius_of_fahrenheit)
 </code></pre>
-</td>
-<td>
+</div>
+<div>
+<h4 id="sql-3"><a class="header" href="#sql-3">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   cities.*,
   temp_f - 32 * 3 AS temp_c
 FROM
   cities
 </code></pre>
-</td>
-</tr>
-</table>
+</div>
 </div>
 <p>We can combine a chain of functions, which makes logic more readable:</p>
 <div class="comparison">
-<table>
-<tr>
-<th>PRQL</th><th>SQL</th>
-</tr>
-<tr>
-<td>
+<div>
+<h4 id="prql-4"><a class="header" href="#prql-4">PRQL</a></h4>
 <pre><code class="language-prql">func celsius_of_fahrenheit temp = (temp - 32) * 3
 func interp lower:0 higher x = (x - lower) / (higher - lower)
 
 from kettles
 derive boiling_proportion: (temp_c | celsius_of_fahrenheit | interp 100)
 </code></pre>
-</td>
-<td>
+</div>
+<div>
+<h4 id="sql-4"><a class="header" href="#sql-4">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   kettles.*,
   temp_c - 32 * 3 - 0 / 100 - 0 AS boiling_proportion
 FROM
   kettles
 </code></pre>
-</td>
-</tr>
-</table>
+</div>
 </div>
 <h2 id="todos"><a class="header" href="#todos">TODOs</a></h2>
 <p>Currently, functions require a binding to variables in scope; they can't
