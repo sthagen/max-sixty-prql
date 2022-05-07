@@ -1007,7 +1007,7 @@ FROM
 </code></pre>
 </div>
 </div>
-<p>This function named <code>interp</code>, and has two positional parameters named
+<p>This function is named <code>interp</code>, and has two positional parameters named
 <code>higher</code> and <code>x</code>, and one named parameter named <code>lower</code> which takes a default
 argument of <code>0</code>. It calculates the proportion of the distance that <code>x</code> is
 between <code>lower</code> and <code>higher</code>.</p>
@@ -1036,10 +1036,10 @@ FROM
 </div>
 <h2 id="piping"><a class="header" href="#piping">Piping</a></h2>
 <p>Consistent with the principles of PRQL, it's possible to pipe values into
-functions, which makes composing functions more readable. When piping a value
-into a function, the value is passed as an argument to the final positional
-parameter of the function. Here's the same result as the examples above with an
-alternative construction:</p>
+functions, which makes composing many functions more readable. When piping a
+value into a function, the value is passed as an argument to the final
+positional parameter of the function. Here's the same result as the examples
+above with an alternative construction:</p>
 <div class="comparison">
 <div>
 <h4 id="prql-32"><a class="header" href="#prql-32">PRQL</a></h4>
@@ -1047,8 +1047,8 @@ alternative construction:</p>
 
 from students
 derive [
-  sat_proportion_1= (sat_score | interp 1600),
-  sat_proportion_2= (sat_score | interp lower:0 1600),
+  sat_proportion_1 = (sat_score | interp 1600),
+  sat_proportion_2 = (sat_score | interp lower:0 1600),
 ]
 </code></pre>
 </div>
