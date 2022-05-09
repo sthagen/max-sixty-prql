@@ -146,7 +146,7 @@
 </blockquote>
 <pre><code class="language-prql_no_test">from {table reference}
 </code></pre>
-<p><em>Example:</em></p>
+<h4 id="examples"><a class="header" href="#examples">Examples</a></h4>
 <div class="comparison">
 <div>
 <h4 id="prql"><a class="header" href="#prql">PRQL</a></h4>
@@ -168,7 +168,7 @@ FROM
 </blockquote>
 <pre><code class="language-prql_no_test">select [{expression}]
 </code></pre>
-<p><em>Example:</em></p>
+<h4 id="examples-1"><a class="header" href="#examples-1">Examples</a></h4>
 <div class="comparison">
 <div>
 <h4 id="prql-1"><a class="header" href="#prql-1">PRQL</a></h4>
@@ -192,7 +192,7 @@ FROM
 </blockquote>
 <pre><code class="language-prql_no_test">derive [{new_name} = {expression}]
 </code></pre>
-<p><em>Example:</em></p>
+<h4 id="examples-2"><a class="header" href="#examples-2">Examples</a></h4>
 <div class="comparison">
 <div>
 <h4 id="prql-2"><a class="header" href="#prql-2">PRQL</a></h4>
@@ -237,55 +237,34 @@ FROM
 </blockquote>
 <pre><code class="language-prql_no_test">filter {boolean expression}
 </code></pre>
-<p><em>Example:</em></p>
+<h4 id="examples-3"><a class="header" href="#examples-3">Examples</a></h4>
 <pre><code class="language-prql_no_test">from employees
 filter (length last_name &lt; 3)
 </code></pre>
-<h2 id="take"><a class="header" href="#take">Take</a></h2>
-<blockquote>
-<p>picks first n rows</p>
-</blockquote>
-<pre><code class="language-prql_no_test">take {n}
+<h2 id="sort"><a class="header" href="#sort">Sort</a></h2>
+<p><code>sort</code> orders rows based on the values of one or more columns.</p>
+<pre><code class="language-prql_no_test">sort [{direction}{column}]
 </code></pre>
-<p><em>Example:</em></p>
+<h4 id="arguments"><a class="header" href="#arguments">Arguments</a></h4>
+<ul>
+<li>One or multiple columns</li>
+<li>Each column can be prefixed with:
+<ul>
+<li><code>+</code>, for ascending order, the default</li>
+<li><code>-</code>, for descending order</li>
+</ul>
+</li>
+</ul>
+<h4 id="examples-4"><a class="header" href="#examples-4">Examples</a></h4>
 <div class="comparison">
 <div>
 <h4 id="prql-4"><a class="header" href="#prql-4">PRQL</a></h4>
-<pre><code class="language-prql">from employees
-take 10
-</code></pre>
-</div>
-<div>
-<h4 id="sql-4"><a class="header" href="#sql-4">SQL</a></h4>
-<pre><code class="language-sql">SELECT
-  employees.*
-FROM
-  employees
-LIMIT
-  10
-</code></pre>
-</div>
-</div>
-<h2 id="sort"><a class="header" href="#sort">Sort</a></h2>
-<blockquote>
-<p>orders the rows by the values of selected columns</p>
-</blockquote>
-<pre><code class="language-prql_no_test">sort {column}
-</code></pre>
-<p><em>Arguments:</em></p>
-<ul>
-<li>a column identifier of the key to sort by</li>
-</ul>
-<p><em>Example:</em></p>
-<div class="comparison">
-<div>
-<h4 id="prql-5"><a class="header" href="#prql-5">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 sort age
 </code></pre>
 </div>
 <div>
-<h4 id="sql-5"><a class="header" href="#sql-5">SQL</a></h4>
+<h4 id="sql-4"><a class="header" href="#sql-4">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -295,13 +274,79 @@ ORDER BY
 </code></pre>
 </div>
 </div>
+<div class="comparison">
+<div>
+<h4 id="prql-5"><a class="header" href="#prql-5">PRQL</a></h4>
+<pre><code class="language-prql">from employees
+sort (-age)
+</code></pre>
+</div>
+<div>
+<h4 id="sql-5"><a class="header" href="#sql-5">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  employees.*
+FROM
+  employees
+ORDER BY
+  age DESC
+</code></pre>
+</div>
+</div>
+<blockquote>
+<p>Note that <code>sort -age</code> is not valid; <code>-age</code> needs to be surrounded by parentheses.</p>
+</blockquote>
+<div class="comparison">
+<div>
+<h4 id="prql-6"><a class="header" href="#prql-6">PRQL</a></h4>
+<pre><code class="language-prql">from employees
+sort [age, -tenure, +salary]
+</code></pre>
+</div>
+<div>
+<h4 id="sql-6"><a class="header" href="#sql-6">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  employees.*
+FROM
+  employees
+ORDER BY
+  age,
+  tenure DESC,
+  salary
+</code></pre>
+</div>
+</div>
+<h2 id="take"><a class="header" href="#take">Take</a></h2>
+<blockquote>
+<p>picks first n rows</p>
+</blockquote>
+<pre><code class="language-prql_no_test">take {n}
+</code></pre>
+<h4 id="examples-5"><a class="header" href="#examples-5">Examples</a></h4>
+<div class="comparison">
+<div>
+<h4 id="prql-7"><a class="header" href="#prql-7">PRQL</a></h4>
+<pre><code class="language-prql">from employees
+take 10
+</code></pre>
+</div>
+<div>
+<h4 id="sql-7"><a class="header" href="#sql-7">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  employees.*
+FROM
+  employees
+LIMIT
+  10
+</code></pre>
+</div>
+</div>
 <h2 id="join"><a class="header" href="#join">Join</a></h2>
 <blockquote>
 <p>adds columns from another table, matching rows based on a condition</p>
 </blockquote>
 <pre><code class="language-prql_no_test">join side:{inner|left|right|full} {table} {[conditions]}
 </code></pre>
-<p><em>Arguments:</em></p>
+<h4 id="arguments-1"><a class="header" href="#arguments-1">Arguments</a></h4>
 <ul>
 <li><code>side</code> decides which rows to include. Defaults to <code>inner</code></li>
 <li>table reference</li>
@@ -311,16 +356,16 @@ ORDER BY
 </ul>
 </li>
 </ul>
-<p><em>Example:</em></p>
+<h4 id="examples-6"><a class="header" href="#examples-6">Examples</a></h4>
 <div class="comparison">
 <div>
-<h4 id="prql-6"><a class="header" href="#prql-6">PRQL</a></h4>
+<h4 id="prql-8"><a class="header" href="#prql-8">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 join side:left positions [id==employee_id]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-6"><a class="header" href="#sql-6">SQL</a></h4>
+<h4 id="sql-8"><a class="header" href="#sql-8">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*,
   positions.*
@@ -330,16 +375,16 @@ FROM
 </code></pre>
 </div>
 </div>
-<p><em>Example:</em></p>
+<h4 id="examples-7"><a class="header" href="#examples-7">Examples</a></h4>
 <div class="comparison">
 <div>
-<h4 id="prql-7"><a class="header" href="#prql-7">PRQL</a></h4>
+<h4 id="prql-9"><a class="header" href="#prql-9">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 join side:full positions [emp_no]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-7"><a class="header" href="#sql-7">SQL</a></h4>
+<h4 id="sql-9"><a class="header" href="#sql-9">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*,
   positions.*,
@@ -356,7 +401,7 @@ columns passed to <code>group</code>'s first argument.</p>
 <p>The most conventional use of <code>group</code> is with <code>aggregate</code>:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-8"><a class="header" href="#prql-8">PRQL</a></h4>
+<h4 id="prql-10"><a class="header" href="#prql-10">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 group [title, country] (
   aggregate [
@@ -367,7 +412,7 @@ group [title, country] (
 </code></pre>
 </div>
 <div>
-<h4 id="sql-8"><a class="header" href="#sql-8">SQL</a></h4>
+<h4 id="sql-10"><a class="header" href="#sql-10">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   title,
   country,
@@ -385,14 +430,14 @@ GROUP BY
 it would to the table — for example finding the employee who joined first:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-9"><a class="header" href="#prql-9">PRQL</a></h4>
+<h4 id="prql-11"><a class="header" href="#prql-11">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 sort join_date
 take 1
 </code></pre>
 </div>
 <div>
-<h4 id="sql-9"><a class="header" href="#sql-9">SQL</a></h4>
+<h4 id="sql-11"><a class="header" href="#sql-11">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -421,10 +466,10 @@ group role (
 </blockquote>
 <pre><code class="language-prql_no_test">aggregate [{expression or assign operations}]
 </code></pre>
-<p><em>Example:</em></p>
+<h4 id="examples-8"><a class="header" href="#examples-8">Examples</a></h4>
 <div class="comparison">
 <div>
-<h4 id="prql-10"><a class="header" href="#prql-10">PRQL</a></h4>
+<h4 id="prql-12"><a class="header" href="#prql-12">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 aggregate [
   average salary,
@@ -433,7 +478,7 @@ aggregate [
 </code></pre>
 </div>
 <div>
-<h4 id="sql-10"><a class="header" href="#sql-10">SQL</a></h4>
+<h4 id="sql-12"><a class="header" href="#sql-12">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   AVG(salary),
   COUNT(*) AS ct
