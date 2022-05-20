@@ -1,261 +1,47 @@
-<!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
-    <head>
-        <!-- Book generated using mdBook -->
-        <meta charset="UTF-8">
-        <title>Introduction - PRQL Language Reference (draft)</title>
-        <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="Modern language for transforming data — a simpler and more powerful SQL">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
-
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
-        <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
-        <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
-
-        <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="comparison-table.css">
-    </head>
-    <body>
-        <!-- Provide site root to javascript -->
-        <script type="text/javascript">
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
-        <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
-            try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
-
-                if (theme.startsWith('"') && theme.endsWith('"')) {
-                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
-                }
-
-                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
-                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
-                }
-            } catch (e) { }
-        </script>
-
-        <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
-            var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
-            if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
-            html.classList.remove('light')
-            html.classList.add(theme);
-            html.classList.add('js');
-        </script>
-
-        <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
-            if (document.body.clientWidth >= 1080) {
-                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
-                sidebar = sidebar || 'visible';
-            }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
-        </script>
-
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="queries/index.html"><strong aria-hidden="true">2.</strong> Queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="queries/pipelines.html"><strong aria-hidden="true">2.1.</strong> Pipelines</a></li></ol></li><li class="chapter-item expanded "><a href="transforms.html"><strong aria-hidden="true">3.</strong> Transforms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="transforms/from.html"><strong aria-hidden="true">3.1.</strong> From</a></li><li class="chapter-item expanded "><a href="transforms/select.html"><strong aria-hidden="true">3.2.</strong> Select</a></li><li class="chapter-item expanded "><a href="transforms/derive.html"><strong aria-hidden="true">3.3.</strong> Derive</a></li><li class="chapter-item expanded "><a href="transforms/filter.html"><strong aria-hidden="true">3.4.</strong> Filter</a></li><li class="chapter-item expanded "><a href="transforms/sort.html"><strong aria-hidden="true">3.5.</strong> Sort</a></li><li class="chapter-item expanded "><a href="transforms/join.html"><strong aria-hidden="true">3.6.</strong> Join</a></li><li class="chapter-item expanded "><a href="transforms/take.html"><strong aria-hidden="true">3.7.</strong> Take</a></li><li class="chapter-item expanded "><a href="transforms/group.html"><strong aria-hidden="true">3.8.</strong> Group</a></li><li class="chapter-item expanded "><a href="transforms/aggregate.html"><strong aria-hidden="true">3.9.</strong> Aggregate</a></li><li class="chapter-item expanded "><a href="transforms/window.html"><strong aria-hidden="true">3.10.</strong> Window</a></li></ol></li><li class="chapter-item expanded "><a href="language-features/index.html"><strong aria-hidden="true">4.</strong> Language features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="language-features/strings.html"><strong aria-hidden="true">4.1.</strong> Strings</a></li><li class="chapter-item expanded "><a href="language-features/f-strings.html"><strong aria-hidden="true">4.2.</strong> F-Strings</a></li><li class="chapter-item expanded "><a href="language-features/s-strings.html"><strong aria-hidden="true">4.3.</strong> S-Strings</a></li><li class="chapter-item expanded "><a href="language-features/ranges.html"><strong aria-hidden="true">4.4.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="language-features/dates_and_times.html"><strong aria-hidden="true">4.5.</strong> Dates & Times</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.6.</strong> Regex</div></li><li class="chapter-item expanded "><a href="language-features/coalesce.html"><strong aria-hidden="true">4.7.</strong> Coalesce</a></li></ol></li><li class="chapter-item expanded "><a href="syntax.html"><strong aria-hidden="true">5.</strong> Syntax</a></li><li class="chapter-item expanded "><a href="null.html"><strong aria-hidden="true">6.</strong> Null handling</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">7.</strong> Functions</a></li><li class="chapter-item expanded "><a href="stdlib.html"><strong aria-hidden="true">8.</strong> Stdlib</a></li><li class="chapter-item expanded "><a href="editor.html"><strong aria-hidden="true">9.</strong> Live Editor</a></li><li class="chapter-item expanded "><a href="examples/index.html"><strong aria-hidden="true">10.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="examples/variables.html"><strong aria-hidden="true">10.1.</strong> Variables</a></li><li class="chapter-item expanded "><a href="examples/list-equivalence.html"><strong aria-hidden="true">10.2.</strong> List equivalence</a></li><li class="chapter-item expanded "><a href="examples/functions.html"><strong aria-hidden="true">10.3.</strong> Functions</a></li><li class="chapter-item expanded "><a href="examples/cte.html"><strong aria-hidden="true">10.4.</strong> CTE (intermediate tables)</a></li><li class="chapter-item expanded "><a href="examples/sql-parameters.html"><strong aria-hidden="true">10.5.</strong> Sql parameters</a></li><li class="chapter-item expanded "><a href="examples/employees.html"><strong aria-hidden="true">10.6.</strong> Employees</a></li></ol></li></ol>
-            </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
-        </nav>
-
-        <div id="page-wrapper" class="page-wrapper">
-
-            <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
-                    <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
-                        </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                        </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-
-                    <h1 class="menu-title">PRQL Language Reference (draft)</h1>
-
-                    <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
-                        </a>
-                        <a href="https://github.com/prql/prql" title="Git repository" aria-label="Git repository">
-                            <i id="git-repository-button" class="fa fa-github"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
-                    </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
-                        </ul>
-                    </div>
-                </div>
-                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
-                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
-                    });
-                </script>
-
-                <div id="content" class="content">
-                    <main>
-                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<blockquote>
-<p>[Note that this is a very early version and actively being worked on; thanks for
-your patience]</p>
-</blockquote>
-<p>PRQL is a modern language for transforming data — a simpler and more powerful
-SQL. Like SQL, it's readable, explicit and declarative. Unlike SQL, it forms a
-logical pipeline of transformations, and supports abstractions such as variables
-and functions. It can be used with any database that uses SQL, since it
-transpiles to SQL.</p>
-<p>Let's get started with an example:</p>
-<!-- TODO: resolve formatting — way too wide for the current preprocessor -->
-<div class="comparison">
-<div>
-<h4 id="prql"><a class="header" href="#prql">PRQL</a></h4>
-<pre><code class="language-prql">from employees
-filter country_code == &quot;USA&quot;   # Each line transforms the previous result.
-derive [                       # This adds columns / variables.
-  gross_salary = salary + payroll_tax,
-  gross_cost = gross_salary + benefits_cost  # Variables can use other variables.
+<!doctype html><html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>PRQL</title><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link href=/main.css rel=stylesheet><link href=/water.css rel=stylesheet><link href=/fonts/fonts.css rel=stylesheet><link href=/highlight/highlight.css rel=stylesheet><script defer src=/highlight/highlight.min.js></script>
+<script defer src=/highlight/prql.js></script><body><header><nav><nav style=display:flex;align-items:center;flex-wrap:wrap><a href=/ style=display:flex;align-items:center><img src=/icon.svg style="margin:0 -20px" height=94 width=94><h1 style="margin:.5rem 0 0 1rem;font-size:3rem">PRQL</h1></a><div style=flex-grow:1></div><a style=padding:1rem href=/reference>Reference</a>
+<a style=padding:1rem href=/playground>Playground</a>
+<a style=padding:1rem href=/roadmap>Roadmap</a>
+<a style=padding:1rem href=/news>News</a>
+<a style=padding:1rem href=https://github.com/prql/prql>Github</a></nav></nav></header><main><article><p><strong>P</strong>ipelined <strong>R</strong>elational <strong>Q</strong>uery <strong>L</strong>anguage, pronounced &ldquo;Prequel&rdquo;.</p><p>PRQL is a modern language for transforming data — a simpler and more powerful
+SQL.</p><pre tabindex=0><code class=language-prql data-lang=prql>from employees
+filter country = &#34;USA&#34;                        # Each line transforms the previous result.
+derive [                                      # `derive` adds columns / variables.
+  gross_salary: salary + payroll_tax,
+  gross_cost:   gross_salary + benefits_cost  # Variables can use other variables.
 ]
 filter gross_cost &gt; 0
-group [title, country_code] (  # For each group use a nested pipeline
-  aggregate [                  # Aggregate each group to a single row
+group [title, country] (                      # `group` runs a pipeline over each group
+  aggregate [                                 # `aggregate` reduces a column to a row
     average salary,
+    sum     salary,
     average gross_salary,
-    sum salary,
-    sum gross_salary,
+    sum     gross_salary,
     average gross_cost,
-    sum_gross_cost = sum gross_cost,
-    ct = count,
+    sum_gross_cost: sum gross_cost,
+    ct: count,
   ]
 )
 sort sum_gross_cost
 filter ct &gt; 200
 take 20
-join countries side:left [country_code]
-derive [
-  always_true = true,
-  db_version = s&quot;version()&quot;,    # An S-string, which transpiles directly into SQL
-]
-</code></pre>
-</div>
-<div>
-<h4 id="sql"><a class="header" href="#sql">SQL</a></h4>
-<pre><code class="language-sql">WITH table_0 AS (
-  SELECT
-    title,
-    country_code,
-    AVG(salary),
-    AVG(salary + payroll_tax),
-    SUM(salary),
-    SUM(salary + payroll_tax),
-    AVG(salary + payroll_tax + benefits_cost),
-    SUM(salary + payroll_tax + benefits_cost) AS sum_gross_cost,
-    COUNT(*) AS ct
-  FROM
-    employees
-  WHERE
-    country_code = 'USA'
-    AND salary + payroll_tax + benefits_cost &gt; 0
-  GROUP BY
-    title,
-    country_code
-  HAVING
-    COUNT(*) &gt; 200
-  ORDER BY
-    sum_gross_cost
-  LIMIT
-    20
-)
-SELECT
-  table_0.*,
-  countries.*,
-  country_code,
-  true AS always_true,
-  version() AS db_version
-FROM
-  table_0
-  LEFT JOIN countries USING(country_code)
-</code></pre>
-</div>
-</div>
-<p>As you can see, PRQL is a linear <strong>pipeline of transformations</strong> — each line of the
-query is a transformation of the previous line's result.</p>
-<p>You can see that in SQL, operations do not follow one another, which makes it hard to compose larger queries.</p>
-
-                    </main>
-
-                    <nav class="nav-wrapper" aria-label="Page navigation">
-                        <!-- Mobile navigation buttons -->
-                            <a rel="next" href="queries/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        <div style="clear: both"></div>
-                    </nav>
-                </div>
-            </div>
-
-            <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="next" href="queries/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-            </nav>
-
-        </div>
-
-        <script type="text/javascript">
-            window.playground_copyable = true;
-        </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
-
-        <!-- Custom JS scripts -->
-        <script type="text/javascript" src="highlight-prql.js"></script>
-    </body>
-</html>
+</code></pre><h2 id=principles>Principles</h2><p>PRQL is a modern language for transforming data — a simpler and more powerful
+SQL. Like SQL, it&rsquo;s readable, explicit and declarative. Unlike SQL, it forms a
+logical pipeline of transformations, and supports abstractions such as variables
+and functions. It can be used with any database that uses SQL, since it
+transpiles to SQL.</p><p>PRQL&rsquo;s principles:</p><ul><li><em>Pipelined</em> — PRQL is a linear pipeline of transformations — each line of the
+query is a transformation of the previous line&rsquo;s result. This makes it easy to
+read, and simple to write.</li><li><em>Simple</em> — PRQL serves both sophisticated engineers and analysts without
+coding experience. By providing simple, clean abstractions, the
+language can be both powerful and easy to use.</li><li><em>Open</em> — PRQL will always be open-source, free-as-in-free, and doesn&rsquo;t
+prioritize one database over others. By compiling to SQL, PRQL is instantly
+compatible with most databases, and existing tools or programming languages
+that manage SQL. Where possible, PRQL unifies syntax across databases.</li><li><em>Extensible</em> — PRQL can be extended through its abstractions, and its explicit
+versioning allows changes without breaking backward-compatibility. PRQL allows
+embedding SQL through S-Strings, where PRQL doesn&rsquo;t yet have an
+implementation.</li><li><em>Analytical</em> — PRQL&rsquo;s focus is analytical queries; we de-emphasize other SQL
+features such as inserting data or transactions.</li></ul><h2 id=motivation>Motivation</h2><p>Even though wildly adopted and readable as a sentence, SQL is inconsistent and becomes
+unmanageable as soon as query complexity goes beyond the most simple queries.</p><p><a href=./motivation/>Here are examples</a> on how PRQL can simplifies analytical SQL queries.</p><h2 id=tools>Tools</h2><ul><li><a href=https://github.com/prql/prql>prql-compiler</a> reference compiler implementation,</li><li><a href=https://github.com/prql/PyPrql>PyPrql</a> python TUI for connecting to databases.
+Has some great features, including a native interactive console with auto-complete
+for column names,</li><li><a href=https://pypi.org/project/pyprql/>prql-py</a> Python compiler library,</li><li><a href=https://www.npmjs.com/package/prql-js>prql-js</a> JavaScript compiler library.</li></ul><h2 id=integrations>Integrations</h2><ul><li>Use a plugin for your existing tool:<ul><li><code>dbt-prql</code>: TODO</li><li><code>jupyter</code>: TODO</li></ul></li><li>Install the compiler:<ul><li>Install with <code>cargo</code>: <code>cargo install prql</code></li><li>Install with <code>pip</code>: <code>pip install pyprql</code></li><li>Install with <code>brew</code>: <code>brew install prql</code></li></ul></li></ul><h2 id=keep-in-touch>Keep in touch</h2><ul><li>Star this repo.</li><li>Send a link to PRQL to a couple of people whose opinion you respect.</li><li>Subscribe to <a href=https://github.com/prql/prql/issues/1>GitHub issue #1</a> for
+a GitHub notification on updates.</li><li>Join the <a href=https://discord.gg/eQcfaCmsNc>Discord</a>.</li><li><a href=https://github.com/prql/prql>Contribute to PRQL</a></li></ul></article></main><footer>© 2022, PRQL developers. Apache 2.0 Licensed</footer></body></html>

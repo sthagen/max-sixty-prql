@@ -1,0 +1,39 @@
+<!doctype html><html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Roadmap</title><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link href=/main.css rel=stylesheet><link href=/water.css rel=stylesheet><link href=/fonts/fonts.css rel=stylesheet><link href=/highlight/highlight.css rel=stylesheet><script defer src=/highlight/highlight.min.js></script>
+<script defer src=/highlight/prql.js></script><body><header><nav><nav style=display:flex;align-items:center;flex-wrap:wrap><a href=/ style=display:flex;align-items:center><img src=/icon.svg style="margin:0 -20px" height=94 width=94><h1 style="margin:.5rem 0 0 1rem;font-size:3rem">PRQL</h1></a><div style=flex-grow:1></div><a style=padding:1rem href=/reference>Reference</a>
+<a style=padding:1rem href=/playground>Playground</a>
+<a style=padding:1rem href=/roadmap>Roadmap</a>
+<a style=padding:1rem href=/news>News</a>
+<a style=padding:1rem href=https://github.com/prql/prql>Github</a></nav></nav></header><main><article><h1>Roadmap</h1><p>I&rsquo;m excited and inspired by the level of enthusiasm behind the project, both
+from individual contributors and the broader community of users who are
+unsatisfied with SQL. We currently have an initial working version for the
+intrepid early user.</p><p>I&rsquo;m hoping we can build a beautiful language, an app that&rsquo;s approachable &
+powerful, and a vibrant community. Many projects have reached the current stage
+and fallen, so this requires compounding on what we&rsquo;ve done so far.</p><h3 id=language-design>Language design</h3><p>Already since becoming public, the language has improved dramatically, thanks to
+the feedback of dozens of contributors. The current state of the basics is now
+stable and while we&rsquo;ll hit corner-cases, I expect we&rsquo;ll only make small changes
+to the existing features — even as we continue adding features.</p><p>Feel free to post questions or continue discussions on <a href="https://github.com/prql/prql/issues?q=is%3Aissue+is%3Aopen+label%3Alanguage-design">Language Design
+Issues</a>.</p><h3 id=documentation>Documentation</h3><p>Currently the language documentation is at <a href=https://prql-lang.org/reference>https://prql-lang.org/reference</a>.</p><p>If you&rsquo;re up for contributing and don&rsquo;t have a preference for writing code or
+not, this is the area that would most benefit from your contribution. Issues are
+tagged with
+<a href=https://github.com/prql/prql/labels/documentation>documentation</a>.</p><h3 id=friendliness>Friendliness</h3><p>Currently the language implementation is not sufficiently friendly, despite
+significant recent improvements. We&rsquo;d like to make error messages better, sand
+off sharp corners, etc.</p><p>Both bug reports of unfriendliness, and code contributions to improve them are
+welcome; there&rsquo;s a
+<a href="https://github.com/prql/prql/issues?q=is%3Aissue+label%3Afriendlienss+is%3Aopen">friendliness</a>
+label.</p><h3 id=fast-feedback>Fast feedback</h3><p>As well as a command-line tool that transpiles queries, we&rsquo;d like to make
+developing in PRQL a wonderful experience, where it feels like it&rsquo;s on your
+side:</p><ul><li>Syntax highlighting in more editors; currently we have a basic <a href=https://github.com/prql/prql-code>VSCode
+extension</a>.</li><li>Initial type-inference, where it&rsquo;s possible without connecting to the DB, e.g.
+<a href=https://github.com/prql/prql/pull/55>#55</a>.</li><li>Improvements or integrations to the <a href=https://prql-lang.org/playground/>live in-browser
+compiler</a>, including querying actual
+tables.</li><li>(I&rsquo;m sure there&rsquo;s more, ideas welcome)</li></ul><h3 id=integrations>Integrations</h3><p>PRQL is focused at the language layer, which means we can easily integrate with
+existing tools & apps. This will be the primary way that people can start using
+PRQL day-to-day. Probably the most impactful initial integrations will be tools that
+engineers use to build data pipelines, like
+<a href=https://github.com/prql/prql/issues/375><code>dbt-prql</code></a>.</p><h3 id=database-cohesion>Database cohesion</h3><p>One benefit of PRQL over SQL is that auto-complete, type-inference, and
+error checking can be much more powerful.</p><p>We&rsquo;d like to build this out. It&rsquo;s more difficult to build, since it requires a
+connection to the database in order to understand the schema of the table.</p><h3 id=not-in-focus>Not in focus</h3><p>We should focus on solving a distinct problem really well. PRQL&rsquo;s goal is to
+make reading and writing analytical queries easier, and so for the moment that
+means putting some things out of scope:</p><ul><li>Building infrastructure outside of queries, like lineage. dbt is excellent at
+that! (<a href=https://github.com/prql/prql/issues/13>#13</a>).</li><li>Writing DDL / index / schema manipulation / inserting data
+(<a href=https://github.com/prql/prql/issues/16>#16</a>).</li></ul></article></main><footer>© 2022, PRQL developers. Apache 2.0 Licensed</footer></body></html>
