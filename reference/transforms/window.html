@@ -167,21 +167,37 @@ will include <code>n</code> last values, including current row.</li>
 <tr><td><code>rows:0..</code></td><td>current row and all following rows until the end of the table</td></tr>
 <tr><td><code>rows:..</code></td><td>all rows, which same as not having window at all</td></tr>
 </tbody></table>
-<blockquote>
-<p>Note: currently, negative integer literals (<code>-3</code>) are not implemented.</p>
-</blockquote>
 <h2 id="example"><a class="header" href="#example">Example</a></h2>
-<pre><code class="language-prql_no_test">from employees
-group employee_id (
-  sort month
-  window rows:-5.. (
-    derive semi_annual_comp = sum paycheck
-  )
-)
-</code></pre>
 <div class="comparison">
 <div>
 <h4 id="prql"><a class="header" href="#prql">PRQL</a></h4>
+<pre><code class="language-prql">from employees
+group employee_id (
+  sort month
+  window rows:-5.. (
+    derive [semi_annual_comp = sum paycheck]
+  )
+)
+</code></pre>
+</div>
+<div>
+<h4 id="sql"><a class="header" href="#sql">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  employees.*,
+  SUM(paycheck) OVER (
+    PARTITION BY employee_id
+    ORDER BY
+      month ROWS BETWEEN 5 PRECEDING
+      AND UNBOUNDED FOLLOWING
+  ) AS semi_annual_comp
+FROM
+  employees
+</code></pre>
+</div>
+</div>
+<div class="comparison">
+<div>
+<h4 id="prql-1"><a class="header" href="#prql-1">PRQL</a></h4>
 <pre><code class="language-prql">from orders
 sort day
 window rolling:3 (
@@ -196,7 +212,7 @@ group [order_month] (
 </code></pre>
 </div>
 <div>
-<h4 id="sql"><a class="header" href="#sql">SQL</a></h4>
+<h4 id="sql-1"><a class="header" href="#sql-1">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   orders.*,
   SUM(price) OVER (
