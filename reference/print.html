@@ -467,11 +467,12 @@ late-bind to column names; so for example:</p>
 <h4 id="prql-10"><a class="header" href="#prql-10">PRQL</a></h4>
 <pre><code class="language-prql">table top_50 = (
   from employees
+  sort salary
   take 50
   aggregate (sum salary)
 )
 
-from a            # Starts a new pipeline
+from another_table      # Starts a new pipeline
 </code></pre>
 </div>
 <div>
@@ -481,6 +482,8 @@ from a            # Starts a new pipeline
     employees.*
   FROM
     employees
+  ORDER BY
+    salary
   LIMIT
     50
 ), top_50 AS (
@@ -490,14 +493,14 @@ from a            # Starts a new pipeline
     table_0
 )
 SELECT
-  a.*
+  another_table.*
 FROM
-  a
+  another_table
 </code></pre>
 </div>
 </div>
-<p>In PRQL <code>table</code>s are far less common that CTEs are in SQL, since a single
-pipeline of logic can always be represented without simple pipelines alone.</p>
+<p>In PRQL <code>table</code>s are far less common than CTEs are in SQL, since a linear
+series of CTEs can be represented with a single pipeline.</p>
 <h2 id="roadmap-1"><a class="header" href="#roadmap-1">Roadmap</a></h2>
 <p>Currently it’s not yet possible to have an
 <a href="queries/./../language-features/s-strings.html">s-string</a> as a whole table. See
@@ -575,10 +578,10 @@ WHERE
 </code></pre>
 </div>
 </div>
-<p>A line-break doesn’t created a pipeline in a couple of cases:</p>
+<p>A line-break doesn’t create a pipeline in a couple of cases:</p>
 <ul>
-<li>Within a list (e.g. the <code>derive</code> examples below).</li>
-<li>When the following line is a new statement, which starts with a keyword of
+<li>within a list (e.g. the <code>derive</code> examples below),</li>
+<li>when the following line is a new statement, which starts with a keyword of
 <code>func</code>, <code>table</code> or <code>from</code>.</li>
 </ul>
 <h2 id="lists"><a class="header" href="#lists">Lists</a></h2>

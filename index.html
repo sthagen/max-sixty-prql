@@ -3,25 +3,25 @@
 <a style=padding:1rem href=/playground>Playground</a>
 <a style=padding:1rem href=/roadmap>Roadmap</a>
 <a style=padding:1rem href=https://github.com/prql/prql>Github</a></nav></nav></header><main><article><p><strong>P</strong>ipelined <strong>R</strong>elational <strong>Q</strong>uery <strong>L</strong>anguage, pronounced &ldquo;Prequel&rdquo;.</p><p>PRQL is a modern language for transforming data — a simpler and more powerful
-SQL.</p><pre tabindex=0><code class=language-prql data-lang=prql>from employees
-filter country = &#34;USA&#34;                        # Each line transforms the previous result.
+SQL.</p><pre tabindex=0><code class=language-prql data-lang=prql>from employees                                # Each line transforms the previous result.
+filter start_date &gt; @2021-01-01               # Clear date syntax.
 derive [                                      # `derive` adds columns / variables.
-  gross_salary: salary + payroll_tax,
-  gross_cost:   gross_salary + benefits_cost  # Variables can use other variables.
+  gross_salary = salary + payroll_tax,
+  gross_cost = gross_salary + benefits_cost   # Variables can use other variables.
 ]
 filter gross_cost &gt; 0
-group [title, country] (                      # `group` runs a pipeline over each group
-  aggregate [                                 # `aggregate` reduces a column to a row
+group [title, country] (                      # `group` runs a pipeline over each group.
+  aggregate [                                 # `aggregate` reduces each group to a row.
     average salary,
     sum     salary,
     average gross_salary,
     sum     gross_salary,
     average gross_cost,
-    sum_gross_cost: sum gross_cost,
-    ct: count,
+    sum_gross_cost = sum gross_cost,          # `=` sets a column name.
+    ct = count,
   ]
 )
-sort sum_gross_cost
+sort [sum_gross_cost, -country]               # `-country` means descending order.
 filter ct &gt; 200
 take 20
 </code></pre><h2 id=principles>Principles</h2><p>PRQL is a modern language for transforming data — a simpler and more powerful

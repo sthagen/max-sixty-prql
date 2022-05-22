@@ -145,11 +145,12 @@
 <h4 id="prql"><a class="header" href="#prql">PRQL</a></h4>
 <pre><code class="language-prql">table top_50 = (
   from employees
+  sort salary
   take 50
   aggregate (sum salary)
 )
 
-from a            # Starts a new pipeline
+from another_table      # Starts a new pipeline
 </code></pre>
 </div>
 <div>
@@ -159,6 +160,8 @@ from a            # Starts a new pipeline
     employees.*
   FROM
     employees
+  ORDER BY
+    salary
   LIMIT
     50
 ), top_50 AS (
@@ -168,14 +171,14 @@ from a            # Starts a new pipeline
     table_0
 )
 SELECT
-  a.*
+  another_table.*
 FROM
-  a
+  another_table
 </code></pre>
 </div>
 </div>
-<p>In PRQL <code>table</code>s are far less common that CTEs are in SQL, since a single
-pipeline of logic can always be represented without simple pipelines alone.</p>
+<p>In PRQL <code>table</code>s are far less common than CTEs are in SQL, since a linear
+series of CTEs can be represented with a single pipeline.</p>
 <h2 id="roadmap"><a class="header" href="#roadmap">Roadmap</a></h2>
 <p>Currently it’s not yet possible to have an
 <a href="./../language-features/s-strings.html">s-string</a> as a whole table. See
