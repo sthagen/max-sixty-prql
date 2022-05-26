@@ -1641,41 +1641,19 @@ FROM
 <blockquote>
 <p>Note: <code>|</code> is here temporarily, until we finish work on function &amp; pipeline currying.</p>
 </blockquote>
-<h2 id="roadmap-5"><a class="header" href="#roadmap-5">Roadmap</a></h2>
-<p>Soon we’ll be able to <a href="https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group">select range of rows in each
+<hr />
+<p>We are be able to <a href="https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group">select range of rows in each
 group</a>
 by combining <code>group</code> and <code>sort</code>:</p>
-<pre><code class="language-prql_no_test"># youngest employee from each department
+<div class="comparison">
+<div>
+<h4 id="prql-54"><a class="header" href="#prql-54">PRQL</a></h4>
+<pre><code class="language-prql"># youngest employee from each department
 from employees
 group department (
   sort age
   take 1
 )
-</code></pre>
-<p>… which will produces …</p>
-<pre><code class="language-sql">WITH table_0 = (
-  SELECT ROW_NUMBER() OVER(PARTITION BY department ORDER_BY age) as _row_number
-  FROM employees
-)
-SELECT *
-FROM table_0
-WHERE _row_number = 1
-</code></pre>
-<p>… or in Postgres dialect …</p>
-<pre><code class="language-sql">SELECT DISTINCT ON (department) *
-FROM employees
-ORDER BY department, age
-</code></pre>
-<p>Until this is implemented, we can use <code>row_number</code>:</p>
-<div class="comparison">
-<div>
-<h4 id="prql-54"><a class="header" href="#prql-54">PRQL</a></h4>
-<pre><code class="language-prql">from employees
-group department (
-  sort age
-  derive rank = row_number
-)
-filter rank == 1
 </code></pre>
 </div>
 <div>
@@ -1683,12 +1661,11 @@ filter rank == 1
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
     employees.*,
-    ROW_NUMBER() OVER (
+    ROW NUMBER() OVER (
       PARTITION BY department
       ORDER BY
-        age ROWS BETWEEN UNBOUNDED PRECEDING
-        AND UNBOUNDED FOLLOWING
-    ) AS rank
+        age
+    ) AS _rn
   FROM
     employees
 )
@@ -1697,10 +1674,24 @@ SELECT
 FROM
   table_0
 WHERE
-  rank = 1
+  _rn &lt;= 1
 </code></pre>
 </div>
 </div>
+<h2 id="roadmap-5"><a class="header" href="#roadmap-5">Roadmap</a></h2>
+<p>When using Postgres dialect, we are planning to compile:</p>
+<pre><code class="language-prql_no_test"># youngest employee from each department
+from employees
+group department (
+  sort age
+  take 1
+)
+</code></pre>
+<p>… to …</p>
+<pre><code class="language-sql">SELECT DISTINCT ON (department) *
+FROM employees
+ORDER BY department, age
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="f-strings"><a class="header" href="#f-strings">F-Strings</a></h1>
 <p>f-strings are a readable approach to building new strings from existing strings.
 Currently PRQL supports this for concatenating strings:</p>
