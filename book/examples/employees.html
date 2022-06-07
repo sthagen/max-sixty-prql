@@ -212,8 +212,7 @@ FROM
 </div>
 <h2 id="task-2"><a class="header" href="#task-2">Task 2</a></h2>
 <blockquote>
-<p>The company active pursues gender equality.</p>
-<p>Prepare an analysis based on salaries and gender distribution by departments.</p>
+<p>Estimate distribution of salaries and gender for each department departments.</p>
 </blockquote>
 <div class="comparison">
 <div>
@@ -276,8 +275,7 @@ FROM
 </div>
 <h2 id="task-3"><a class="header" href="#task-3">Task 3</a></h2>
 <blockquote>
-<p>The company active pursues gender equality.</p>
-<p>Prepare an analysis based on salaries and gender distribution by managers.</p>
+<p>Estimate distribution of salaries and gender for each manager.</p>
 </blockquote>
 <div class="comparison">
 <div>
@@ -348,7 +346,7 @@ FROM
 </div>
 <h2 id="task-4"><a class="header" href="#task-4">Task 4</a></h2>
 <blockquote>
-<p>Find distributions of titles, salaries and genders over different departments.</p>
+<p>Find distributions of titles, salaries and genders for each department.</p>
 </blockquote>
 <div class="comparison">
 <div>
@@ -375,7 +373,8 @@ select [dept_no, salary, employees.gender, titles.title]
     AVG(s.salary) AS salary
   FROM
     dept_emp AS de
-    LEFT JOIN salaries AS s ON s.emp_no = de.emp_no (s.from_date, s.to_date) OVERLAPS (de.from_date, de.to_date)
+    LEFT JOIN salaries AS s ON s.emp_no = de.emp_no
+    AND (s.from_date, s.to_date) OVERLAPS (de.from_date, de.to_date)
   GROUP BY
     de.emp_no,
     de.dept_no

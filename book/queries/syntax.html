@@ -325,29 +325,6 @@ FROM
 </code></pre>
 </div>
 </div>
-<h2 id="roadmap"><a class="header" href="#roadmap">Roadmap</a></h2>
-<p>Currently we don’t yet “curry” a pipeline. As a result, an inline pipeline which
-doesn’t begin with a line-break — generally a very short pipeline —
-to start with a line-break or a <code>|</code> character:</p>
-<div class="comparison">
-<div>
-<h4 id="prql-7"><a class="header" href="#prql-7">PRQL</a></h4>
-<pre><code class="language-prql">from employees
-select department
-group department ( | take 1)
-</code></pre>
-</div>
-<div>
-<h4 id="sql-7"><a class="header" href="#sql-7">SQL</a></h4>
-<pre><code class="language-sql">SELECT
-  DISTINCT department
-FROM
-  employees
-</code></pre>
-</div>
-</div>
-<p>We’ll be able to replace <code>( | take 1)</code> with <code>(take 1)</code> in the future; see
-<a href="https://github.com/prql/prql/issues/414">#414</a> for more details.</p>
 
                     </main>
 

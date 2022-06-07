@@ -146,13 +146,13 @@ Currently PRQL supports this for concatenating strings:</p>
 <div>
 <h4 id="prql"><a class="header" href="#prql">PRQL</a></h4>
 <pre><code class="language-prql">from employees
-select full_name = f&quot;{first} {last}&quot;
+select full_name = f&quot;{first_name} {last_name}&quot;
 </code></pre>
 </div>
 <div>
 <h4 id="sql"><a class="header" href="#sql">SQL</a></h4>
 <pre><code class="language-sql">SELECT
-  CONCAT(first, ' ', last) AS full_name
+  CONCAT(first_name, ' ', last_name) AS full_name
 FROM
   employees
 </code></pre>

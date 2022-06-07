@@ -152,6 +152,7 @@
 <li><code>-</code>, for descending order</li>
 </ul>
 </li>
+<li>When using prefixes, make sure to wrap columns in a list. Otherwise, <code>sort -column</code> is interpreted as subtraction between <code>sort</code> and <code>column</code>.</li>
 </ul>
 <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
 <div class="comparison">
@@ -176,7 +177,7 @@ ORDER BY
 <div>
 <h4 id="prql-1"><a class="header" href="#prql-1">PRQL</a></h4>
 <pre><code class="language-prql">from employees
-sort -age
+sort [-age]
 </code></pre>
 </div>
 <div>

@@ -24,23 +24,29 @@ group [title, country] (                      # `group` runs a pipeline over eac
 sort [sum_gross_cost, -country]               # `-country` means descending order.
 filter ct &gt; 200
 take 20
-</code></pre><h2 id=principles>Principles</h2><p>PRQL is a modern language for transforming data — a simpler and more powerful
-SQL. Like SQL, it&rsquo;s readable, explicit and declarative. Unlike SQL, it forms a
-logical pipeline of transformations, and supports abstractions such as variables
-and functions. It can be used with any database that uses SQL, since it
-transpiles to SQL.</p><p>PRQL&rsquo;s principles:</p><ul><li><em>Pipelined</em> — PRQL is a linear pipeline of transformations — each line of the
+</code></pre><h2 id=principles>Principles</h2><ul><li><p><em><strong>Pipelined</strong></em> — PRQL is a linear pipeline of transformations — each line of the
 query is a transformation of the previous line&rsquo;s result. This makes it easy to
-read, and simple to write.</li><li><em>Simple</em> — PRQL serves both sophisticated engineers and analysts without
-coding experience. By providing simple, clean abstractions, the
-language can be both powerful and easy to use.</li><li><em>Open</em> — PRQL will always be open-source, free-as-in-free, and doesn&rsquo;t
+read, and simple to write.</p></li><li><p><em><strong>Simple</strong></em> — PRQL serves both sophisticated engineers and analysts without
+coding experience.
+We believe that there should be only one way of expressing each operation,
+so there is only a few patterns to memorize. This opposes query tweaking with
+intention to improve performance, because that should be handled by the compiler and
+the database.</p></li><li><p><em><strong>Open</strong></em> — PRQL will always be open-source, free-as-in-free, and doesn&rsquo;t
 prioritize one database over others. By compiling to SQL, PRQL is instantly
 compatible with most databases, and existing tools or programming languages
-that manage SQL. Where possible, PRQL unifies syntax across databases.</li><li><em>Extensible</em> — PRQL can be extended through its abstractions, and its explicit
+that manage SQL. Where possible, PRQL unifies syntax across databases.</p></li><li><p><em><strong>Extensible</strong></em> — PRQL can be extended through its abstractions, and its explicit
 versioning allows changes without breaking backward-compatibility. PRQL allows
 embedding SQL through S-Strings, where PRQL doesn&rsquo;t yet have an
-implementation.</li><li><em>Analytical</em> — PRQL&rsquo;s focus is analytical queries; we de-emphasize other SQL
-features such as inserting data or transactions.</li></ul><h2 id=motivation>Motivation</h2><p>Even though wildly adopted and readable as a sentence, SQL is inconsistent and becomes
-unmanageable as soon as query complexity goes beyond the most simple queries.</p><p><a href=./motivation/>Here are examples</a> on how PRQL can simplifies analytical SQL queries.</p><h2 id=tools>Tools</h2><ul><li><a href=https://github.com/prql/prql>prql-compiler</a> reference compiler implementation,</li><li><a href=https://github.com/prql/PyPrql>PyPrql</a> python TUI for connecting to databases.
-Has some great features, including a native interactive console with auto-complete
-for column names,</li><li><a href=https://pypi.org/project/pyprql/>prql-py</a> Python compiler library,</li><li><a href=https://www.npmjs.com/package/prql-js>prql-js</a> JavaScript compiler library.</li></ul><h2 id=integrations>Integrations</h2><ul><li>Use a plugin for your existing tool:<ul><li><code>dbt-prql</code>: TODO</li><li><code>jupyter</code>: TODO</li></ul></li><li>Install the compiler:<ul><li>Install with <code>cargo</code>: <code>cargo install prql</code></li><li>Install with <code>pip</code>: <code>pip install pyprql</code></li></ul></li></ul><h2 id=keep-in-touch>Keep in touch</h2><ul><li>Star this repo.</li><li>Send a link to PRQL to a couple of people whose opinion you respect.</li><li>Subscribe to <a href=https://github.com/prql/prql/issues/1>GitHub issue #1</a> for
-a GitHub notification on updates.</li><li>Join the <a href=https://discord.gg/eQcfaCmsNc>Discord</a>.</li><li><a href=https://github.com/prql/prql>Contribute to PRQL</a></li></ul></article></main><footer>© 2022, PRQL developers. Apache 2.0 Licensed</footer></body></html>
+implementation.</p></li><li><p><em><strong>Analytical</strong></em> — PRQL&rsquo;s focus is analytical queries; we de-emphasize other SQL
+features such as inserting data or transactions.</p></li></ul><h2 id=motivation>Motivation</h2><p>Even though wildly adopted and readable as a sentence, SQL is inconsistent and becomes
+unmanageable as soon as complexity grows beyond the most simple queries.</p><p><a href=./motivation/>Here are examples</a> on how PRQL compares to SQL analytical queries.</p><h2 id=tools>Tools</h2><ul><li><a href=https://github.com/prql/prql>prql-compiler</a> - reference compiler implementation.<ul><li>Install with <code>cargo</code>: <code>cargo install prql</code></li></ul><ul><li>Install with <code>brew</code>: <code>brew install prql</code></li></ul></li><li><a href=https://github.com/prql/PyPrql>PyPrql</a> - python TUI for connecting to databases.
+It has some great features, including a native interactive console with auto-complete
+for column names.<ul><li>Install with <code>pip</code>: <code>pip install pyprql</code></li></ul></li><li><a href=https://pypi.org/project/prql-python/>prql-python</a> - Python compiler library.</li><li><a href=https://www.npmjs.com/package/prql-js>prql-js</a> - JavaScript compiler library.</li><li><a href=https://prql-lang.org/playground>PRQL Playground</a> - in-browser playground.</li></ul><h2 id=integrations>Integrations</h2><ul><li><a href="https://marketplace.visualstudio.com/items?itemName=prql.prql">Visual Studio Code extension</a>,
+provides syntax highlighting and an upcoming language server</li><li><a href=https://pyprql.readthedocs.io/en/latest/magic_readme.html>Jupyter/IPython</a>:
+PyPrql has a magic extension, which executes a PRQL cell against a database.
+It can also set up an in-memory DuckDB instance, populated with a pandas
+dataframes.</li><li><code>dbt-prql</code>: upcoming</li><li><code>prefect-prql</code>: upcoming</li></ul><h2 id=keep-in-touch>Keep in touch</h2><ul><li><p>Star <a href=https://github.com/prql/prql>the main repo</a>.</p></li><li><p>Send a link to PRQL to a couple of people whose opinion you respect.</p></li><li><p>Subscribe to <a href=https://github.com/prql/prql/issues/1>GitHub issue #1</a> for
+a GitHub notification on updates.</p></li><li><p>Rewrite any of your own queries to PRQL to see if it makes sense. You can use the
+<a href=https://prql-lang.org/playground>playground</a> and submit issues <a href=https://github.com/prql/prql/issues>here</a>.
+We are looking for any use-cases that expose a poor design choice, a need of a feature,
+a pain point or just a sharp edge of the language.</p></li><li><p>Join the <a href=https://discord.gg/eQcfaCmsNc>Discord</a>.</p></li><li><p><a href=https://github.com/prql/prql/issues>Contribute to PRQL</a></p></li></ul></article></main><footer>© 2022, PRQL developers. Apache 2.0 Licensed</footer></body></html>

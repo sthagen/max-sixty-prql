@@ -166,7 +166,7 @@ FROM
 <h4 id="prql-1"><a class="header" href="#prql-1">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 select department
-group department ( | take 1) # Note below
+group department (take 1) # Note below
 </code></pre>
 </div>
 <div>
@@ -178,8 +178,6 @@ FROM
 </code></pre>
 </div>
 </div>
-<pre><code class="language-admonish note">Note: `|` is required in `( | take 1)` temporarily, until we finish implementing function &amp; pipeline currying.
-</code></pre>
 <h2 id="selecting-from-each-group"><a class="header" href="#selecting-from-each-group">Selecting from each group</a></h2>
 <p>We are be able to <a href="https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group">select a rows from each
 group</a>
