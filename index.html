@@ -23,9 +23,10 @@ sort [sum_gross_cost, -country]
 filter ct &gt; 200
 take 20
 </code>
-        </pre></div></div></div></section><main id=main><section class=principle_section><div class=container><div class="row justify-content-center"><div class=section-title><h2 class=mb-3>Principles</h2><p></p></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Pipelined</h4><p class=blue-border><strong>A PRQL query is a linear pipeline of transformations</strong></p><p>Each line of the query is a transformation of the previous line’s result. This makes it easy to read, and simple to write.</p></div></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Simple</h4><p class=blue-border><strong>PRQL serves both sophisticated engineers and analysts without coding experience.</strong></p><p>By providing a small number of powerful & orthogonal primitives, queries are simpler — there&rsquo;s only one way of expressing each operation.</p></div></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Open</h4><p class=blue-border><strong>PRQL will always be open-source</strong></p><p>Free-as-in-free, and doesn’t prioritize one database over others. By compiling to SQL, PRQL is instantly compatible with most databases, and existing tools or programming languages that manage SQL. Where possible, PRQL unifies syntax across databases.</p></div></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Extensible</h4><p class=blue-border><strong>PRQL can be extended through functions</strong></p><p>PRQL has abstractions which make it a great platform to build on. Its explicit versioning allows changes without breaking backward-compatibility. Where there isn&rsquo;t yet an implementation, PRQL allows embedding SQL with S-Strings.</p></div></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Analytical</h4><p class=blue-border><strong>PRQL’s focus is analytical queries</strong></p><p>We de-emphasize other SQL features such as inserting data or transactions.</p></div></div></div></div></section><section class="content-section showcase-section section-bg"><div class=container><div class="row content"><div class="col-lg-6 mb-4"><div class=section-title><h3></h3><h2 class=mb-3>Showcase</h2></div><p class=mb-3>Even though wildly adopted and readable as a sentence, SQL is inconsistent and becomes unmanageable as soon as query complexity goes beyond the most simple queries.</p><p class=mb-3>Because each transform in PRQL is orthogonal to all previous transforms, it is always easy to extend your query. On top of that, PRQL offers modern features, such syntax for dates, ranges and f-strings as well as functions, type checking and better null handling.</p><a class=btn href=/examples/>More examples</a>
-<a class=btn href=/playground/>Playground</a></div><div class="col-lg-6 d-flex align-items-start"><div class="nav flex-column nav-pills flex-shrink-0 me-3" id=v-pills-tab role=tablist aria-orientation=vertical><button class="nav-link active" id=v-pills-basics-tab data-bs-toggle=pill data-bs-target=#v-pills-basics type=button role=tab aria-controls=v-pills-basics aria-selected=false>Basic example</button>
-<button class=nav-link id=v-pills-syntax-tab data-bs-toggle=pill data-bs-target=#v-pills-syntax type=button role=tab aria-controls=v-pills-syntax aria-selected=false>Syntax</button>
+        </pre></div></div></div></section><main id=main><section class=principle_section><div class=container><div class="row justify-content-center"><div class=section-title><h2 class=mb-3>Principles</h2><p></p></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Pipelined</h4><p class=blue-border><strong>A PRQL query is a linear pipeline of transformations</strong></p><p>Each line of the query is a transformation of the previous line’s result. This makes it easy to read, and simple to write.</p></div></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Simple</h4><p class=blue-border><strong>PRQL serves both sophisticated engineers and analysts without coding experience.</strong></p><p>By providing a small number of powerful & orthogonal primitives, queries are simpler — there&rsquo;s only one way of expressing each operation. We can eschew the debt that SQL has built up.</p></div></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Open</h4><p class=blue-border><strong>PRQL will always be open-source</strong></p><p>PRQL is free-as-in-free, will never have a commercial product, and doesn’t prioritize one database over others. By compiling to SQL, PRQL is instantly compatible with most databases, and existing tools or programming languages that manage SQL. Where possible, PRQL unifies syntax across databases.</p></div></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Extensible</h4><p class=blue-border><strong>PRQL can be extended through functions</strong></p><p>PRQL has abstractions which make it a great platform to build on. Its explicit versioning allows changes without breaking backward-compatibility. And in the cases where PRQL doesn&rsquo;t yet have an implementation, it allows embedding SQL with S-Strings.</p></div></div><div class="col-lg-4 d-flex align-items-stretch mb-4"><div class=card><h4>Analytical</h4><p class=blue-border><strong>PRQL’s focus is analytical queries</strong></p><p>We de-emphasize other SQL features such as inserting data or transactions.</p></div></div></div></div></section><section class="content-section showcase-section section-bg"><div class=container><div class="row content"><div class="col-lg-6 mb-4"><div class=section-title><h3></h3><h2 class=mb-3>Showcase</h2></div><p class=mb-3>PRQL consists of a curated set of orthogonal transformations, which are combined together to form a pipeline. That makes it easy to compose and extend queries. The language also benefits from modern features, such syntax for dates, ranges and f-strings as well as functions, type checking and better null handling.</p><a class=btn href=/examples/>More examples</a>
+<a class=btn href=/playground/>Playground</a>
+<a class=btn href=/book/>Book</a></div><div class="col-lg-6 d-flex align-items-start"><div class="nav flex-column nav-pills flex-shrink-0 me-3" id=v-pills-tab role=tablist aria-orientation=vertical><button class="nav-link active" id=v-pills-basics-tab data-bs-toggle=pill data-bs-target=#v-pills-basics type=button role=tab aria-controls=v-pills-basics aria-selected=false>Basic example</button>
+<button class=nav-link id=v-pills-friendly-syntax-tab data-bs-toggle=pill data-bs-target=#v-pills-friendly-syntax type=button role=tab aria-controls=v-pills-friendly-syntax aria-selected=false>Friendly syntax</button>
 <button class=nav-link id=v-pills-null-handling-tab data-bs-toggle=pill data-bs-target=#v-pills-null-handling type=button role=tab aria-controls=v-pills-null-handling aria-selected=false>Null handling</button>
 <button class=nav-link id=v-pills-f-strings-tab data-bs-toggle=pill data-bs-target=#v-pills-f-strings type=button role=tab aria-controls=v-pills-f-strings aria-selected=false>F-strings</button>
 <button class=nav-link id=v-pills-functions-tab data-bs-toggle=pill data-bs-target=#v-pills-functions type=button role=tab aria-controls=v-pills-functions aria-selected=false>Functions</button></div><div class=tab-content id=v-pills-tabContent><div class="tab-pane fadeshow active row" id=v-pills-basics role=tabpanel aria-labelledby=v-pills-basics-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from employees
@@ -36,11 +37,10 @@ take 10
 FROM employees
 ORDER BY age
 LIMIT 10
-</code></pre></div><div class="tab-pane fade row" id=v-pills-syntax role=tabpanel aria-labelledby=v-pills-syntax-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from order  # this is a comment
-filter created_at &gt; @2022-06-13
+</code></pre></div><div class="tab-pane fade row" id=v-pills-friendly-syntax role=tabpanel aria-labelledby=v-pills-friendly-syntax-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from order  # this is a comment
+filter created_at &gt; @2022-06-13  # dates
 filter status == &#34;done&#34;
-derive promo_amount = amount * (promo ?? 0)
-sort [-amount]
+sort [-amount]  # sort order
 </code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT
   order.*,
   amount * COALESCE(promo, 0) AS promo_amount
@@ -51,21 +51,28 @@ ORDER BY amount DESC
 </code></pre></div><div class="tab-pane fade row" id=v-pills-null-handling role=tabpanel aria-labelledby=v-pills-null-handling-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from users
 filter last_login != null
 filter deleted_at == null
-</code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT users.*
-FROM users
-WHERE last_login IS NOT NULL
+derive channel = channel ?? &#34;unknown&#34;
+</code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT
+  users.*,
+  COALESCE(channel, &#39;unknown&#39;) AS channel
+FROM
+  users
+WHERE
+  last_login IS NOT NULL
   AND deleted_at IS NULL
 </code></pre></div><div class="tab-pane fade row" id=v-pills-f-strings role=tabpanel aria-labelledby=v-pills-f-strings-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from web
 select url = f&#34;http://www.{domain}.{tld}/{page}&#34;
 </code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT CONCAT(&#39;http://www.&#39;, domain, &#39;.&#39;, tld,
   &#39;/&#39;, page) AS url
 FROM web
-</code></pre></div><div class="tab-pane fade row" id=v-pills-functions role=tabpanel aria-labelledby=v-pills-functions-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>func celsius_of_fahrenheit temp -&gt; (temp - 32) * 3
+</code></pre></div><div class="tab-pane fade row" id=v-pills-functions role=tabpanel aria-labelledby=v-pills-functions-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>func fahrenheit_of_celsius temp -&gt; temp * 3 &#43; 32
 
-from cities
-select temp_c = (celsius_of_fahrenheit temp_f)
-</code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT temp_f - 32 * 3 AS temp_c
-FROM cities
+from weather
+select temp_f = (fahrenheit_of_celsius temp_c)
+</code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT
+  temp_c * 3 &#43; 32 AS temp_f
+FROM
+  weather
 </code></pre></div></div></div></div></div></section><section class=content-section><div class=container><div class="row content"><div class=section-title><h2 class=mb-3>Integrations</h2></div><div class="col-sm-6 col-md-3 d-flex align-items-stretch"><div class="card mb-3"><a href=https://github.com/prql/dbt-prql target=_blank><h4>dbt <sup><i class="bx bx-link-external"></i></sup></h4></a>Allows writing PRQL in dbt models.
 This combines the benefits of PRQL&rsquo;s power & simplicity within queries, with dbt&rsquo;s version control, lineage & testing across queries.</div></div><div class="col-sm-6 col-md-3 d-flex align-items-stretch"><div class="card mb-3"><a href=https://pyprql.readthedocs.io/en/latest/magic_readme.html target=_blank><h4>Jupyter/IPython <sup><i class="bx bx-link-external"></i></sup></h4></a>PyPrql has a magic extension, which executes a PRQL cell against a database.
 It can also set up an in-memory DuckDB instance, populated with a pandas dataframes.</div></div><div class="col-sm-6 col-md-3 d-flex align-items-stretch"><div class="card mb-3"><a href="https://marketplace.visualstudio.com/items?itemName=prql.prql" target=_blank><h4>Visual Studio Code <sup><i class="bx bx-link-external"></i></sup></h4></a>Extension with syntax highlighting and an upcoming language server.</div></div><div class="col-sm-6 col-md-3 d-flex align-items-stretch"><div class="card mb-3"><h4 class=text-muted>Prefect</h4>Upcoming.</div></div></div></div></section><section class=content-section><div class=container><div class="row content"><div class=section-title><h2 class=mb-3>Tools</h2></div><div class="col-sm-6 col-md-3 d-flex align-items-stretch"><div class="card mb-3"><a href=/playground/ target=_blank><h4>Playground <sup><i class="bx bx-link-external"></i></sup></h4></a>Online in-browser playground that compiles PRQL to SQL as you type.</div></div><div class="col-sm-6 col-md-3 d-flex align-items-stretch"><div class="card mb-3"><a href=https://github.com/prql/prql target=_blank><h4>prql-compiler <sup><i class="bx bx-link-external"></i></sup></h4></a><p>Reference compiler implementation. Has a CLI utility that can transpile, format and annotate PRQL queries.</p><p><code>cargo install prql</code></p><p><code>brew install prql/prq/prql</code></p></div></div><div class="col-sm-6 col-md-3 d-flex align-items-stretch"><div class="card mb-3"><a href=https://github.com/prql/PyPrql target=_blank><h4>PyPrql <sup><i class="bx bx-link-external"></i></sup></h4></a><p>Python TUI for connecting to databases.
