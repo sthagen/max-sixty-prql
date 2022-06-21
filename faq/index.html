@@ -1,0 +1,77 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta content="width=device-width,initial-scale=1" name=viewport><meta property="og:title" content="FAQ"><meta property="og:description" content="This reminds me of something else, did you take the idea from them? Yes, probably.
+We&rsquo;re standing on the shoulders of giants:
+dplyr is a beautiful language for manipulating data, in R. It&rsquo;s very similar to PRQL. It only works on in-memory R data. There&rsquo;s also dbplyr which compiles a subset of dplyr to SQL, though requires an R runtime. Kusto is also a beautiful pipelined language, very similar to PRQL."><meta property="og:type" content="article"><meta property="og:url" content="https://prql-lang.org/faq/"><meta property="og:image" content="https://prql-lang.org/static/img/favicon-32x32.png"><meta property="article:section" content><meta property="og:site_name" content="PRQL"><title>FAQ</title><meta content name=description><meta content="[]" name=keywords><link rel=apple-touch-icon sizes=180x180 href=/img/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/img/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/favicon-16x16.png><link href=/plugins/bootstrap/bootstrap.min.css rel=stylesheet><link href=/fonts/boxicons.min.css rel=stylesheet><link href=/plugins/highlight/highlight.css rel=stylesheet><script defer src=/plugins/highlight/highlight.min.js></script>
+<script defer src=/plugins/highlight/prql.js></script>
+<link href=/style.css rel=stylesheet></head><body><header id=header class="fixed-top d-flex align-items-center"><div class="container d-flex align-items-center"><a href=/ class="logo me-auto d-flex align-items-end"><img src=/img/icon.svg alt class=img-fluid height=50 width=50><h1>PRQL</h1></a><nav id=navbar class=navbar><ul><li><a href=https://prql-lang.org/book/ class="nav-link scrollto" target=_blank>Book
+<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=https://prql-lang.org/playground/ class="nav-link scrollto" target=_blank>Playground
+<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=/roadmap/ class="nav-link scrollto" target>Roadmap</a></li><li><a href=/examples/ class="nav-link scrollto" target>Examples</a></li><li><a href=/faq/ class="nav-link scrollto" target>FAQ</a></li><li><a class=icon href=https://github.com/prql/prql><i class="bx bxl-github"></i></a></li></ul><i class='bx bx-list-ul mobile-nav-toggle'></i></nav></div></header><main id=main class="container no-hero"><article><h1>FAQ</h1><h2 id=this-reminds-me-of-something-else-did-you-take-the-idea-from-them>This reminds me of something else, did you take the idea from them?</h2><p>Yes, probably.</p><p>We&rsquo;re standing on the shoulders of giants:</p><ul><li><a href=https://dplyr.tidyverse.org/>dplyr</a> is a beautiful language for manipulating
+data, in R. It&rsquo;s very similar to PRQL. It only works on in-memory R data.<ul><li>There&rsquo;s also <a href=https://dbplyr.tidyverse.org/>dbplyr</a> which compiles a subset
+of dplyr to SQL, though requires an R runtime.</li></ul></li><li><a href="https://docs.microsoft.com/azure/data-explorer/kusto/query/samples?pivots=azuredataexplorer">Kusto</a>
+is also a beautiful pipelined language, very similar to PRQL. But it can only
+use Kusto-compatible DBs.<ul><li>A Kusto-to-SQL transpiler would be a legitimate alternative to PRQL, though
+there would be some impedance mismatch in some areas. My central criticism
+of Kusto is that it gives up broad compatibility without getting that much
+in return.</li></ul></li><li><a href=https://www.scattered-thoughts.net/writing/against-sql/>Against SQL</a> gives a
+fairly complete description of SQL&rsquo;s weaknesses, both for analytical and
+transactional queries. <a href=https://github.com/jamii><strong>@jamii</strong></a> consistently
+writes insightful pieces, and it&rsquo;s worth sponsoring him for his updates.</li><li>Julia&rsquo;s <a href=https://gitlab.com/aplavin/DataPipes.jl>DataPipes.jl</a> &
+<a href=https://github.com/jkrumbiegel/Chain.jl>Chain.jl</a>, which demonstrate how
+effective point-free pipelines can be, and how line-breaks can work as pipes.</li><li><a href=https://ocaml.org/>OCaml</a>, for its elegant and simple syntax.</li></ul><p>And there are many projects similar to PRQL:</p><ul><li><a href=https://hexdocs.pm/ecto/Ecto.html#module-query>Ecto</a> is a sophisticated
+ORM library in Elixir which has pipelined queries as well as more traditional
+ORM features.</li><li><a href=http://blog.hydromatic.net/2020/02/25/morel-a-functional-language-for-data.html>Morel</a>
+is a functional language for data, also with a pipeline concept. It doesn&rsquo;t
+compile to SQL but states that it can access external data.</li><li><a href=https://github.com/looker-open-source/malloy>Malloy</a> from Looker &
+<a href=https://github.com/lloydtabb><strong>@lloydtabb</strong></a> in a new language which
+combines a declarative syntax for querying with a modelling layer.</li><li><a href=https://github.com/MechanicalRabbit/FunSQL.jl>FunSQL.jl</a> is a library in
+Julia which compiles a nice query syntax to SQL. It requires a Julia runtime.</li><li><a href=https://docs.microsoft.com/dotnet/csharp/linq/write-linq-queries>LINQ</a>,
+is a pipelined language for the <code>.NET</code> ecosystem which can (mostly) compile to
+SQL. It was one of the first languages to take this approach.</li><li><a href=https://github.com/RCHowell/Sift>Sift</a> is an experimental language which
+heavily uses pipes and relational algebra.</li><li>After writing the original proposal (including the name!), we found
+<a href=https://github.com/erezsh/Preql>Preql</a>. Despite the similar name and
+compiling to SQL, it seems to focus more on making the language python-like,
+which is very different to this proposal.</li></ul><blockquote><p>If any of these descriptions can be improved, please feel free to PR changes.</p></blockquote><h2 id=how-is-prql-different-from-all-the-projects-that-sql-has-so-far-defeated>How is PRQL different from all the projects that SQL has (so far) defeated?</h2><p>Many languages have attempted to replace SQL, and yet SQL has massively <em>grown</em>
+in usage and importance in the past decade. There are lots
+<a href=https://twitter.com/seldo/status/1513599841355526145>of</a>
+<a href="https://benn.substack.com/p/has-sql-gone-too-far?s=r#footnote-anchor-2">reasonable</a>
+<a href=https://erikbern.com/2018/08/30/i-dont-want-to-learn-your-garbage-query-language.html>critiques</a>
+on these attempts. So a reasonable question is &ldquo;Why are y&rsquo;all building something that
+many others have failed at?&rdquo;. Some thoughts:</p><ul><li>PRQL is open. It&rsquo;s not designed for a specific database. PRQL will always be
+fully open-source. There will never be a commercial product. We&rsquo;ll never have
+to balance profitability against compatibility, or try and expand up the stack
+to justify a valuation. Whether someone is building a new tool or writing a
+simple query — PRQL can be <em>more</em> compatible across DBs than SQL.</li><li>PRQL is analytical. The biggest growth in SQL usage has been from querying large
+amounts of data, often from analytical DBs that are specifically designed for
+this — with columnar storage and wide denormalized tables. SQL carries a lot
+of baggage unrelated to this, and focusing on the analytical use-case lets us
+make a better language.</li><li>PRQL is simple. There&rsquo;s often a tradeoff between power and accessibility
+— rust is powerful vs. Excel is accessible — but there are also instances
+where we can expand the frontier. PRQL&rsquo;s orthogonality is an example of
+synthesizing this tradeoff — have a single <code>filter</code> rather than <code>WHERE</code> & <code>HAVING</code>
+& <code>QUALIFY</code> brings both more power <em>and</em> more accessibility.</li></ul><p>In the same way that &ldquo;SQL was invented in the 1970s and therefore must be bad&rdquo;
+is questionable logic, &ldquo;<code>n</code> languages have tried and failed so therefore SQL
+cannot be improved.&rdquo; suffers a similar fallacy. SQL isn&rsquo;t bad because it&rsquo;s old.
+It&rsquo;s bad because — in some cases — it&rsquo;s bad.</p><h2 id=whats-going-on-with-this-weird-aggregate-syntax-whats-wrong-with-select--group-by>What&rsquo;s going on with this weird <code>aggregate</code> syntax? What&rsquo;s wrong with <code>select</code> & <code>group by</code></h2><p>SQL uses <code>SELECT</code> for all of these:</p><ul><li><p>Selecting or computing columns, without changing the shape of the data:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>SELECT</span> x <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span> <span style=color:#66d9ef>FROM</span> y <span style=color:#66d9ef>as</span> two_x
+</span></span></code></pre></div></li><li><p>Reducing a column into a single row, with a reduction function:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>SELECT</span> <span style=color:#66d9ef>SUM</span>(x) <span style=color:#66d9ef>FROM</span> y
+</span></span></code></pre></div></li><li><p>Reducing a column into groups, with a reduction function and a <code>GROUP BY</code> function:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>SELECT</span> <span style=color:#66d9ef>SUM</span>(x) <span style=color:#66d9ef>FROM</span> y <span style=color:#66d9ef>GROUP</span> <span style=color:#66d9ef>BY</span> z
+</span></span></code></pre></div></li></ul><p>These are not orthogonal — <code>SELECT</code> does lots of different things depending on
+the context. It&rsquo;s difficult for both people and machines to evaluate the shape
+of the output. It&rsquo;s easy to mix meanings and raise an error (<code>SELECT x, MIN(y) FROM z</code>).</p><p>PRQL clearly delineates two operations with two transforms:</p><ul><li><p><code>select</code> — picking & calculating columns.
+These calculations always produce exactly one output row for every input row.</p><pre tabindex=0><code class=language-prql data-lang=prql>from employees
+select name = f&#34;{first_name} {last_name}&#34;
+</code></pre></li><li><p><code>aggregate</code> — reducing multiple rows to a single row, with a reduction
+function like <code>sum</code> or <code>min</code>.</p><pre tabindex=0><code class=language-prql data-lang=prql>from employees
+aggregate (select total_salary = sum salary)
+</code></pre></li></ul><p><code>aggregate</code> can then be used in a <code>group</code> transform, where it has exactly the
+same semantics on the group as it would on a whole table — another example of
+PRQL&rsquo;s orthogonality.</p><pre tabindex=0><code class=language-prql data-lang=prql>from employees
+group department (
+  aggregate (select total_salary = sum salary)
+)
+</code></pre><p>For more detail, check out the docs in the <a href=https://prql-lang.org/book>PRQL Book</a>.</p></article></main><footer id=footer><div class=container><div class=row><div class="col-md-6 py-3"><h3>Help the project</h3><ul><li>Send a link to PRQL to a couple of people whose opinion you respect.</li><li>Rewrite any of your own queries to PRQL to see if it makes sense.
+You can use the <a href=https://prql-lang.org/playground>playground</a> and submit issues
+<a href=https://github.com/prql/prql/issues>here</a>. We are looking for any
+use-cases that expose a poor design choice, a need of a feature, a pain point
+or are just a sharp edge of the language.</li></ul><a class=btn href=https://github.com/prql/prql target=_blank>Contribute<sup><i class="bx bx-link-external"></i></a></div><div class="col-md-6 py-3 text-end"><p>Subscribe to <a href=https://github.com/prql/prql/issues/1>issue #1 for a GitHub notification on updates</a>.</p><p>Join our <a href=https://discord.com/invite/eQcfaCmsNc>Discord server.</a></p><p><a class=btn-icon href=https://github.com/prql/prql target=_blank title="GitHub repository"><i class="bx bxl-github"></i></a>
+<a class=btn-icon href=https://discord.com/invite/eQcfaCmsNc target=_blank title="Join the Discord"><i class="bx bxl-discord"></i></a></p><p>© 2022, PRQL developers. Apache 2.0 Licensed</p></div></div></div></footer><a href=# class="back-to-top d-flex align-items-center justify-content-center"><i class='bx bx-up-arrow-alt'></i></a>
+<script src=/main.js></script>
+<script src=/plugins/bootstrap/bootstrap.bundle.min.js></script></body></html>
