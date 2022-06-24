@@ -75,7 +75,7 @@ a.btn-icon i {
 
 code {
   padding: 2px 4px;
-  color: #f08c00;
+  color: #ffffff;
 }
 
 /*--------------------------------------------------------------
@@ -140,7 +140,7 @@ code {
 #header a:hover,
 #header .active,
 #header .active:focus,
-#header li:hover>a {
+#header li:hover > a {
   color: var(--secondary-color);
 }
 
@@ -248,7 +248,7 @@ code {
 
 .navbar-mobile a:hover,
 .navbar-mobile .active,
-.navbar-mobile li:hover>a {
+.navbar-mobile li:hover > a {
   color: #d9232d;
 }
 
@@ -259,12 +259,14 @@ code {
   width: 100%;
   min-height: 100vh;
   background: #f2f9ff;
-  background: repeating-linear-gradient(45deg,
+  background: repeating-linear-gradient(
+      45deg,
       transparent,
       transparent 150px,
       #f2f9ff 150px,
-      #f2f9ff 300px),
-    linear-gradient(#e8f2f2, #f2f9ff);
+      #f2f9ff 300px
+    ),
+    linear-gradient(#daeaff, #f2f9ff);
   padding-top: 100px;
 }
 
@@ -354,7 +356,6 @@ pre ::-webkit-scrollbar-thumb:hover {
 }
 
 @media (min-width: 1024px) {
-
   #hero .carousel-control-prev,
   #hero .carousel-control-next {
     width: 5%;
@@ -378,12 +379,14 @@ section {
 .section-bg,
 .services .icon-box {
   background: #f2f9ff;
-  background: repeating-linear-gradient(45deg,
+  background: repeating-linear-gradient(
+      45deg,
       transparent,
       transparent 150px,
       #f2f9ff 150px,
-      #f2f9ff 300px),
-    linear-gradient(#e8f2f2, #f2f9ff);
+      #f2f9ff 300px
+    ),
+    linear-gradient(#daeaff, #f2f9ff);
 }
 
 .section-title h2 {
@@ -413,8 +416,13 @@ section {
 /*--------------------------------------------------------------
 # Principles
 --------------------------------------------------------------*/
+.principle_section {
+  background: #f2f9ff;
+}
+
 .principle_section .card {
   padding: 30px;
+  height: 100%;
   border-radius: 0px;
 }
 
@@ -447,6 +455,9 @@ section {
 /*--------------------------------------------------------------
 # showcase-section
 --------------------------------------------------------------*/
+.showcase-section {
+  background: #f2f9ff;
+}
 
 .showcase-section #v-pills-tabContent {
   flex-grow: 1;
@@ -461,10 +472,13 @@ section {
   background-color: var(--main-color);
 }
 
-
 /*--------------------------------------------------------------
 # content-section
 --------------------------------------------------------------*/
+.cards-section {
+  background: #f2f9ff;
+}
+
 .content-section .icon {
   font-size: 250px;
   color: var(--main-color);
@@ -472,7 +486,8 @@ section {
 
 .content-section .card {
   padding: 15px;
-  flex: 1 0 0;
+  height: 100%;
+  flex: 100%;
 }
 
 .content-section .card a {
@@ -513,8 +528,42 @@ section {
   border-radius: 8px;
 }
 
-.highlight>pre {
+.highlight > pre {
   background-color: transparent !important;
+}
+
+/*--------------------------------------------------------------
+# comments-section
+--------------------------------------------------------------*/
+.comments-section {
+  background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 150px,
+      #f2f9ff 150px,
+      #f2f9ff 300px
+    ),
+    linear-gradient(#f2f9ff, #daeaff);
+}
+
+.comments-section .card-container {
+  margin: 10px;
+  width: 400px;
+}
+
+.quote {
+  line-height: 1.6;
+}
+
+.quote-text {
+  margin: 30px;
+  font-size: 120%;
+}
+
+.quote span {
+  display: block;
+  font-weight: bold;
+  margin: 20% auto;
 }
 
 /*--------------------------------------------------------------
@@ -539,12 +588,7 @@ article h2 {
 --------------------------------------------------------------*/
 #footer {
   background: var(--main-color);
-  background: repeating-linear-gradient(45deg,
-      transparent,
-      transparent 150px,
-      var(--main-color) 150px,
-      var(--main-color) 300px),
-    linear-gradient(#1d252e, var(--main-color));
+  background: linear-gradient(#1d252e, var(--main-color));
   padding: 1rem 0 2rem 0;
   color: #fff;
 }
