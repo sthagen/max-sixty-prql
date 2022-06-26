@@ -1,38 +1,53 @@
 <!doctype html><html lang=en><head><meta charset=utf-8><meta content="width=device-width,initial-scale=1" name=viewport><meta property="og:title" content="FAQ"><meta property="og:description" content="This reminds me of something else, did you take the idea from them? Yes, probably. We&rsquo;re standing on the shoulders of giants:
 dplyr is a beautiful language for manipulating data, in R. It&rsquo;s very similar to PRQL. It only works on in-memory R data. There&rsquo;s also dbplyr which compiles a subset of dplyr to SQL, though requires an R runtime. Kusto is also a beautiful pipelined language, very similar to PRQL."><meta property="og:type" content="article"><meta property="og:url" content="https://prql-lang.org/faq/"><meta property="og:image" content="https://prql-lang.org/static/img/favicon-32x32.png"><meta property="article:section" content><meta property="og:site_name" content="PRQL"><title>FAQ</title><meta content name=description><meta content="[]" name=keywords><link rel=apple-touch-icon sizes=180x180 href=/img/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/img/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/favicon-16x16.png><link href=/plugins/bootstrap/bootstrap.min.css rel=stylesheet><link href=/fonts/boxicons.min.css rel=stylesheet><link href=/plugins/highlight/highlight.css rel=stylesheet><script defer src=/plugins/highlight/highlight.min.js></script>
 <script defer src=/plugins/highlight/prql.js></script>
-<link href=/style.css rel=stylesheet></head><body><header id=header class="fixed-top d-flex align-items-center"><div class="container d-flex align-items-center"><a href=/ class="logo me-auto d-flex align-items-end"><img src=/img/icon.svg alt class=img-fluid height=50 width=50><h1>PRQL</h1></a><nav id=navbar class=navbar><ul><li><a href=https://prql-lang.org/book/ class="nav-link scrollto" target=_blank>Book
-<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=https://prql-lang.org/playground/ class="nav-link scrollto" target=_blank>Playground
-<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=/roadmap/ class="nav-link scrollto" target>Roadmap</a></li><li><a href=/examples/ class="nav-link scrollto" target>Examples</a></li><li><a href=/faq/ class="nav-link scrollto" target>FAQ</a></li><li><a class=icon href=https://github.com/prql/prql><i class="bx bxl-github"></i></a></li></ul><i class="bx bx-list-ul mobile-nav-toggle"></i></nav></div></header><main id=main class="container no-hero"><article><h1>FAQ</h1><h2 id=this-reminds-me-of-something-else-did-you-take-the-idea-from-them>This reminds me of something else, did you take the idea from them?</h2><p>Yes, probably. We&rsquo;re standing on the shoulders of giants:</p><ul><li><a href=https://dplyr.tidyverse.org/>dplyr</a> is a beautiful language for manipulating
-data, in R. It&rsquo;s very similar to PRQL. It only works on in-memory R data.<ul><li>There&rsquo;s also <a href=https://dbplyr.tidyverse.org/>dbplyr</a> which compiles a subset
-of dplyr to SQL, though requires an R runtime.</li></ul></li><li><a href="https://docs.microsoft.com/azure/data-explorer/kusto/query/samples?pivots=azuredataexplorer">Kusto</a>
+<link href=/style.css rel=stylesheet></head><body><header id=header class="fixed-top d-flex align-items-center"><div class="container d-flex align-items-center"><a href=/ class="logo me-auto d-flex align-items-end"><img src=/img/icon.svg alt class=img-fluid height=50 width=50><h1>PRQL</h1></a><nav id=navbar class=navbar><ul><li><a href=https://prql-lang.org/book/ target=_blank rel=noopener>Book<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=https://prql-lang.org/playground/ target=_blank rel=noopener>Playground<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=/roadmap/>Roadmap</a></li><li><a href=/examples/>Examples</a></li><li><a href=/faq/>FAQ</a></li><li><a class=icon href=https://github.com/prql/prql><i class="bx bxl-github"></i></a></li></ul><i class="bx bx-list-ul mobile-nav-toggle"></i></nav></div></header><main id=main class="container no-hero"><article><h1>FAQ</h1><h2 id=this-reminds-me-of-something-else-did-you-take-the-idea-from-them>This reminds me of something else, did you take the idea from them?</h2><p>Yes, probably. We&rsquo;re standing on the shoulders of giants:</p><ul><li><a href=https://dplyr.tidyverse.org/ target=_blank rel=noopener>dplyr<sup><i class="bx bx-link-external"></i></sup></a>
+is a beautiful language for manipulating
+data, in R. It&rsquo;s very similar to PRQL. It only works on in-memory R data.<ul><li>There&rsquo;s also
+<a href=https://dbplyr.tidyverse.org/ target=_blank rel=noopener>dbplyr<sup><i class="bx bx-link-external"></i></sup></a>
+which compiles a subset
+of dplyr to SQL, though requires an R runtime.</li></ul></li><li><a href="https://docs.microsoft.com/azure/data-explorer/kusto/query/samples?pivots=azuredataexplorer" target=_blank rel=noopener>Kusto<sup><i class="bx bx-link-external"></i></sup></a>
 is also a beautiful pipelined language, very similar to PRQL. But it can only
 use Kusto-compatible DBs.<ul><li>A Kusto-to-SQL transpiler would be a legitimate alternative to PRQL, though
 there would be some impedance mismatch in some areas. My central criticism
 of Kusto is that it gives up broad compatibility without getting that much
-in return.</li></ul></li><li><a href=https://www.scattered-thoughts.net/writing/against-sql/>Against SQL</a> gives a
+in return.</li></ul></li><li><a href=https://www.scattered-thoughts.net/writing/against-sql/ target=_blank rel=noopener>Against SQL<sup><i class="bx bx-link-external"></i></sup></a>
+gives a
 fairly complete description of SQL&rsquo;s weaknesses, both for analytical and
-transactional queries. <a href=https://github.com/jamii><strong>@jamii</strong></a> consistently
-writes insightful pieces, and it&rsquo;s worth sponsoring him for his updates.</li><li>Julia&rsquo;s <a href=https://gitlab.com/aplavin/DataPipes.jl>DataPipes.jl</a> &
-<a href=https://github.com/jkrumbiegel/Chain.jl>Chain.jl</a>, which demonstrate how
-effective point-free pipelines can be, and how line-breaks can work as pipes.</li><li><a href=https://ocaml.org/>OCaml</a>, for its elegant and simple syntax.</li></ul><p>And there are many projects similar to PRQL:</p><ul><li><a href=https://hexdocs.pm/ecto/Ecto.html#module-query>Ecto</a> is a sophisticated
+transactional queries.
+<a href=https://github.com/jamii target=_blank rel=noopener><strong>@jamii</strong><sup><i class="bx bx-link-external"></i></sup></a>
+consistently
+writes insightful pieces, and it&rsquo;s worth sponsoring him for his updates.</li><li>Julia&rsquo;s
+<a href=https://gitlab.com/aplavin/DataPipes.jl target=_blank rel=noopener>DataPipes.jl<sup><i class="bx bx-link-external"></i></sup></a>
+&
+<a href=https://github.com/jkrumbiegel/Chain.jl target=_blank rel=noopener>Chain.jl<sup><i class="bx bx-link-external"></i></sup></a>
+, which demonstrate how
+effective point-free pipelines can be, and how line-breaks can work as pipes.</li><li><a href=https://ocaml.org/ target=_blank rel=noopener>OCaml<sup><i class="bx bx-link-external"></i></sup></a>
+, for its elegant and simple syntax.</li></ul><p>And there are many projects similar to PRQL:</p><ul><li><a href=https://hexdocs.pm/ecto/Ecto.html#module-query target=_blank rel=noopener>Ecto<sup><i class="bx bx-link-external"></i></sup></a>
+is a sophisticated
 ORM library in Elixir which has pipelined queries as well as more traditional
-ORM features.</li><li><a href=http://blog.hydromatic.net/2020/02/25/morel-a-functional-language-for-data.html>Morel</a>
+ORM features.</li><li><a href=http://blog.hydromatic.net/2020/02/25/morel-a-functional-language-for-data.html target=_blank rel=noopener>Morel<sup><i class="bx bx-link-external"></i></sup></a>
 is a functional language for data, also with a pipeline concept. It doesn&rsquo;t
-compile to SQL but states that it can access external data.</li><li><a href=https://github.com/looker-open-source/malloy>Malloy</a> from Looker &
-<a href=https://github.com/lloydtabb><strong>@lloydtabb</strong></a> in a new language which
-combines a declarative syntax for querying with a modelling layer.</li><li><a href=https://github.com/MechanicalRabbit/FunSQL.jl>FunSQL.jl</a> is a library in
-Julia which compiles a nice query syntax to SQL. It requires a Julia runtime.</li><li><a href=https://docs.microsoft.com/dotnet/csharp/linq/write-linq-queries>LINQ</a>,
+compile to SQL but states that it can access external data.</li><li><a href=https://github.com/looker-open-source/malloy target=_blank rel=noopener>Malloy<sup><i class="bx bx-link-external"></i></sup></a>
+from Looker &
+<a href=https://github.com/lloydtabb target=_blank rel=noopener><strong>@lloydtabb</strong><sup><i class="bx bx-link-external"></i></sup></a>
+in a new language which
+combines a declarative syntax for querying with a modelling layer.</li><li><a href=https://github.com/MechanicalRabbit/FunSQL.jl target=_blank rel=noopener>FunSQL.jl<sup><i class="bx bx-link-external"></i></sup></a>
+is a library in
+Julia which compiles a nice query syntax to SQL. It requires a Julia runtime.</li><li><a href=https://docs.microsoft.com/dotnet/csharp/linq/write-linq-queries target=_blank rel=noopener>LINQ<sup><i class="bx bx-link-external"></i></sup></a>
+,
 is a pipelined language for the <code>.NET</code> ecosystem which can (mostly) compile to
-SQL. It was one of the first languages to take this approach.</li><li><a href=https://github.com/RCHowell/Sift>Sift</a> is an experimental language which
+SQL. It was one of the first languages to take this approach.</li><li><a href=https://github.com/RCHowell/Sift target=_blank rel=noopener>Sift<sup><i class="bx bx-link-external"></i></sup></a>
+is an experimental language which
 heavily uses pipes and relational algebra.</li><li>After writing the original proposal (including the name!), we found
-<a href=https://github.com/erezsh/Preql>Preql</a>. Despite the similar name and
+<a href=https://github.com/erezsh/Preql target=_blank rel=noopener>Preql<sup><i class="bx bx-link-external"></i></sup></a>
+. Despite the similar name and
 compiling to SQL, it seems to focus more on making the language python-like,
 which is very different to this proposal.</li></ul><blockquote><p>If any of these descriptions can be improved, please feel free to PR changes.</p></blockquote><h2 id=how-is-prql-different-from-all-the-projects-that-sql-has-defeated>How is PRQL different from all the projects that SQL has defeated?</h2><p>Many languages have attempted to replace SQL, and yet SQL has massively <em>grown</em>
 in usage and importance in the past decade. There are lots
-<a href=https://twitter.com/seldo/status/1513599841355526145>of</a>
-<a href="https://benn.substack.com/p/has-sql-gone-too-far?s=r#footnote-anchor-2">reasonable</a>
-<a href=https://erikbern.com/2018/08/30/i-dont-want-to-learn-your-garbage-query-language.html>critiques</a>
+<a href=https://twitter.com/seldo/status/1513599841355526145 target=_blank rel=noopener>of<sup><i class="bx bx-link-external"></i></sup></a>
+<a href="https://benn.substack.com/p/has-sql-gone-too-far?s=r#footnote-anchor-2" target=_blank rel=noopener>reasonable<sup><i class="bx bx-link-external"></i></sup></a>
+<a href=https://erikbern.com/2018/08/30/i-dont-want-to-learn-your-garbage-query-language.html target=_blank rel=noopener>critiques<sup><i class="bx bx-link-external"></i></sup></a>
 on these attempts. So a reasonable question is &ldquo;Why are y&rsquo;all building something that
 many others have failed at?&rdquo;. Some thoughts:</p><ul><li>PRQL is open. It&rsquo;s not designed for a specific database. PRQL will always be
 fully open-source. There will never be a commercial product. We&rsquo;ll never have
@@ -66,13 +81,20 @@ PRQL&rsquo;s orthogonality.</p><pre tabindex=0><code class=language-prql data-la
 group department (
   aggregate [total_salary = sum salary]
 )
-</code></pre><p>For more detail, check out the docs in the <a href=https://prql-lang.org/book>PRQL Book</a>.</p></article></main><footer id=footer><div class=container><div class=row><div class="col-md-6 py-3"><h3>Help the project</h3><ul><li>Send a link to PRQL to a couple of people whose opinion you respect.</li><li>Rewrite any of your own queries to PRQL to see if it makes sense.
-You can use the <a href=https://prql-lang.org/playground>playground</a> and submit issues
-<a href=https://github.com/prql/prql/issues>here</a>. We are looking for any
+</code></pre><p>For more detail, check out the docs in the
+<a href=https://prql-lang.org/book target=_blank rel=noopener>PRQL Book<sup><i class="bx bx-link-external"></i></sup></a>
+.</p></article></main><footer id=footer><div class=container><div class=row><div class="col-md-6 py-3"><h3>Help the project</h3><ul><li>Send a link to PRQL to a couple of people whose opinion you respect.</li><li>Rewrite any of your own queries to PRQL to see if it makes sense.
+You can use the
+<a href=https://prql-lang.org/playground target=_blank rel=noopener>playground<sup><i class="bx bx-link-external"></i></sup></a>
+and submit issues
+<a href=https://github.com/prql/prql/issues target=_blank rel=noopener>here<sup><i class="bx bx-link-external"></i></sup></a>
+. We are looking for any
 use-cases that expose a poor design choice, a need of a feature, a pain point
 or are just a sharp edge of the language.</li></ul><a class=btn href=https://github.com/prql/prql target=_blank>Contribute<sup><i class="bx bx-link-external"></i></sup></a></div><div class="col-md-6 py-3 text-end"><p>Subscribe to
-<a href=https://github.com/prql/prql/issues/1>issue #1 for a GitHub notification on updates</a>.</p><p>Join our
-<a href=https://discord.com/invite/eQcfaCmsNc>Discord server.</a></p><p><a class=btn-icon href=https://github.com/prql/prql target=_blank title="GitHub repository"><i class="bx bxl-github"></i></a>
+<a href=https://github.com/prql/prql/issues/1 target=_blank rel=noopener>issue #1 for a GitHub notification on updates<sup><i class="bx bx-link-external"></i></sup></a>
+.</p><p>Join our
+<a href=https://discord.com/invite/eQcfaCmsNc target=_blank rel=noopener>Discord server<sup><i class="bx bx-link-external"></i></sup></a>
+.</p><p><a class=btn-icon href=https://github.com/prql/prql target=_blank title="GitHub repository"><i class="bx bxl-github"></i></a>
 <a class=btn-icon href=https://discord.com/invite/eQcfaCmsNc target=_blank title="Join the Discord"><i class="bx bxl-discord"></i></a></p><p>© 2022, PRQL developers. Apache 2.0 Licensed</p></div></div></div></footer><a href=# class="back-to-top d-flex align-items-center justify-content-center"><i class="bx bx-up-arrow-alt"></i></a>
 <script src=/main.js></script>
 <script src=/plugins/bootstrap/bootstrap.bundle.min.js></script></body></html>

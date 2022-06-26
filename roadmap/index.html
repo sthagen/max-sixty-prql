@@ -1,9 +1,7 @@
 <!doctype html><html lang=en><head><meta charset=utf-8><meta content="width=device-width,initial-scale=1" name=viewport><meta property="og:title" content="Roadmap"><meta property="og:description" content="We&rsquo;re excited and inspired by the level of enthusiasm behind the project, both from individual contributors and the broader community of users who are unsatisfied with SQL. We currently have an working version for the intrepid users.
 We&rsquo;re hoping we can build a beautiful language, integrations that are approachable & powerful, and a vibrant community. Many projects have reached the current stage and fallen, so this requires compounding on what we&rsquo;ve done so far."><meta property="og:type" content="article"><meta property="og:url" content="https://prql-lang.org/roadmap/"><meta property="og:image" content="https://prql-lang.org/static/img/favicon-32x32.png"><meta property="article:section" content><meta property="og:site_name" content="PRQL"><title>Roadmap</title><meta content name=description><meta content="[]" name=keywords><link rel=apple-touch-icon sizes=180x180 href=/img/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/img/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/favicon-16x16.png><link href=/plugins/bootstrap/bootstrap.min.css rel=stylesheet><link href=/fonts/boxicons.min.css rel=stylesheet><link href=/plugins/highlight/highlight.css rel=stylesheet><script defer src=/plugins/highlight/highlight.min.js></script>
 <script defer src=/plugins/highlight/prql.js></script>
-<link href=/style.css rel=stylesheet></head><body><header id=header class="fixed-top d-flex align-items-center"><div class="container d-flex align-items-center"><a href=/ class="logo me-auto d-flex align-items-end"><img src=/img/icon.svg alt class=img-fluid height=50 width=50><h1>PRQL</h1></a><nav id=navbar class=navbar><ul><li><a href=https://prql-lang.org/book/ class="nav-link scrollto" target=_blank>Book
-<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=https://prql-lang.org/playground/ class="nav-link scrollto" target=_blank>Playground
-<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=/roadmap/ class="nav-link scrollto" target>Roadmap</a></li><li><a href=/examples/ class="nav-link scrollto" target>Examples</a></li><li><a href=/faq/ class="nav-link scrollto" target>FAQ</a></li><li><a class=icon href=https://github.com/prql/prql><i class="bx bxl-github"></i></a></li></ul><i class="bx bx-list-ul mobile-nav-toggle"></i></nav></div></header><main id=main class="container no-hero"><article><h1>Roadmap</h1><blockquote><p>We&rsquo;re excited and inspired by the level of enthusiasm behind the project, both
+<link href=/style.css rel=stylesheet></head><body><header id=header class="fixed-top d-flex align-items-center"><div class="container d-flex align-items-center"><a href=/ class="logo me-auto d-flex align-items-end"><img src=/img/icon.svg alt class=img-fluid height=50 width=50><h1>PRQL</h1></a><nav id=navbar class=navbar><ul><li><a href=https://prql-lang.org/book/ target=_blank rel=noopener>Book<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=https://prql-lang.org/playground/ target=_blank rel=noopener>Playground<sup><i class="bx bx-link-external"></i></sup></a></li><li><a href=/roadmap/>Roadmap</a></li><li><a href=/examples/>Examples</a></li><li><a href=/faq/>FAQ</a></li><li><a class=icon href=https://github.com/prql/prql><i class="bx bxl-github"></i></a></li></ul><i class="bx bx-list-ul mobile-nav-toggle"></i></nav></div></header><main id=main class="container no-hero"><article><h1>Roadmap</h1><blockquote><p>We&rsquo;re excited and inspired by the level of enthusiasm behind the project, both
 from individual contributors and the broader community of users who are
 unsatisfied with SQL. We currently have an working version for the intrepid
 users.</p><p>We&rsquo;re hoping we can build a beautiful language, integrations that are
@@ -14,11 +12,14 @@ the feedback of dozens of contributors. The current state of the basics is now
 stable and while we&rsquo;ll hit corner-cases, I expect we&rsquo;ll only make small changes
 to the existing features — even as we continue adding features.</p><p>On this foundation we are planning to build advanced features like type checking,
 function currying, pivot/melt/wide_to_long/long_to_wide operations, operator overloading and
-<a href="https://github.com/prql/prql/issues?q=is%3Aissue+is%3Aopen+label%3Alanguage-design">a few more</a>.
+<a href="https://github.com/prql/prql/issues?q=is%3Aissue+is%3Aopen+label%3Alanguage-design" target=_blank rel=noopener>a few more<sup><i class="bx bx-link-external"></i></sup></a>
+.
 This will take time, because we want to build a consistent language that feels like it is
 made to last.</p><h2 id=friendliness>Friendliness</h2><p>Currently the compiler is not sufficiently friendly, despite significant recent improvements.
 We&rsquo;d like to make error messages better and sand off sharp corners.</p><p>Both bug reports of unfriendliness, and code contributions to improve them are welcome; there&rsquo;s a
-<a href="https://github.com/prql/prql/issues?q=is%3Aissue+label%3Afriendlienss+is%3Aopen">friendliness label.</a></p><h2 id=standard-library>Standard library</h2><p>Currently, the standard library is <a href=https://github.com/prql/prql/blob/main/prql-compiler/src/sql/stdlib.prql>quite limited</a>.
+<a href="https://github.com/prql/prql/issues?q=is%3Aissue+label%3Afriendlienss+is%3Aopen" target=_blank rel=noopener>friendliness label.<sup><i class="bx bx-link-external"></i></sup></a></p><h2 id=standard-library>Standard library</h2><p>Currently, the standard library is
+<a href=https://github.com/prql/prql/blob/main/prql-compiler/src/sql/stdlib.prql target=_blank rel=noopener>quite limited<sup><i class="bx bx-link-external"></i></sup></a>
+.
 It contains only basic arithmetic functions (<code>AVERAGE</code>, <code>SUM</code>) and lacks functions for string manipulation,
 date handling and many math functions.
 One challenge here is the variety of functionalities and syntax of target DBMSs; e.g. there&rsquo;s no standard
@@ -26,7 +27,9 @@ regex function. Improving our testing framework to include integration tests wil
 here.
 of different dialects.</p></div><div class=col-md><h2 id=alternative-backends>Alternative backends</h2><p>Currently, PRQL only transpiles into SQL. It could be much more powerful (and in some cases performant)
 if we develop a data-frame-handling-library backend. To be more precise, we would want to apply PRQL&rsquo;s
-AST to a in-memory dataframe of a performance-optimized library (such as <a href=https://www.pola.rs/>Polars</a>).</p><p>This would allow data scientists, analysts and general Python developers to transform DataFrames with
+AST to a in-memory dataframe of a performance-optimized library (such as
+<a href=https://www.pola.rs/ target=_blank rel=noopener>Polars<sup><i class="bx bx-link-external"></i></sup></a>
+).</p><p>This would allow data scientists, analysts and general Python developers to transform DataFrames with
 PRQL queries. One language for all data transformations.</p><h2 id=prql-as-a-tool>PRQL as a tool</h2><p>PyPrql is a step into direction of a general data handling program. But we want to build a tool that
 can read many data sources, offers syntax highlighting, auto-complete and type-inference using
 information from database&rsquo;s schema.</p><p>If done right, it could replace many uses of classical spreadsheet software while producing reproducible
@@ -34,17 +37,27 @@ data transformations and intuitive, interactive experience with fast feedback.</
 existing tools & apps. This will be the primary way that people can start using
 PRQL day-to-day. Probably the most impactful initial integrations will be tools that
 engineers use to build data pipelines, like
-<a href=https://github.com/prql/prql/issues/375><code>dbt-prql</code></a>.</p><h2 id=not-in-focus>Not in focus</h2><p>We should focus on solving a distinct problem really well. PRQL&rsquo;s goal is to
+<a href=https://github.com/prql/prql/issues/375 target=_blank rel=noopener><code>dbt-prql</code><sup><i class="bx bx-link-external"></i></sup></a>
+.</p><h2 id=not-in-focus>Not in focus</h2><p>We should focus on solving a distinct problem really well. PRQL&rsquo;s goal is to
 make reading and writing analytical queries easier, and so for the moment that
 means putting some things out of scope:</p><ul><li>Building infrastructure outside of queries, like lineage. dbt is excellent at
-that! (<a href=https://github.com/prql/prql/issues/13>#13</a>).</li><li>Writing DDL / index / schema manipulation / inserting data
-(<a href=https://github.com/prql/prql/issues/16>#16</a>).</li></ul></div></div></article></main><footer id=footer><div class=container><div class=row><div class="col-md-6 py-3"><h3>Help the project</h3><ul><li>Send a link to PRQL to a couple of people whose opinion you respect.</li><li>Rewrite any of your own queries to PRQL to see if it makes sense.
-You can use the <a href=https://prql-lang.org/playground>playground</a> and submit issues
-<a href=https://github.com/prql/prql/issues>here</a>. We are looking for any
+that! (
+<a href=https://github.com/prql/prql/issues/13 target=_blank rel=noopener>#13<sup><i class="bx bx-link-external"></i></sup></a>
+).</li><li>Writing DDL / index / schema manipulation / inserting data
+(
+<a href=https://github.com/prql/prql/issues/16 target=_blank rel=noopener>#16<sup><i class="bx bx-link-external"></i></sup></a>
+).</li></ul></div></div></article></main><footer id=footer><div class=container><div class=row><div class="col-md-6 py-3"><h3>Help the project</h3><ul><li>Send a link to PRQL to a couple of people whose opinion you respect.</li><li>Rewrite any of your own queries to PRQL to see if it makes sense.
+You can use the
+<a href=https://prql-lang.org/playground target=_blank rel=noopener>playground<sup><i class="bx bx-link-external"></i></sup></a>
+and submit issues
+<a href=https://github.com/prql/prql/issues target=_blank rel=noopener>here<sup><i class="bx bx-link-external"></i></sup></a>
+. We are looking for any
 use-cases that expose a poor design choice, a need of a feature, a pain point
 or are just a sharp edge of the language.</li></ul><a class=btn href=https://github.com/prql/prql target=_blank>Contribute<sup><i class="bx bx-link-external"></i></sup></a></div><div class="col-md-6 py-3 text-end"><p>Subscribe to
-<a href=https://github.com/prql/prql/issues/1>issue #1 for a GitHub notification on updates</a>.</p><p>Join our
-<a href=https://discord.com/invite/eQcfaCmsNc>Discord server.</a></p><p><a class=btn-icon href=https://github.com/prql/prql target=_blank title="GitHub repository"><i class="bx bxl-github"></i></a>
+<a href=https://github.com/prql/prql/issues/1 target=_blank rel=noopener>issue #1 for a GitHub notification on updates<sup><i class="bx bx-link-external"></i></sup></a>
+.</p><p>Join our
+<a href=https://discord.com/invite/eQcfaCmsNc target=_blank rel=noopener>Discord server<sup><i class="bx bx-link-external"></i></sup></a>
+.</p><p><a class=btn-icon href=https://github.com/prql/prql target=_blank title="GitHub repository"><i class="bx bxl-github"></i></a>
 <a class=btn-icon href=https://discord.com/invite/eQcfaCmsNc target=_blank title="Join the Discord"><i class="bx bxl-discord"></i></a></p><p>© 2022, PRQL developers. Apache 2.0 Licensed</p></div></div></div></footer><a href=# class="back-to-top d-flex align-items-center justify-content-center"><i class="bx bx-up-arrow-alt"></i></a>
 <script src=/main.js></script>
 <script src=/plugins/bootstrap/bootstrap.bundle.min.js></script></body></html>
