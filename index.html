@@ -32,12 +32,16 @@ Dates</button>
 Orthogonality</button>
 <button class=nav-link id=v-pills-f-strings-tab data-bs-toggle=pill data-bs-target=#v-pills-f-strings type=button role=tab aria-controls=v-pills-f-strings aria-selected=false>
 F-strings</button>
+<button class=nav-link id=v-pills-windows-tab data-bs-toggle=pill data-bs-target=#v-pills-windows type=button role=tab aria-controls=v-pills-windows aria-selected=false>
+Windows</button>
 <button class=nav-link id=v-pills-functions-tab data-bs-toggle=pill data-bs-target=#v-pills-functions type=button role=tab aria-controls=v-pills-functions aria-selected=false>
 Functions</button>
 <button class=nav-link id=v-pills-top-n-tab data-bs-toggle=pill data-bs-target=#v-pills-top-n type=button role=tab aria-controls=v-pills-top-n aria-selected=false>
 Top n items</button>
 <button class=nav-link id=v-pills-s-string-tab data-bs-toggle=pill data-bs-target=#v-pills-s-string type=button role=tab aria-controls=v-pills-s-string aria-selected=false>
 S-strings</button>
+<button class=nav-link id=v-pills-joins-tab data-bs-toggle=pill data-bs-target=#v-pills-joins type=button role=tab aria-controls=v-pills-joins aria-selected=false>
+Joins</button>
 <button class=nav-link id=v-pills-null-handling-tab data-bs-toggle=pill data-bs-target=#v-pills-null-handling type=button role=tab aria-controls=v-pills-null-handling aria-selected=false>
 Null handling</button>
 <button class=nav-link id=v-pills-dialects-tab data-bs-toggle=pill data-bs-target=#v-pills-dialects type=button role=tab aria-controls=v-pills-dialects aria-selected=false>
@@ -51,16 +55,17 @@ take 10
 FROM employees
 ORDER BY age
 LIMIT 10
-</code></pre></div><div class="tab-pane fade row" id=v-pills-friendly-syntax role=tabpanel aria-labelledby=v-pills-friendly-syntax-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from order  # This is a comment
+</code></pre></div><div class="tab-pane fade row" id=v-pills-friendly-syntax role=tabpanel aria-labelledby=v-pills-friendly-syntax-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from order               # This is a comment
 filter status == &#34;done&#34;
-sort [-amount]  # sort order
+sort [-amount]           # sort order
 </code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT
-  order.*,
-  amount * COALESCE(promo, 0) AS promo_amount
-FROM order
-WHERE created_at &gt; DATE &#39;2022-06-13&#39;
-  AND status = &#39;done&#39;
-ORDER BY amount DESC
+  order.*
+FROM
+  order
+WHERE
+  status = &#39;done&#39;
+ORDER BY
+  amount DESC
 </code></pre></div><div class="tab-pane fade row" id=v-pills-dates role=tabpanel aria-labelledby=v-pills-dates-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from employees
 derive [
   age_at_year_end = (@2022-12-31 - dob),
@@ -97,6 +102,23 @@ select url = f&#34;http://www.{domain}.{tld}/{page}&#34;
 </code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT CONCAT(&#39;http://www.&#39;, domain, &#39;.&#39;, tld,
   &#39;/&#39;, page) AS url
 FROM web
+</code></pre></div><div class="tab-pane fade row" id=v-pills-windows role=tabpanel aria-labelledby=v-pills-windows-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from employees
+group employee_id (
+  sort month
+  window rolling:12 (
+    derive [trail_12_m_comp = sum paycheck]
+  )
+)
+</code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT
+  employees.*,
+  SUM(paycheck) OVER (
+    PARTITION BY employee_id
+    ORDER BY
+      month ROWS BETWEEN 11 PRECEDING
+      AND CURRENT ROW
+  ) AS trail_12_m_comp
+FROM
+  employees
 </code></pre></div><div class="tab-pane fade row" id=v-pills-functions role=tabpanel aria-labelledby=v-pills-functions-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>func fahrenheit_from_celsius temp -&gt; temp * 9/5 &#43; 32
 
 from weather
@@ -115,7 +137,7 @@ group role (
 </code></pre><pre><code class="language-sql hljs" data-lang=sql>WITH table_0 AS (
   SELECT
     employees.*,
-    ROW NUMBER() OVER (
+    ROW_NUMBER() OVER (
       PARTITION BY role
       ORDER BY
         join_date
@@ -134,6 +156,18 @@ WHERE
 derive db_version = s&#34;version()&#34;
 </code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT
   version() AS db_version
+</code></pre></div><div class="tab-pane fade row" id=v-pills-joins role=tabpanel aria-labelledby=v-pills-joins-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from employees
+join benefits [employee_id]
+join side:left p=positions [id==employee_id]
+select [employee_id, role, vision_coverage]
+</code></pre><pre><code class="language-sql hljs" data-lang=sql>SELECT
+  employee_id,
+  role,
+  vision_coverage
+FROM
+  employees
+  JOIN benefits USING(employee_id)
+  LEFT JOIN positions AS p ON id = employee_id
 </code></pre></div><div class="tab-pane fade row" id=v-pills-null-handling role=tabpanel aria-labelledby=v-pills-null-handling-tab tabindex=0><pre><code class="language-prql hljs" data-lang=prql>from users
 filter last_login != null
 filter deleted_at == null
@@ -158,7 +192,7 @@ FROM
 ORDER BY
   age
 </code></pre></div></div></div></div></div></section><section class="content-section cards-section"><div class=container><div class="row content"><div class=section-title><h2>Integrations</h2></div><div class="row row-cols-1 row-cols-lg-4 justify-content-left"><div class="col g-3"><div class=card><h4><a href=https://github.com/prql/dbt-prql target=_blank rel=noopener>dbt<sup><i class="bx bx-link-external"></i></sup></a></h4>Allows writing PRQL in dbt models. This combines the benefits of PRQL&rsquo;s power & simplicity within queries; with dbt&rsquo;s version control, lineage & testing across queries.</div></div><div class="col g-3"><div class=card><h4><a href=https://pyprql.readthedocs.io/en/latest/magic_readme.html target=_blank rel=noopener>Jupyter/IPython<sup><i class="bx bx-link-external"></i></sup></a></h4>PyPrql contains a Jupyter extension, which executes a PRQL cell against a database. It can also set up an in-memory DuckDB instance, populated with a pandas DataFrame.</div></div><div class="col g-3"><div class=card><h4><a href="https://marketplace.visualstudio.com/items?itemName=prql.prql" target=_blank rel=noopener>Visual Studio Code<sup><i class="bx bx-link-external"></i></sup></a></h4>Extension with syntax highlighting and an upcoming language server.</div></div><div class="col g-3"><div class=card><h4><a href=https://prql-lang.org/book/integrations/prefect.html target=_blank rel=noopener>Prefect<sup><i class="bx bx-link-external"></i></sup></a></h4>Add PRQL models to your Prefect workflows with a single function.</div></div></div></div></div></section><section class="content-section cards-section"><div class=container><div class="row content"><div class=section-title><h2>Tools</h2></div><div class="row row-cols-1 row-cols-lg-4 justify-content-left"><div class="col g-3"><div class=card><h4><a href=https://prql-lang.org/playground/ target=_blank rel=noopener>Playground<sup><i class="bx bx-link-external"></i></sup></a></h4>Online in-browser playground that compiles PRQL to SQL as you type.</div></div><div class="col g-3"><div class=card><h4><a href=https://github.com/prql/PyPrql target=_blank rel=noopener>PyPrql<sup><i class="bx bx-link-external"></i></sup></a></h4><p>Python TUI for connecting to databases.
-Provides a native interactive console with auto-complete for column names and Jupyter/IPython cell magic.</p><p><code>pip install pyprql</code></p></div></div><div class="col g-3"><div class=card><h4><a href=https://github.com/prql/prql target=_blank rel=noopener>prql-compiler<sup><i class="bx bx-link-external"></i></sup></a></h4><p>Reference compiler implementation. Has a CLI utility that can transpile, format and annotate PRQL queries.</p><p><code>brew install prql/prq/prql-compiler</code></p></div></div></div></div></div></section><section class="content-section cards-section"><div class=container><div class="row content"><div class=section-title><h2>Bindings</h2></div><div class="row row-cols-1 row-cols-lg-4 justify-content-left"><div class="col g-3"><div class=card><h4><a href=https://pypi.org/project/prql-python target=_blank rel=noopener>prql-python<sup><i class="bx bx-link-external"></i></sup></a></h4>Python bindings for prql-compiler.</div></div><div class="col g-3"><div class=card><h4><a href=https://www.npmjs.com/package/prql-js target=_blank rel=noopener>prql-js<sup><i class="bx bx-link-external"></i></sup></a></h4>JavaScript bindings for prql-compiler.</div></div><div class="col g-3"><div class=card><h4><a href=https://crates.io/crates/prql-compiler target=_blank rel=noopener>prql-compiler<sup><i class="bx bx-link-external"></i></sup></a></h4><p>PRQL&rsquo;s compiler library, written in Rust.</p><p><code>cargo install prql-compiler</code></p></div></div></div></div></div></section><section class="content-section comments-section"><div class=container><div class=row><div class=section-title><h2>What people are saying</h2></div><div class="row row-cols justify-content-center"><div class=card-container><div class="card quote" style=margin-top:10px;margin-bottom:10px;height:unset><p class=quote-text>It starts with FROM, it fixes trailing commas, and it's called PRQL?? If this is a dream, don't wake me up.
+Provides a native interactive console with auto-complete for column names and Jupyter/IPython cell magic.</p><p><code>pip install pyprql</code></p></div></div><div class="col g-3"><div class=card><h4><a href=https://github.com/prql/prql target=_blank rel=noopener>prql-compiler<sup><i class="bx bx-link-external"></i></sup></a></h4><p>Reference compiler implementation. Has a CLI utility that can transpile, format and annotate PRQL queries.</p><p><code>brew install prql/prql/prql-compiler</code></p></div></div></div></div></div></section><section class="content-section cards-section"><div class=container><div class="row content"><div class=section-title><h2>Bindings</h2></div><div class="row row-cols-1 row-cols-lg-4 justify-content-left"><div class="col g-3"><div class=card><h4><a href=https://pypi.org/project/prql-python target=_blank rel=noopener>prql-python<sup><i class="bx bx-link-external"></i></sup></a></h4>Python bindings for prql-compiler.</div></div><div class="col g-3"><div class=card><h4><a href=https://www.npmjs.com/package/prql-js target=_blank rel=noopener>prql-js<sup><i class="bx bx-link-external"></i></sup></a></h4>JavaScript bindings for prql-compiler.</div></div><div class="col g-3"><div class=card><h4><a href=https://crates.io/crates/prql-compiler target=_blank rel=noopener>prql-compiler<sup><i class="bx bx-link-external"></i></sup></a></h4><p>PRQL&rsquo;s compiler library, written in Rust.</p><p><code>cargo install prql-compiler</code></p></div></div></div></div></div></section><section class="content-section comments-section"><div class=container><div class=row><div class=section-title><h2>What people are saying</h2></div><div class="row row-cols justify-content-center"><div class=card-container><div class="card quote" style=margin-top:10px;margin-bottom:10px;height:unset><p class=quote-text>It starts with FROM, it fixes trailing commas, and it's called PRQL?? If this is a dream, don't wake me up.
 <span>— Jeremiah Lowin, Founder & CEO, Prefect.</span></p></div></div><div class=card-container><blockquote class=twitter-tweet data-conversation=none data-cards=hidden data-dnt=true><p lang=en dir=ltr>very excited for prql!</p>&mdash; Hamilton Ulmer (@hamiltonulmer) <a href="https://twitter.com/hamiltonulmer/status/1522562664467107840?ref_src=twsrc%5Etfw">May 6, 2022</a></blockquote><script async src=https://platform.twitter.com/widgets.js></script></div><div class=card-container><blockquote class=twitter-tweet data-cards=hidden data-dnt=true><p lang=en dir=ltr>A few years ago, I started working on a language, called "dsql", short for declarative SQL, and a pun on "the sequel (to SQL)". I kinda chickened out of it then, the amount of study and research I needed was massive.<br><br>prql here is better than I imagined: <a href=https://t.co/s4ROGBX3Bo>https://t.co/s4ROGBX3Bo</a></p>&mdash; Swanand P (@_swanand) <a href="https://twitter.com/_swanand/status/1485965394880131081?ref_src=twsrc%5Etfw">January 25, 2022</a></blockquote><script async src=https://platform.twitter.com/widgets.js></script></div><div class=card-container><div class="card quote" style=margin-top:10px;margin-bottom:10px;height:unset><a class=quote-text href="https://news.ycombinator.com/item?id=30064873" target=_blank>Column aliases would have saved me hundreds of hours over the course of my career.
 <span>— @dvasdekis</span></a></div></div><div class=card-container><blockquote class=twitter-tweet data-cards=hidden data-dnt=true><p lang=en dir=ltr>SQL's hold on data retrieval is slipping! 8 new databases are emerging, and some speak entirely new languages for data querying. Know more <a href=https://t.co/nZ5VTD0Daz>https://t.co/nZ5VTD0Daz</a> <a href="https://twitter.com/hashtag/SQL?src=hash&ref_src=twsrc%5Etfw">#SQL</a> <a href="https://twitter.com/hashtag/DataQuery?src=hash&ref_src=twsrc%5Etfw">#DataQuery</a> <a href="https://twitter.com/hashtag/GraphQL?src=hash&ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/PRQL?src=hash&ref_src=twsrc%5Etfw">#PRQL</a> <a href="https://twitter.com/hashtag/WebAssembly?src=hash&ref_src=twsrc%5Etfw">#WebAssembly</a></p>&mdash; Rishabh Software (@RishabhSoft) <a href="https://twitter.com/RishabhSoft/status/1514280454890872833?ref_src=twsrc%5Etfw">April 13, 2022</a></blockquote><script async src=https://platform.twitter.com/widgets.js></script></div><div class=card-container><blockquote class=twitter-tweet data-cards=hidden data-dnt=true><p lang=en dir=ltr>I want to give the PRQL a little boost here, "pipeline of transformations" is IMHO a good choice for readable query languages that need to deal with SQL-like aggregations, group by and count and sum all: <a href=https://t.co/MVAkEMgyj3>https://t.co/MVAkEMgyj3</a></p>&mdash; Burak Emir (@burakemir) <a href="https://twitter.com/burakemir/status/1485958835844100098?ref_src=twsrc%5Etfw">January 25, 2022</a></blockquote><script async src=https://platform.twitter.com/widgets.js></script></div><div class=card-container><div class="card quote" style=margin-top:10px;margin-bottom:10px;height:unset><a class=quote-text href=https://lobste.rs/s/oavgcx/prql_simpler_more_powerful_sql#c_nmzcd7 target=_blank>Having written some complex dbt projects...the first thing...it gets right is to start with the table and work down. This is an enormous readability boost in large projects and leads to great intellisense.
 <span>— Ruben Slabbert</span></a></div></div><div class=card-container><blockquote class=twitter-tweet data-cards=hidden data-dnt=true><p lang=en dir=ltr>what an *excellent* criticism of SQL<a href="https://twitter.com/hashtag/PRQL?src=hash&ref_src=twsrc%5Etfw">#PRQL</a> <a href=https://t.co/NYtKb4VkBl>https://t.co/NYtKb4VkBl</a></p>&mdash; Michael Sumner (@mdsumner) <a href="https://twitter.com/mdsumner/status/1485795181198983170?ref_src=twsrc%5Etfw">January 25, 2022</a></blockquote><script async src=https://platform.twitter.com/widgets.js></script></div><div class=card-container><div class="card quote" style=margin-top:10px;margin-bottom:10px;height:unset><a class=quote-text href="https://news.ycombinator.com/item?id=30063771" target=_blank>Just wanna say, I absolutely love this.
