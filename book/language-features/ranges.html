@@ -141,23 +141,27 @@
                     <main>
                         <h1 id="ranges"><a class="header" href="#ranges">Ranges</a></h1>
 <p>PRQL has a concise range syntax <code>start..end</code>.</p>
-<p>This can be used in filters with the <code>in</code> function:</p>
+<p>This can be used in filters with the <code>in</code> function, with any type of literal,
+including dates:</p>
 <div class="comparison">
 <div>
 <h4 id="prql"><a class="header" href="#prql">PRQL</a></h4>
-<pre><code class="language-prql">from employees
-filter (age | in 18..40)
+<pre><code class="language-prql">from events
+filter (date | in @1776-07-04..@1787-09-17)
+filter (magnitude | in 50..100)
 </code></pre>
 </div>
 <div>
 <h4 id="sql"><a class="header" href="#sql">SQL</a></h4>
 <pre><code class="language-sql">SELECT
-  employees.*
+  events.*
 FROM
-  employees
+  events
 WHERE
-  age BETWEEN 18
-  AND 40
+  date BETWEEN DATE '1776-07-04'
+  AND DATE '1787-09-17'
+  AND magnitude BETWEEN 50
+  AND 100
 </code></pre>
 </div>
 </div>
@@ -186,6 +190,8 @@ LIMIT
 </code></pre>
 </div>
 </div>
+<h2 id="roadmap"><a class="header" href="#roadmap">Roadmap</a></h2>
+<p>We’d like to use this for more like whether an object is in an array or list literal.</p>
 
                     </main>
 
