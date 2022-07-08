@@ -890,7 +890,7 @@ FROM
 </div>
 </div>
 <p><code>derive</code> generally computes a column from existing columns, but can also take a
-literal in which case it can begin a pipeline <code>from</code>:</p>
+literal in which case it can begin a pipeline without a <code>from</code>:</p>
 <div class="comparison">
 <div>
 <h4 id="prql-25"><a class="header" href="#prql-25">PRQL</a></h4>
@@ -1147,7 +1147,7 @@ FROM
 </div>
 </div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="select"><a class="header" href="#select">Select</a></h1>
-<p>Picks and compute columns.</p>
+<p>Picks and computes columns.</p>
 <pre><code class="language-prql_no_test">select [{assign_expression}]
 </code></pre>
 <h2 id="examples-6"><a class="header" href="#examples-6">Examples</a></h2>
@@ -2589,7 +2589,8 @@ $ git clone https://github.com/vrajmohan/pgsql-sample-data.git
 $ psql -U postgres -d employees -f pgsql-sample-data/employee/employees.dump
 </code></pre>
 <p>Execute a PRQL query:</p>
-<pre><code>$ cargo run compile examples/employees/average-title-salary.prql | psql -U postgres -d employees
+<pre><code>$ cd prql-compiler
+$ cargo run compile examples/employees/average-title-salary.prql | psql -U postgres -d employees
 </code></pre>
 <h2 id="task-1"><a class="header" href="#task-1">Task 1</a></h2>
 <blockquote>
