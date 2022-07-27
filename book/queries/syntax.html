@@ -329,24 +329,22 @@ FROM
 </div>
 <h2 id="backticks"><a class="header" href="#backticks">Backticks</a></h2>
 <p>To use identifiers that are otherwise invalid, surround them with backticks.
-Depending on the dialect, these will remain as backticks or be converted to double-quotes</p>
+Depending on the dialect, these will remain as backticks or be converted to
+double-quotes</p>
 <div class="comparison">
 <div>
 <h4 id="prql-7"><a class="header" href="#prql-7">PRQL</a></h4>
-<pre><code class="language-prql">prql dialect:bigquery
-from `project-foo.dataset.table`
-join `project-bar.dataset.table` [col_bax]
+<pre><code class="language-prql">prql dialect:mysql
+from employees
+select `first name`
 </code></pre>
 </div>
 <div>
 <h4 id="sql-7"><a class="header" href="#sql-7">SQL</a></h4>
 <pre><code class="language-sql">SELECT
-  `project-foo`.dataset.table.*,
-  `project-bar`.dataset.table.*,
-  col_bax
+  `first name`
 FROM
-  `project-foo`.dataset.table
-  JOIN `project-bar`.dataset.table USING(col_bax)
+  employees
 </code></pre>
 </div>
 </div>
@@ -364,6 +362,28 @@ select `first name`
   &quot;first name&quot;
 FROM
   employees
+</code></pre>
+</div>
+</div>
+<p>BigQuery also uses backticks to surround project &amp; dataset names (even if valid
+identifiers) in the <code>SELECT</code> statement:</p>
+<div class="comparison">
+<div>
+<h4 id="prql-9"><a class="header" href="#prql-9">PRQL</a></h4>
+<pre><code class="language-prql">prql dialect:bigquery
+from `project-foo.dataset.table`
+join `project-bar.dataset.table` [col_bax]
+</code></pre>
+</div>
+<div>
+<h4 id="sql-9"><a class="header" href="#sql-9">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  `project-foo.dataset.table`.*,
+  `project-bar.dataset.table`.*,
+  col_bax
+FROM
+  `project-foo.dataset.table`
+  JOIN `project-bar.dataset.table` USING(col_bax)
 </code></pre>
 </div>
 </div>

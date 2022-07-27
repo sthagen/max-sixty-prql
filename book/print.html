@@ -685,24 +685,22 @@ FROM
 </div>
 <h2 id="backticks"><a class="header" href="#backticks">Backticks</a></h2>
 <p>To use identifiers that are otherwise invalid, surround them with backticks.
-Depending on the dialect, these will remain as backticks or be converted to double-quotes</p>
+Depending on the dialect, these will remain as backticks or be converted to
+double-quotes</p>
 <div class="comparison">
 <div>
 <h4 id="prql-18"><a class="header" href="#prql-18">PRQL</a></h4>
-<pre><code class="language-prql">prql dialect:bigquery
-from `project-foo.dataset.table`
-join `project-bar.dataset.table` [col_bax]
+<pre><code class="language-prql">prql dialect:mysql
+from employees
+select `first name`
 </code></pre>
 </div>
 <div>
 <h4 id="sql-18"><a class="header" href="#sql-18">SQL</a></h4>
 <pre><code class="language-sql">SELECT
-  `project-foo`.dataset.table.*,
-  `project-bar`.dataset.table.*,
-  col_bax
+  `first name`
 FROM
-  `project-foo`.dataset.table
-  JOIN `project-bar`.dataset.table USING(col_bax)
+  employees
 </code></pre>
 </div>
 </div>
@@ -723,6 +721,28 @@ FROM
 </code></pre>
 </div>
 </div>
+<p>BigQuery also uses backticks to surround project &amp; dataset names (even if valid
+identifiers) in the <code>SELECT</code> statement:</p>
+<div class="comparison">
+<div>
+<h4 id="prql-20"><a class="header" href="#prql-20">PRQL</a></h4>
+<pre><code class="language-prql">prql dialect:bigquery
+from `project-foo.dataset.table`
+join `project-bar.dataset.table` [col_bax]
+</code></pre>
+</div>
+<div>
+<h4 id="sql-20"><a class="header" href="#sql-20">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  `project-foo.dataset.table`.*,
+  `project-bar.dataset.table`.*,
+  col_bax
+FROM
+  `project-foo.dataset.table`
+  JOIN `project-bar.dataset.table` USING(col_bax)
+</code></pre>
+</div>
+</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="query-header-dialect--version"><a class="header" href="#query-header-dialect--version">Query header: Dialect &amp; Version</a></h1>
 <h2 id="dialect"><a class="header" href="#dialect">Dialect</a></h2>
 <p>PRQL allows specifying a dialect at the top of the query, which allows PRQL to
@@ -730,7 +750,7 @@ compile to a database-specific SQL flavor.</p>
 <h3 id="examples"><a class="header" href="#examples">Examples</a></h3>
 <div class="comparison">
 <div>
-<h4 id="prql-20"><a class="header" href="#prql-20">PRQL</a></h4>
+<h4 id="prql-21"><a class="header" href="#prql-21">PRQL</a></h4>
 <pre><code class="language-prql">prql dialect:postgres
 
 from employees
@@ -739,7 +759,7 @@ take 10
 </code></pre>
 </div>
 <div>
-<h4 id="sql-20"><a class="header" href="#sql-20">SQL</a></h4>
+<h4 id="sql-21"><a class="header" href="#sql-21">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -753,7 +773,7 @@ LIMIT
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-21"><a class="header" href="#prql-21">PRQL</a></h4>
+<h4 id="prql-22"><a class="header" href="#prql-22">PRQL</a></h4>
 <pre><code class="language-prql">prql dialect:mssql
 
 from employees
@@ -762,7 +782,7 @@ take 10
 </code></pre>
 </div>
 <div>
-<h4 id="sql-21"><a class="header" href="#sql-21">SQL</a></h4>
+<h4 id="sql-22"><a class="header" href="#sql-22">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   TOP (10) employees.*
 FROM
@@ -794,14 +814,14 @@ Contributions are very welcome.</p>
 <p>PRQL allows specifying a version of the language in the PRQL header, like:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-22"><a class="header" href="#prql-22">PRQL</a></h4>
+<h4 id="prql-23"><a class="header" href="#prql-23">PRQL</a></h4>
 <pre><code class="language-prql">prql version:1
 
 from employees
 </code></pre>
 </div>
 <div>
-<h4 id="sql-22"><a class="header" href="#sql-22">SQL</a></h4>
+<h4 id="sql-23"><a class="header" href="#sql-23">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -842,7 +862,7 @@ one fulfilling a specific purpose. That’s often referred to as “orthogonalit
 <h2 id="examples-1"><a class="header" href="#examples-1">Examples</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-23"><a class="header" href="#prql-23">PRQL</a></h4>
+<h4 id="prql-24"><a class="header" href="#prql-24">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 aggregate [
   average salary,
@@ -851,7 +871,7 @@ aggregate [
 </code></pre>
 </div>
 <div>
-<h4 id="sql-23"><a class="header" href="#sql-23">SQL</a></h4>
+<h4 id="sql-24"><a class="header" href="#sql-24">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   AVG(salary),
   COUNT(*) AS ct
@@ -862,7 +882,7 @@ FROM
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-24"><a class="header" href="#prql-24">PRQL</a></h4>
+<h4 id="prql-25"><a class="header" href="#prql-25">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 group [title, country] (
   aggregate [
@@ -873,7 +893,7 @@ group [title, country] (
 </code></pre>
 </div>
 <div>
-<h4 id="sql-24"><a class="header" href="#sql-24">SQL</a></h4>
+<h4 id="sql-25"><a class="header" href="#sql-25">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   title,
   country,
@@ -894,13 +914,13 @@ GROUP BY
 <h2 id="examples-2"><a class="header" href="#examples-2">Examples</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-25"><a class="header" href="#prql-25">PRQL</a></h4>
+<h4 id="prql-26"><a class="header" href="#prql-26">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 derive gross_salary = salary + payroll_tax
 </code></pre>
 </div>
 <div>
-<h4 id="sql-25"><a class="header" href="#sql-25">SQL</a></h4>
+<h4 id="sql-26"><a class="header" href="#sql-26">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*,
   salary + payroll_tax AS gross_salary
@@ -911,7 +931,7 @@ FROM
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-26"><a class="header" href="#prql-26">PRQL</a></h4>
+<h4 id="prql-27"><a class="header" href="#prql-27">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 derive [
   gross_salary = salary + payroll_tax,
@@ -920,7 +940,7 @@ derive [
 </code></pre>
 </div>
 <div>
-<h4 id="sql-26"><a class="header" href="#sql-26">SQL</a></h4>
+<h4 id="sql-27"><a class="header" href="#sql-27">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*,
   salary + payroll_tax AS gross_salary,
@@ -934,12 +954,12 @@ FROM
 literal in which case it can begin a pipeline without a <code>from</code>:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-27"><a class="header" href="#prql-27">PRQL</a></h4>
+<h4 id="prql-28"><a class="header" href="#prql-28">PRQL</a></h4>
 <pre><code class="language-prql">derive x = 5
 </code></pre>
 </div>
 <div>
-<h4 id="sql-27"><a class="header" href="#sql-27">SQL</a></h4>
+<h4 id="sql-28"><a class="header" href="#sql-28">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   5 AS x
 </code></pre>
@@ -952,13 +972,13 @@ literal in which case it can begin a pipeline without a <code>from</code>:</p>
 <h2 id="examples-3"><a class="header" href="#examples-3">Examples</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-28"><a class="header" href="#prql-28">PRQL</a></h4>
+<h4 id="prql-29"><a class="header" href="#prql-29">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 filter age &gt; 25
 </code></pre>
 </div>
 <div>
-<h4 id="sql-28"><a class="header" href="#sql-28">SQL</a></h4>
+<h4 id="sql-29"><a class="header" href="#sql-29">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -970,13 +990,13 @@ WHERE
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-29"><a class="header" href="#prql-29">PRQL</a></h4>
+<h4 id="prql-30"><a class="header" href="#prql-30">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 filter (age | in 25..40)
 </code></pre>
 </div>
 <div>
-<h4 id="sql-29"><a class="header" href="#sql-29">SQL</a></h4>
+<h4 id="sql-30"><a class="header" href="#sql-30">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -994,12 +1014,12 @@ WHERE
 <h2 id="examples-4"><a class="header" href="#examples-4">Examples</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-30"><a class="header" href="#prql-30">PRQL</a></h4>
+<h4 id="prql-31"><a class="header" href="#prql-31">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 </code></pre>
 </div>
 <div>
-<h4 id="sql-30"><a class="header" href="#sql-30">SQL</a></h4>
+<h4 id="sql-31"><a class="header" href="#sql-31">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -1010,13 +1030,13 @@ FROM
 <p>To introduce an alias, use an assign expression:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-31"><a class="header" href="#prql-31">PRQL</a></h4>
+<h4 id="prql-32"><a class="header" href="#prql-32">PRQL</a></h4>
 <pre><code class="language-prql">from e = employees
 select e.first_name
 </code></pre>
 </div>
 <div>
-<h4 id="sql-31"><a class="header" href="#sql-31">SQL</a></h4>
+<h4 id="sql-32"><a class="header" href="#sql-32">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   first_name
 FROM
@@ -1032,7 +1052,7 @@ FROM
 <p>The most conventional use of <code>group</code> is with <code>aggregate</code>:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-32"><a class="header" href="#prql-32">PRQL</a></h4>
+<h4 id="prql-33"><a class="header" href="#prql-33">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 group [title, country] (
   aggregate [
@@ -1043,7 +1063,7 @@ group [title, country] (
 </code></pre>
 </div>
 <div>
-<h4 id="sql-32"><a class="header" href="#sql-32">SQL</a></h4>
+<h4 id="sql-33"><a class="header" href="#sql-33">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   title,
   country,
@@ -1062,14 +1082,14 @@ it would to the table — for example finding the employee who joined first acro
 the whole table:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-33"><a class="header" href="#prql-33">PRQL</a></h4>
+<h4 id="prql-34"><a class="header" href="#prql-34">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 sort join_date
 take 1
 </code></pre>
 </div>
 <div>
-<h4 id="sql-33"><a class="header" href="#sql-33">SQL</a></h4>
+<h4 id="sql-34"><a class="header" href="#sql-34">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -1085,7 +1105,7 @@ LIMIT
 same pipeline, but within a <code>group</code> expression:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-34"><a class="header" href="#prql-34">PRQL</a></h4>
+<h4 id="prql-35"><a class="header" href="#prql-35">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 group role (
   sort join_date  # taken from above
@@ -1094,7 +1114,7 @@ group role (
 </code></pre>
 </div>
 <div>
-<h4 id="sql-34"><a class="header" href="#sql-34">SQL</a></h4>
+<h4 id="sql-35"><a class="header" href="#sql-35">SQL</a></h4>
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
     employees.*,
@@ -1134,13 +1154,13 @@ contain one column for each specified column.</li>
 <h2 id="examples-5"><a class="header" href="#examples-5">Examples</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-35"><a class="header" href="#prql-35">PRQL</a></h4>
+<h4 id="prql-36"><a class="header" href="#prql-36">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 join side:left positions [id==employee_id]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-35"><a class="header" href="#sql-35">SQL</a></h4>
+<h4 id="sql-36"><a class="header" href="#sql-36">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*,
   positions.*
@@ -1152,13 +1172,13 @@ FROM
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-36"><a class="header" href="#prql-36">PRQL</a></h4>
+<h4 id="prql-37"><a class="header" href="#prql-37">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 join side:full positions [emp_no]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-36"><a class="header" href="#sql-36">SQL</a></h4>
+<h4 id="sql-37"><a class="header" href="#sql-37">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*,
   positions.*,
@@ -1171,13 +1191,13 @@ FROM
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-37"><a class="header" href="#prql-37">PRQL</a></h4>
+<h4 id="prql-38"><a class="header" href="#prql-38">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 join side:left p=positions [id==employee_id]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-37"><a class="header" href="#sql-37">SQL</a></h4>
+<h4 id="sql-38"><a class="header" href="#sql-38">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*,
   p.*
@@ -1194,13 +1214,13 @@ FROM
 <h2 id="examples-6"><a class="header" href="#examples-6">Examples</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-38"><a class="header" href="#prql-38">PRQL</a></h4>
+<h4 id="prql-39"><a class="header" href="#prql-39">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 select first_name
 </code></pre>
 </div>
 <div>
-<h4 id="sql-38"><a class="header" href="#sql-38">SQL</a></h4>
+<h4 id="sql-39"><a class="header" href="#sql-39">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   first_name
 FROM
@@ -1210,13 +1230,13 @@ FROM
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-39"><a class="header" href="#prql-39">PRQL</a></h4>
+<h4 id="prql-40"><a class="header" href="#prql-40">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 select [first_name, last_name]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-39"><a class="header" href="#sql-39">SQL</a></h4>
+<h4 id="sql-40"><a class="header" href="#sql-40">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   first_name,
   last_name
@@ -1227,13 +1247,13 @@ FROM
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-40"><a class="header" href="#prql-40">PRQL</a></h4>
+<h4 id="prql-41"><a class="header" href="#prql-41">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 select name = f&quot;{first_name} {last_name}&quot;
 </code></pre>
 </div>
 <div>
-<h4 id="sql-40"><a class="header" href="#sql-40">SQL</a></h4>
+<h4 id="sql-41"><a class="header" href="#sql-41">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   CONCAT(first_name, ' ', last_name) AS name
 FROM
@@ -1243,7 +1263,7 @@ FROM
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-41"><a class="header" href="#prql-41">PRQL</a></h4>
+<h4 id="prql-42"><a class="header" href="#prql-42">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 select [
   name = f&quot;{first_name} {last_name}&quot;,
@@ -1252,7 +1272,7 @@ select [
 </code></pre>
 </div>
 <div>
-<h4 id="sql-41"><a class="header" href="#sql-41">SQL</a></h4>
+<h4 id="sql-42"><a class="header" href="#sql-42">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   CONCAT(first_name, ' ', last_name) AS name,
   dob - DATE '2022-12-31' AS age_eoy
@@ -1279,13 +1299,13 @@ FROM
 <h2 id="examples-7"><a class="header" href="#examples-7">Examples</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-42"><a class="header" href="#prql-42">PRQL</a></h4>
+<h4 id="prql-43"><a class="header" href="#prql-43">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 sort age
 </code></pre>
 </div>
 <div>
-<h4 id="sql-42"><a class="header" href="#sql-42">SQL</a></h4>
+<h4 id="sql-43"><a class="header" href="#sql-43">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -1297,13 +1317,13 @@ ORDER BY
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-43"><a class="header" href="#prql-43">PRQL</a></h4>
+<h4 id="prql-44"><a class="header" href="#prql-44">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 sort [-age]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-43"><a class="header" href="#sql-43">SQL</a></h4>
+<h4 id="sql-44"><a class="header" href="#sql-44">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -1315,13 +1335,13 @@ ORDER BY
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-44"><a class="header" href="#prql-44">PRQL</a></h4>
+<h4 id="prql-45"><a class="header" href="#prql-45">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 sort [age, -tenure, +salary]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-44"><a class="header" href="#sql-44">SQL</a></h4>
+<h4 id="sql-45"><a class="header" href="#sql-45">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -1347,13 +1367,13 @@ work.</p>
 <h2 id="examples-8"><a class="header" href="#examples-8">Examples</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-45"><a class="header" href="#prql-45">PRQL</a></h4>
+<h4 id="prql-46"><a class="header" href="#prql-46">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 take 10
 </code></pre>
 </div>
 <div>
-<h4 id="sql-45"><a class="header" href="#sql-45">SQL</a></h4>
+<h4 id="sql-46"><a class="header" href="#sql-46">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -1365,14 +1385,14 @@ LIMIT
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-46"><a class="header" href="#prql-46">PRQL</a></h4>
+<h4 id="prql-47"><a class="header" href="#prql-47">PRQL</a></h4>
 <pre><code class="language-prql">from orders
 sort [-value, date]
 take 101..110
 </code></pre>
 </div>
 <div>
-<h4 id="sql-46"><a class="header" href="#sql-46">SQL</a></h4>
+<h4 id="sql-47"><a class="header" href="#sql-47">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   orders.*
 FROM
@@ -1426,7 +1446,7 @@ window is also knows as a Simple Moving Average.</li>
 <h2 id="example"><a class="header" href="#example">Example</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-47"><a class="header" href="#prql-47">PRQL</a></h4>
+<h4 id="prql-48"><a class="header" href="#prql-48">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 group employee_id (
   sort month
@@ -1437,7 +1457,7 @@ group employee_id (
 </code></pre>
 </div>
 <div>
-<h4 id="sql-47"><a class="header" href="#sql-47">SQL</a></h4>
+<h4 id="sql-48"><a class="header" href="#sql-48">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*,
   SUM(paycheck) OVER (
@@ -1453,7 +1473,7 @@ FROM
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-48"><a class="header" href="#prql-48">PRQL</a></h4>
+<h4 id="prql-49"><a class="header" href="#prql-49">PRQL</a></h4>
 <pre><code class="language-prql">from orders
 sort day
 window rows:-3..3 (
@@ -1468,7 +1488,7 @@ group [order_month] (
 </code></pre>
 </div>
 <div>
-<h4 id="sql-48"><a class="header" href="#sql-48">SQL</a></h4>
+<h4 id="sql-49"><a class="header" href="#sql-49">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   orders.*,
   AVG(value) OVER (
@@ -1493,13 +1513,13 @@ FROM
 value or, if that value is null, the second value.</p>
 <div class="comparison">
 <div>
-<h4 id="prql-49"><a class="header" href="#prql-49">PRQL</a></h4>
+<h4 id="prql-50"><a class="header" href="#prql-50">PRQL</a></h4>
 <pre><code class="language-prql">from orders
 derive amount ?? 0
 </code></pre>
 </div>
 <div>
-<h4 id="sql-49"><a class="header" href="#sql-49">SQL</a></h4>
+<h4 id="sql-50"><a class="header" href="#sql-50">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   orders.*,
   COALESCE(amount, 0)
@@ -1529,13 +1549,13 @@ canonical <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601</a> format de
 date format.</p>
 <div class="comparison">
 <div>
-<h4 id="prql-50"><a class="header" href="#prql-50">PRQL</a></h4>
+<h4 id="prql-51"><a class="header" href="#prql-51">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 derive age_at_year_end = (@2022-12-31 - dob)
 </code></pre>
 </div>
 <div>
-<h4 id="sql-50"><a class="header" href="#sql-50">SQL</a></h4>
+<h4 id="sql-51"><a class="header" href="#sql-51">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*,
   DATE '2022-12-31' - dob AS age_at_year_end
@@ -1550,13 +1570,13 @@ rounded to zero, including the timezone, which is represented by <code>+HH:mm</c
 <code>-HH:mm</code> or <code>Z</code>. This is consistent with the ISO8601 time format.</p>
 <div class="comparison">
 <div>
-<h4 id="prql-51"><a class="header" href="#prql-51">PRQL</a></h4>
+<h4 id="prql-52"><a class="header" href="#prql-52">PRQL</a></h4>
 <pre><code class="language-prql">from orders
 derive should_have_shipped_today = (order_time &lt; @08:30)
 </code></pre>
 </div>
 <div>
-<h4 id="sql-51"><a class="header" href="#sql-51">SQL</a></h4>
+<h4 id="sql-52"><a class="header" href="#sql-52">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   orders.*,
   order_time &lt; TIME '08:30' AS should_have_shipped_today
@@ -1573,12 +1593,12 @@ is <code>@</code> followed by the ISO8601 datetime format, which uses <code>T</
 time.</p>
 <div class="comparison">
 <div>
-<h4 id="prql-52"><a class="header" href="#prql-52">PRQL</a></h4>
+<h4 id="prql-53"><a class="header" href="#prql-53">PRQL</a></h4>
 <pre><code class="language-prql">derive first_prql_commit = @2020-01-01T13:19:55-0800
 </code></pre>
 </div>
 <div>
-<h4 id="sql-52"><a class="header" href="#sql-52">SQL</a></h4>
+<h4 id="sql-53"><a class="header" href="#sql-53">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   TIMESTAMP '2020-01-01T13:19:55-0800' AS first_prql_commit
 </code></pre>
@@ -1602,13 +1622,13 @@ issue if this is inconvenient.</p>
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-53"><a class="header" href="#prql-53">PRQL</a></h4>
+<h4 id="prql-54"><a class="header" href="#prql-54">PRQL</a></h4>
 <pre><code class="language-prql">from projects
 derive first_check_in = start + 10days
 </code></pre>
 </div>
 <div>
-<h4 id="sql-53"><a class="header" href="#sql-53">SQL</a></h4>
+<h4 id="sql-54"><a class="header" href="#sql-54">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   projects.*,
   start + INTERVAL '10' DAY AS first_check_in
@@ -1649,7 +1669,7 @@ timestamp annotated as a datetime:</p>
 <p>PRQL doesn’t have a specific <code>distinct</code> keyword. Instead, use <code>group</code> and <code>take 1</code>:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-54"><a class="header" href="#prql-54">PRQL</a></h4>
+<h4 id="prql-55"><a class="header" href="#prql-55">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 select department
 group department (
@@ -1658,7 +1678,7 @@ group department (
 </code></pre>
 </div>
 <div>
-<h4 id="sql-54"><a class="header" href="#sql-54">SQL</a></h4>
+<h4 id="sql-55"><a class="header" href="#sql-55">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   DISTINCT department
 FROM
@@ -1669,14 +1689,14 @@ FROM
 <p>This also works without a linebreak:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-55"><a class="header" href="#prql-55">PRQL</a></h4>
+<h4 id="prql-56"><a class="header" href="#prql-56">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 select department
 group department (take 1)
 </code></pre>
 </div>
 <div>
-<h4 id="sql-55"><a class="header" href="#sql-55">SQL</a></h4>
+<h4 id="sql-56"><a class="header" href="#sql-56">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   DISTINCT department
 FROM
@@ -1690,7 +1710,7 @@ group</a>
 by combining <code>group</code> and <code>sort</code>:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-56"><a class="header" href="#prql-56">PRQL</a></h4>
+<h4 id="prql-57"><a class="header" href="#prql-57">PRQL</a></h4>
 <pre><code class="language-prql"># youngest employee from each department
 from employees
 group department (
@@ -1700,7 +1720,7 @@ group department (
 </code></pre>
 </div>
 <div>
-<h4 id="sql-56"><a class="header" href="#sql-56">SQL</a></h4>
+<h4 id="sql-57"><a class="header" href="#sql-57">SQL</a></h4>
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
     employees.*,
@@ -1740,13 +1760,13 @@ ORDER BY department, age
 Currently PRQL supports this for concatenating strings:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-57"><a class="header" href="#prql-57">PRQL</a></h4>
+<h4 id="prql-58"><a class="header" href="#prql-58">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 select full_name = f&quot;{first_name} {last_name}&quot;
 </code></pre>
 </div>
 <div>
-<h4 id="sql-57"><a class="header" href="#sql-57">SQL</a></h4>
+<h4 id="sql-58"><a class="header" href="#sql-58">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   CONCAT(first_name, ' ', last_name) AS full_name
 FROM
@@ -1757,13 +1777,13 @@ FROM
 <p>This can be much easier to read for longer strings, relative to the SQL approach:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-58"><a class="header" href="#prql-58">PRQL</a></h4>
+<h4 id="prql-59"><a class="header" href="#prql-59">PRQL</a></h4>
 <pre><code class="language-prql">from web
 select url = f&quot;http{tls}://www.{domain}.{tld}/{page}&quot;
 </code></pre>
 </div>
 <div>
-<h4 id="sql-58"><a class="header" href="#sql-58">SQL</a></h4>
+<h4 id="sql-59"><a class="header" href="#sql-59">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   CONCAT(
     'http',
@@ -1803,14 +1823,14 @@ unknown values. As a result, in SQL:</p>
 </ul>
 <div class="comparison">
 <div>
-<h4 id="prql-59"><a class="header" href="#prql-59">PRQL</a></h4>
+<h4 id="prql-60"><a class="header" href="#prql-60">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 filter first_name == null
 filter null != last_name
 </code></pre>
 </div>
 <div>
-<h4 id="sql-59"><a class="header" href="#sql-59">SQL</a></h4>
+<h4 id="sql-60"><a class="header" href="#sql-60">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   employees.*
 FROM
@@ -1832,14 +1852,14 @@ database).</p>
 including dates:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-60"><a class="header" href="#prql-60">PRQL</a></h4>
+<h4 id="prql-61"><a class="header" href="#prql-61">PRQL</a></h4>
 <pre><code class="language-prql">from events
 filter (date | in @1776-07-04..@1787-09-17)
 filter (magnitude | in 50..100)
 </code></pre>
 </div>
 <div>
-<h4 id="sql-60"><a class="header" href="#sql-60">SQL</a></h4>
+<h4 id="sql-61"><a class="header" href="#sql-61">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   events.*
 FROM
@@ -1857,14 +1877,14 @@ WHERE
 in <code>take</code>:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-61"><a class="header" href="#prql-61">PRQL</a></h4>
+<h4 id="prql-62"><a class="header" href="#prql-62">PRQL</a></h4>
 <pre><code class="language-prql">from orders
 sort [-value, date]
 take 101..110
 </code></pre>
 </div>
 <div>
-<h4 id="sql-61"><a class="header" href="#sql-61">SQL</a></h4>
+<h4 id="sql-62"><a class="header" href="#sql-62">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   orders.*
 FROM
@@ -1885,12 +1905,12 @@ doesn’t yet implement. For example, there’s no <code>version()</code> functi
 returns the Postgres version, so if we want to use that, we use an s-string:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-62"><a class="header" href="#prql-62">PRQL</a></h4>
+<h4 id="prql-63"><a class="header" href="#prql-63">PRQL</a></h4>
 <pre><code class="language-prql">derive db_version = s&quot;version()&quot;
 </code></pre>
 </div>
 <div>
-<h4 id="sql-62"><a class="header" href="#sql-62">SQL</a></h4>
+<h4 id="sql-63"><a class="header" href="#sql-63">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   version() AS db_version
 </code></pre>
@@ -1903,13 +1923,13 @@ library defines the <code>average</code> function as:</p>
 <p>So this compiles using the function:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-63"><a class="header" href="#prql-63">PRQL</a></h4>
+<h4 id="prql-64"><a class="header" href="#prql-64">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 aggregate [average salary]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-63"><a class="header" href="#sql-63">SQL</a></h4>
+<h4 id="sql-64"><a class="header" href="#sql-64">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   AVG(salary)
 FROM
@@ -1920,7 +1940,7 @@ FROM
 <p>Here’s an example of a more involved use of an s-string:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-64"><a class="header" href="#prql-64">PRQL</a></h4>
+<h4 id="prql-65"><a class="header" href="#prql-65">PRQL</a></h4>
 <pre><code class="language-prql">from de=dept_emp
 join s=salaries side:left [
   (s.emp_no == de.emp_no),
@@ -1931,7 +1951,7 @@ join s=salaries side:left [
 </code></pre>
 </div>
 <div>
-<h4 id="sql-64"><a class="header" href="#sql-64">SQL</a></h4>
+<h4 id="sql-65"><a class="header" href="#sql-65">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   de.*,
   s.*
@@ -1953,21 +1973,8 @@ should implement it in PRQL or PRQL’s stdlib.</p>
 <p>Strings in PRQL can use either single or double quotes:</p>
 <div class="comparison">
 <div>
-<h4 id="prql-65"><a class="header" href="#prql-65">PRQL</a></h4>
-<pre><code class="language-prql">derive x = &quot;hello world&quot;
-</code></pre>
-</div>
-<div>
-<h4 id="sql-65"><a class="header" href="#sql-65">SQL</a></h4>
-<pre><code class="language-sql">SELECT
-  'hello world' AS x
-</code></pre>
-</div>
-</div>
-<div class="comparison">
-<div>
 <h4 id="prql-66"><a class="header" href="#prql-66">PRQL</a></h4>
-<pre><code class="language-prql">derive x = 'hello world'
+<pre><code class="language-prql">derive x = &quot;hello world&quot;
 </code></pre>
 </div>
 <div>
@@ -1977,16 +1984,29 @@ should implement it in PRQL or PRQL’s stdlib.</p>
 </code></pre>
 </div>
 </div>
-<p>To quote a string containing quotes, either use the “other” type of quote, or
-use three-or-more quotes, and close with the same number.</p>
 <div class="comparison">
 <div>
 <h4 id="prql-67"><a class="header" href="#prql-67">PRQL</a></h4>
-<pre><code class="language-prql">derive x = '&quot;hello world&quot;'
+<pre><code class="language-prql">derive x = 'hello world'
 </code></pre>
 </div>
 <div>
 <h4 id="sql-67"><a class="header" href="#sql-67">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  'hello world' AS x
+</code></pre>
+</div>
+</div>
+<p>To quote a string containing quotes, either use the “other” type of quote, or
+use three-or-more quotes, and close with the same number.</p>
+<div class="comparison">
+<div>
+<h4 id="prql-68"><a class="header" href="#prql-68">PRQL</a></h4>
+<pre><code class="language-prql">derive x = '&quot;hello world&quot;'
+</code></pre>
+</div>
+<div>
+<h4 id="sql-68"><a class="header" href="#sql-68">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   '&quot;hello world&quot;' AS x
 </code></pre>
@@ -1994,12 +2014,12 @@ use three-or-more quotes, and close with the same number.</p>
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-68"><a class="header" href="#prql-68">PRQL</a></h4>
+<h4 id="prql-69"><a class="header" href="#prql-69">PRQL</a></h4>
 <pre><code class="language-prql">derive x = &quot;&quot;&quot;I said &quot;hello world&quot;!&quot;&quot;&quot;
 </code></pre>
 </div>
 <div>
-<h4 id="sql-68"><a class="header" href="#sql-68">SQL</a></h4>
+<h4 id="sql-69"><a class="header" href="#sql-69">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   'I said &quot;hello world&quot;!' AS x
 </code></pre>
@@ -2007,12 +2027,12 @@ use three-or-more quotes, and close with the same number.</p>
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-69"><a class="header" href="#prql-69">PRQL</a></h4>
+<h4 id="prql-70"><a class="header" href="#prql-70">PRQL</a></h4>
 <pre><code class="language-prql">derive x = &quot;&quot;&quot;&quot;&quot;I said &quot;&quot;&quot;hello world&quot;&quot;&quot;!&quot;&quot;&quot;&quot;&quot;
 </code></pre>
 </div>
 <div>
-<h4 id="sql-69"><a class="header" href="#sql-69">SQL</a></h4>
+<h4 id="sql-70"><a class="header" href="#sql-70">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   'I said &quot;&quot;&quot;hello world&quot;&quot;&quot;!' AS x
 </code></pre>
@@ -2053,9 +2073,24 @@ those need to be built deeper into the compiler. We’ll resolve this at some po
 then, we’ll only add functions here that are broadly supported by most DBs.</p>
 </div>
 </div>
-<p>Here’s the source of the current <a href="https://github.com/prql/prql/blob/main/prql-compiler/src/sql/stdlib.prql">PRQL
+<p>Here’s the source of the current <a href="https://github.com/prql/prql/blob/main/prql-compiler/src/semantic/stdlib.prql">PRQL
 stdlib</a>:</p>
-<pre><code class="language-prql_no_test"># Aggregate Functions
+<pre><code class="language-prql_no_test"># Transform type definitions
+
+# make sure to update cast_transfrom if you change any of the declarations here
+
+func from&lt;table&gt; source -&gt; 0
+func select&lt;table&gt; assigns tbl -&gt; 0
+func filter&lt;table&gt; condition tbl -&gt; 0
+func derive&lt;table&gt; assigns tbl -&gt; 0
+func aggregate&lt;table&gt; assigns tbl -&gt; 0
+func sort&lt;table&gt; by tbl -&gt; 0
+func take&lt;table&gt; expr tbl -&gt; 0
+func join&lt;table&gt; with filter side:inner tbl -&gt; 0
+func group&lt;table&gt; by pipeline tbl -&gt; 0
+func window&lt;table&gt; rows:0..0 range:0..0 expanding:false rolling:0 pipeline tbl -&gt; 0
+
+# Aggregate Functions
 
 func min &lt;scalar|column&gt; column -&gt;  s&quot;MIN({column})&quot;
 func max &lt;scalar|column&gt; column -&gt;  s&quot;MAX({column})&quot;
@@ -2072,7 +2107,7 @@ func count_distinct &lt;scalar|column&gt; column -&gt;  s&quot;COUNT(DISTINCT `{
 # TODO: Introduce a notation for getting start and end out of a ranges
 # could be range.0? or range.start? But to make this happen, we need to make
 # changes to how variables are resolved.
-func in&lt;scalar&gt; range value -&gt;  s&quot;{value} BETWEEN {range}&quot;
+func in&lt;bool&gt; range value -&gt;  s&quot;{value} BETWEEN {range}&quot;
 
 # Casting functions
 
@@ -2453,7 +2488,7 @@ integration easier, please open an issue.</p>
 <!-- TODO: toc -->
 <div style="break-before: page; page-break-before: always;"></div><div class="comparison">
 <div>
-<h4 id="prql-70"><a class="header" href="#prql-70">PRQL</a></h4>
+<h4 id="prql-71"><a class="header" href="#prql-71">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 filter country == &quot;USA&quot;                       # Each line transforms the previous result.
 derive [                                     # This adds columns / variables.
@@ -2478,7 +2513,7 @@ take 20
 </code></pre>
 </div>
 <div>
-<h4 id="sql-70"><a class="header" href="#sql-70">SQL</a></h4>
+<h4 id="sql-71"><a class="header" href="#sql-71">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   title,
   country,
@@ -2508,7 +2543,7 @@ LIMIT
 </div>
 <div class="comparison">
 <div>
-<h4 id="prql-71"><a class="header" href="#prql-71">PRQL</a></h4>
+<h4 id="prql-72"><a class="header" href="#prql-72">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 group [emp_no] (
   aggregate [
@@ -2527,7 +2562,7 @@ derive salary = salary_k * 1000     # salary_k should not resolve to &quot;avg_s
 </code></pre>
 </div>
 <div>
-<h4 id="sql-71"><a class="header" href="#sql-71">SQL</a></h4>
+<h4 id="sql-72"><a class="header" href="#sql-72">SQL</a></h4>
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
     emp_no,
@@ -2553,26 +2588,9 @@ LIMIT
 <div style="break-before: page; page-break-before: always;"></div><h2 id="single-item-is-coerced-into-a-list"><a class="header" href="#single-item-is-coerced-into-a-list">Single item is coerced into a list</a></h2>
 <div class="comparison">
 <div>
-<h4 id="prql-72"><a class="header" href="#prql-72">PRQL</a></h4>
-<pre><code class="language-prql">from employees
-select salary
-</code></pre>
-</div>
-<div>
-<h4 id="sql-72"><a class="header" href="#sql-72">SQL</a></h4>
-<pre><code class="language-sql">SELECT
-  salary
-FROM
-  employees
-</code></pre>
-</div>
-</div>
-<p>Same as above but with <code>salary</code> in a list:</p>
-<div class="comparison">
-<div>
 <h4 id="prql-73"><a class="header" href="#prql-73">PRQL</a></h4>
 <pre><code class="language-prql">from employees
-select [salary]
+select salary
 </code></pre>
 </div>
 <div>
@@ -2584,35 +2602,32 @@ FROM
 </code></pre>
 </div>
 </div>
-<h2 id="multiple-items"><a class="header" href="#multiple-items">Multiple items</a></h2>
+<p>Same as above but with <code>salary</code> in a list:</p>
 <div class="comparison">
 <div>
 <h4 id="prql-74"><a class="header" href="#prql-74">PRQL</a></h4>
 <pre><code class="language-prql">from employees
-derive [
-  gross_salary = salary + payroll_tax,
-  gross_cost = gross_salary + benefits_cost
-]
+select [salary]
 </code></pre>
 </div>
 <div>
 <h4 id="sql-74"><a class="header" href="#sql-74">SQL</a></h4>
 <pre><code class="language-sql">SELECT
-  employees.*,
-  salary + payroll_tax AS gross_salary,
-  salary + payroll_tax + benefits_cost AS gross_cost
+  salary
 FROM
   employees
 </code></pre>
 </div>
 </div>
-<p>Same as above but split into two lines:</p>
+<h2 id="multiple-items"><a class="header" href="#multiple-items">Multiple items</a></h2>
 <div class="comparison">
 <div>
 <h4 id="prql-75"><a class="header" href="#prql-75">PRQL</a></h4>
 <pre><code class="language-prql">from employees
-derive gross_salary = salary + payroll_tax
-derive gross_cost = gross_salary + benefits_cost
+derive [
+  gross_salary = salary + payroll_tax,
+  gross_cost = gross_salary + benefits_cost
+]
 </code></pre>
 </div>
 <div>
@@ -2626,9 +2641,29 @@ FROM
 </code></pre>
 </div>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><div class="comparison">
+<p>Same as above but split into two lines:</p>
+<div class="comparison">
 <div>
 <h4 id="prql-76"><a class="header" href="#prql-76">PRQL</a></h4>
+<pre><code class="language-prql">from employees
+derive gross_salary = salary + payroll_tax
+derive gross_cost = gross_salary + benefits_cost
+</code></pre>
+</div>
+<div>
+<h4 id="sql-76"><a class="header" href="#sql-76">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  employees.*,
+  salary + payroll_tax AS gross_salary,
+  salary + payroll_tax + benefits_cost AS gross_cost
+FROM
+  employees
+</code></pre>
+</div>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><div class="comparison">
+<div>
+<h4 id="prql-77"><a class="header" href="#prql-77">PRQL</a></h4>
 <pre><code class="language-prql">table newest_employees = (
   from employees
   sort tenure
@@ -2648,7 +2683,7 @@ select [name, salary, average_country_salary]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-76"><a class="header" href="#sql-76">SQL</a></h4>
+<h4 id="sql-77"><a class="header" href="#sql-77">SQL</a></h4>
 <pre><code class="language-sql">WITH newest_employees AS (
   SELECT
     employees.*
@@ -2679,13 +2714,13 @@ FROM
 </div>
 <div style="break-before: page; page-break-before: always;"></div><div class="comparison">
 <div>
-<h4 id="prql-77"><a class="header" href="#prql-77">PRQL</a></h4>
+<h4 id="prql-78"><a class="header" href="#prql-78">PRQL</a></h4>
 <pre><code class="language-prql">from mytable
 filter id == $1
 </code></pre>
 </div>
 <div>
-<h4 id="sql-77"><a class="header" href="#sql-77">SQL</a></h4>
+<h4 id="sql-78"><a class="header" href="#sql-78">SQL</a></h4>
 <pre><code class="language-sql">SELECT
   mytable.*
 FROM
@@ -2719,7 +2754,7 @@ $ cargo run compile examples/employees/average-title-salary.prql | psql -U postg
 </ul>
 <div class="comparison">
 <div>
-<h4 id="prql-78"><a class="header" href="#prql-78">PRQL</a></h4>
+<h4 id="prql-79"><a class="header" href="#prql-79">PRQL</a></h4>
 <pre><code class="language-prql">from salaries
 group [emp_no] (
   aggregate [emp_salary = average salary]
@@ -2734,7 +2769,7 @@ select [dept_name, title, avg_salary]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-78"><a class="header" href="#sql-78">SQL</a></h4>
+<h4 id="sql-79"><a class="header" href="#sql-79">SQL</a></h4>
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
     emp_no,
@@ -2773,7 +2808,7 @@ FROM
 </blockquote>
 <div class="comparison">
 <div>
-<h4 id="prql-79"><a class="header" href="#prql-79">PRQL</a></h4>
+<h4 id="prql-80"><a class="header" href="#prql-80">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 join salaries [emp_no]
 group [emp_no, gender] (
@@ -2793,7 +2828,7 @@ select [dept_name, gender, salary_avg, salary_sd]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-79"><a class="header" href="#sql-79">SQL</a></h4>
+<h4 id="sql-80"><a class="header" href="#sql-80">SQL</a></h4>
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
     emp_no,
@@ -2836,7 +2871,7 @@ FROM
 </blockquote>
 <div class="comparison">
 <div>
-<h4 id="prql-80"><a class="header" href="#prql-80">PRQL</a></h4>
+<h4 id="prql-81"><a class="header" href="#prql-81">PRQL</a></h4>
 <pre><code class="language-prql">from employees
 join salaries [emp_no]
 group [emp_no, gender] (
@@ -2861,7 +2896,7 @@ select [mng_name, managers.gender, salary_avg, salary_sd]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-80"><a class="header" href="#sql-80">SQL</a></h4>
+<h4 id="sql-81"><a class="header" href="#sql-81">SQL</a></h4>
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
     emp_no,
@@ -2907,7 +2942,7 @@ FROM
 </blockquote>
 <div class="comparison">
 <div>
-<h4 id="prql-81"><a class="header" href="#prql-81">PRQL</a></h4>
+<h4 id="prql-82"><a class="header" href="#prql-82">PRQL</a></h4>
 <pre><code class="language-prql">from de=dept_emp
 join s=salaries side:left [
   (s.emp_no == de.emp_no),
@@ -2922,7 +2957,7 @@ select [dept_no, salary, employees.gender, titles.title]
 </code></pre>
 </div>
 <div>
-<h4 id="sql-81"><a class="header" href="#sql-81">SQL</a></h4>
+<h4 id="sql-82"><a class="header" href="#sql-82">SQL</a></h4>
 <pre><code class="language-sql">WITH table_0 AS (
   SELECT
     de.emp_no,
