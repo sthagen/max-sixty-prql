@@ -203,6 +203,26 @@ FROM
 </code></pre>
 </div>
 </div>
+<p>To use brackets in an s-string, use double brackets:</p>
+<div class="comparison">
+<div>
+<h4 id="prql-3"><a class="header" href="#prql-3">PRQL</a></h4>
+<pre><code class="language-prql">from employees
+derive [
+  has_valid_title = s&quot;regexp_contains(title, '([a-z0-9]*-){{2,}}')&quot;
+]
+</code></pre>
+</div>
+<div>
+<h4 id="sql-3"><a class="header" href="#sql-3">SQL</a></h4>
+<pre><code class="language-sql">SELECT
+  employees.*,
+  regexp_contains(title, '([a-z0-9]*-){2,}') AS has_valid_title
+FROM
+  employees
+</code></pre>
+</div>
+</div>
 <p>For those who have used python, s-strings are similar to python’s f-strings, but
 the result is SQL, rather than a string literal — a python f-string of
 <code>f&quot;average{col}&quot;</code> where <code>col=&quot;salary&quot;</code> would produce <code>&quot;average(salary)&quot;</code>, with
